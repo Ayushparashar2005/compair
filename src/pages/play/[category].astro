@@ -1,0 +1,27 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { GameBoard } from '../../components/game/GameBoard';
+import { getCategoryBySlug } from '../../lib/services/categories';
+
+const { category } = Astro.params;
+
+let categoryId: string | undefined = undefined;
+let categoryName = "Anything";
+
+if (category && category !== 'all') {
+  const catData = await getCategoryBySlug(category);
+  if (!catData) return Astro.redirect('/play');
+  categoryId = catData.id;
+  categoryName = catData.name;
+}
+---
+
+<Layout title={`Playing ${categoryName}`}>
+  <div class="mb-8 flex items-center justify-center">
+    <div class="px-4 py-1 rounded-full border border-[var(--color-brand-border)] font-mono text-sm text-[var(--color-brand-text-secondary)]">
+      CATEGORY: <span class="text-[var(--color-brand-accent)]">{categoryName.toUpperCase()}</span>
+    </div>
+  </div>
+  
+  <GameBoard client:only="react" categoryId={categoryId} />
+</Layout>

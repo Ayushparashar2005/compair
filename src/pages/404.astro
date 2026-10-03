@@ -1,0 +1,21 @@
+---
+import Layout from '../components/layout/Layout.astro';
+---
+
+<Layout title="Page Not Found">
+  <div class="min-h-[80dvh] flex flex-col items-center justify-center text-center px-6">
+    <div class="font-display font-black text-9xl tracking-tighter mb-4">404</div>
+    <h1 class="text-3xl md:text-5xl font-bold font-display uppercase tracking-widest mb-8">
+      Lost in the data
+    </h1>
+    <p class="font-mono text-[var(--color-brand-text-secondary)] text-lg max-w-md mb-12">
+      We couldn't find the comparison you're looking for. It might have been moved or deleted.
+    </p>
+    <a 
+      href="/"
+      class="inline-flex items-center justify-center px-8 py-4 bg-[var(--color-brand-accent)] text-white font-mono font-bold uppercase tracking-widest text-lg border-4 border-black shadow-[6px_6px_0_#000] hover:-translate-y-1 hover:shadow-[8px_8px_0_#000] active:translate-y-0 active:shadow-[0px_0px_0_#000] transition-all duration-150"
+    >
+      Return Base
+    </a>
+  </div>
+</Layout>

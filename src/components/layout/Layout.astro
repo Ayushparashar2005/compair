@@ -1,0 +1,74 @@
+---
+import '../../styles/global.css';
+import VgpuBackground from './VgpuBackground';
+import { TransitionCanvas } from './TransitionCanvas';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  ogType?: string;
+}
+
+const { title, description = "Real facts. Real numbers. One guess. A knowledge comparison game.", ogImage = "/favicon.svg", ogType = "website" } = Astro.props;
+const pathname = Astro.url.pathname;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} - ComPair</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={`${title} - ComPair`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content={ogType} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+  </head>
+  <body class="min-h-screen flex flex-col antialiased">
+    <TransitionCanvas client:only="react" />
+    <VgpuBackground client:only="react" />
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-[var(--color-brand-accent)] text-white font-mono font-bold px-4 py-2 z-[60] border-4 border-black shadow-[4px_4px_0_#000] outline-none">
+      Skip to main content
+    </a>
+    <header class="w-full border-b-4 border-black bg-white text-black sticky top-0 z-50 shadow-[0_4px_0_#000]">
+      <div class="w-full px-6 h-16 flex items-center justify-between">
+        <a href="/" class="text-2xl font-display font-black tracking-tighter uppercase relative group">
+          Com<span class="text-[var(--color-brand-accent)]">Pair</span>
+          <div class="absolute -bottom-1 left-0 w-0 h-1 bg-black transition-all duration-300 group-hover:w-full"></div>
+        </a>
+        <nav class="flex gap-8 font-mono text-sm font-bold uppercase tracking-wider">
+          <a href="/play" class={`hover:text-[var(--color-brand-accent)] transition-colors relative group ${pathname.startsWith('/play') ? 'text-[var(--color-brand-accent)]' : ''}`}>
+            Play
+            <div class={`absolute -bottom-1 left-0 w-full h-[2px] bg-[var(--color-brand-accent)] transition-transform duration-300 origin-left ${pathname.startsWith('/play') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></div>
+          </a>
+          <a href="/explore" class={`hover:text-[var(--color-brand-accent)] transition-colors relative group ${pathname.startsWith('/explore') ? 'text-[var(--color-brand-accent)]' : ''}`}>
+            Explore
+            <div class={`absolute -bottom-1 left-0 w-full h-[2px] bg-[var(--color-brand-accent)] transition-transform duration-300 origin-left ${pathname.startsWith('/explore') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></div>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="flex-grow w-full">
+      <slot />
+    </main>
+
+    <footer class="w-full border-t-4 border-black bg-black text-white mt-auto py-12">
+      <div class="w-full px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="text-2xl font-display font-black tracking-tighter uppercase">
+          Com<span class="text-[var(--color-brand-accent)]">Pair</span>
+        </div>
+        <div class="text-center md:text-right font-mono text-sm text-white/70">
+          <p>Don't just memorize facts.</p>
+          <p>Develop an intuition for reality.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

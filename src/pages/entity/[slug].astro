@@ -1,0 +1,123 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { ScaleComparison } from '../../components/entity/ScaleComparison';
+import { getEntityWithStats, getEntitiesByCategory } from '../../lib/services/entities';
+import { db } from '../../lib/db';
+import { eq } from 'drizzle-orm';
+
+const { slug } = Astro.params;
+
+if (!slug) return Astro.redirect('/explore');
+
+const entity = await getEntityWithStats(slug);
+
+if (!entity) return Astro.redirect('/explore');
+
+// Get human baseline
+const humanEntity = await getEntityWithStats('human');
+const humanStatsMap = new Map(humanEntity?.stats.map(s => [s.slug, s.value]) || []);
+
+// Get category for CTA
+import { categories } from '../../lib/db/schema/categories';
+const catResult = await db.select().from(categories).where(eq(categories.id, entity.categoryId)).limit(1);
+const category = catResult[0];
+
+// Get related entities
+const allInCategory = await getEntitiesByCategory(entity.categoryId);
+const relatedEntities = allInCategory.filter(e => e.id !== entity.id).slice(0, 4);
+---
+
+<Layout 
+  title={entity.name}
+  ogImage={`/api/og/entity/${entity.slug}`}
+  ogType="article"
+>
+  <div class="mb-12 border-b border-[var(--color-brand-border)] pb-12">
+    <div class="flex items-center gap-6 mb-6">
+      <div class="text-7xl">{entity.emoji}</div>
+      <div>
+        <h1 class="text-5xl md:text-7xl font-display font-bold">{entity.name}</h1>
+      </div>
+    </div>
+    {entity.description && (
+      <p class="text-xl text-[var(--color-brand-text-secondary)] max-w-3xl">
+        {entity.description}
+      </p>
+    )}
+  </div>
+
+  <h2 class="text-2xl font-mono text-[var(--color-brand-text-secondary)] mb-6 uppercase tracking-widest">
+    STATISTICS
+  </h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-16">
+    {entity.stats.map(stat => (
+      <div class="neo-glass p-6 rounded-2xl flex justify-between items-center hover:border-[var(--color-brand-accent)] transition-colors">
+        <span class="font-bold text-lg">{stat.name}</span>
+        <div class="text-right">
+          <div class="text-2xl font-mono font-bold text-[var(--color-brand-accent)]">
+            {stat.minValue && stat.maxValue && stat.minValue !== stat.maxValue 
+              ? `${stat.minValue.toLocaleString()} – ${stat.maxValue.toLocaleString()}`
+              : stat.value.toLocaleString()} 
+            <span class="text-sm text-[var(--color-brand-text-primary)]">{stat.unit}</span>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  {entity.slug !== 'human' && entity.stats.some(s => humanStatsMap.has(s.slug)) && (
+    <>
+      <h2 class="text-2xl font-mono text-[var(--color-brand-text-secondary)] mb-6 uppercase tracking-widest">
+        VISUAL COMPARISON
+      </h2>
+      <div class="grid grid-cols-1 gap-4 mb-16 max-w-3xl">
+        {entity.stats.filter(s => humanStatsMap.has(s.slug)).map(stat => (
+          <ScaleComparison 
+            statName={stat.name}
+            statUnit={stat.unit || ''}
+            entityValue={stat.value}
+            entityName={entity.name}
+            humanValue={humanStatsMap.get(stat.slug)!}
+          />
+        ))}
+      </div>
+    </>
+  )}
+
+  {relatedEntities.length > 0 && (
+    <>
+      <h2 class="text-2xl font-mono text-[var(--color-brand-text-secondary)] mb-6 uppercase tracking-widest">
+        RELATED ENTITIES
+      </h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+        {relatedEntities.map(related => (
+          <a 
+            href={`/entity/${related.slug}`}
+            class="flex flex-col p-6 rounded-2xl neo-glass hover:-translate-y-1 transition-all duration-300 text-center"
+          >
+            <div class="text-4xl mb-4">{related.emoji}</div>
+            <h3 class="font-display font-bold text-lg">{related.name}</h3>
+          </a>
+        ))}
+      </div>
+    </>
+  )}
+
+  <div class="mt-16 p-8 rounded-3xl neo-glass flex flex-col md:flex-row items-center justify-between gap-6">
+    <div>
+      <p class="text-[var(--color-brand-text-secondary)] font-mono text-sm mb-1 uppercase">
+        Want to test your intuition?
+      </p>
+      <h3 class="font-display font-bold text-2xl">
+        {category.icon} Play {category.name}
+      </h3>
+    </div>
+    <a 
+      href={`/play/${category.slug}`}
+      class="px-8 py-4 bg-[var(--color-brand-accent)] text-[var(--background)] font-bold text-lg rounded-full hover:scale-105 transition-transform whitespace-nowrap"
+    >
+      START COMPARING
+    </a>
+  </div>
+</Layout>

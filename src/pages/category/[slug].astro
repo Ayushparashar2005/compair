@@ -1,0 +1,50 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import { db } from '../../lib/db';
+import { categories } from '../../lib/db/schema/categories';
+import { entities } from '../../lib/db/schema/entities';
+import { eq } from 'drizzle-orm';
+import { getCategoryBySlug } from '../../lib/services/categories';
+import { getEntitiesByCategory } from '../../lib/services/entities';
+
+const { slug } = Astro.params;
+
+if (!slug) return Astro.redirect('/explore');
+
+const category = await getCategoryBySlug(slug);
+if (!category) return Astro.redirect('/explore');
+
+const categoryEntities = await getEntitiesByCategory(category.id);
+---
+
+<Layout title={category.name}>
+  <div class="mb-12 border-b border-[var(--color-brand-border)] pb-12 flex flex-col md:flex-row md:items-center justify-between gap-6">
+    <div>
+      <div class="flex items-center gap-4 mb-2">
+        <div class="text-5xl">{category.icon}</div>
+        <h1 class="text-4xl md:text-5xl font-display font-bold">{category.name}</h1>
+      </div>
+      <p class="text-xl text-[var(--color-brand-text-secondary)] font-mono">
+        {category.description}
+      </p>
+    </div>
+    <a 
+      href={`/play/${category.slug}`}
+      class="px-8 py-4 bg-[var(--color-brand-accent)] text-[var(--background)] font-bold text-lg rounded-full hover:scale-105 transition-transform flex items-center justify-center whitespace-nowrap"
+    >
+      PLAY CATEGORY
+    </a>
+  </div>
+
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    {categoryEntities.map(entity => (
+      <a 
+        href={`/entity/${entity.slug}`}
+        class="flex flex-col p-6 rounded-2xl bg-[var(--color-brand-surface)] border border-[var(--color-brand-border)] hover:border-[var(--color-brand-accent)] hover:-translate-y-1 transition-all duration-300"
+      >
+        <div class="text-4xl mb-4">{entity.emoji}</div>
+        <h3 class="font-display font-bold text-lg">{entity.name}</h3>
+      </a>
+    ))}
+  </div>
+</Layout>

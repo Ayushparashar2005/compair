@@ -80,9 +80,14 @@ export function getAiBotName(difficulty: 'novice' | 'pro' | 'master'): string {
 /**
  * Generate a deck of comparison questions from DB, filling with fallbacks if needed
  */
-export async function generateDuelDeck(count: number = 7, categoryId?: string | null): Promise<DuelQuestion[]> {
+export async function generateDuelDeck(
+  count: number = 7, 
+  categoryId?: string | null,
+  difficulty: 'novice' | 'pro' | 'master' = 'pro'
+): Promise<DuelQuestion[]> {
   const questions: DuelQuestion[] = [];
   const usedEntityIds = new Set<string>();
+  const proximityThreshold = difficulty === 'master' ? 1.0 : difficulty === 'novice' ? 3.0 : 2.0;
 
   try {
     for (let i = 0; i < count; i++) {
@@ -93,7 +98,7 @@ export async function generateDuelDeck(count: number = 7, categoryId?: string | 
       const queryStr = `
         WITH 
           entity_a_pool AS (
-            SELECT e.id, e.name, e.emoji, e.image_url, e.local_image_path, e.category_id,
+            SELECT e.id, e.name, e.emoji, e.image_url, e.local_image_path, e.category_id, e.sub_type,
                    es.stat_id, es.value, s.name as stat_name, s.unit as stat_unit,
                    c.name as category_name
             FROM entities e
@@ -115,6 +120,9 @@ export async function generateDuelDeck(count: number = 7, categoryId?: string | 
             JOIN picked_a pa ON es.stat_id = pa.stat_id
             WHERE e.id != pa.id
               AND e.category_id = pa.category_id
+              AND (e.sub_type = pa.sub_type OR e.sub_type IS NULL OR pa.sub_type IS NULL)
+              AND pa.value > 0 AND es.value > 0
+              AND ABS(LN(es.value::float) - LN(pa.value::float)) < ${proximityThreshold}
               ${excludeClause}
             ORDER BY random()
             LIMIT 15
@@ -239,7 +247,7 @@ export async function createComparisonMatch(
   const totalRounds = options.totalRounds ?? 7;
   const difficulty = options.difficulty ?? 'pro';
   const playerName = options.playerName?.trim() || 'Player 1';
-  const deck = await generateDuelDeck(totalRounds, options.categoryId);
+  const deck = await generateDuelDeck(totalRounds, options.categoryId, difficulty);
 
   const playerA = createInitialPlayer('A', playerName);
   const playerB = createInitialPlayer('B', mode === 'house' ? getAiBotName(difficulty) : 'Opponent');
@@ -493,7 +501,7 @@ export function advanceToNextRound(state: ComparisonDuelSessionState): Compariso
  * Resets match for a Rematch in the same room
  */
 export async function resetRematch(state: ComparisonDuelSessionState): Promise<ComparisonDuelSessionState> {
-  const newDeck = await generateDuelDeck(state.totalRounds);
+  const newDeck = await generateDuelDeck(state.totalRounds, undefined, state.aiDifficulty);
   
   state.currentRound = 1;
   state.questionsDeck = newDeck;

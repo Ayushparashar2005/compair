@@ -6,6 +6,7 @@ export const entities = pgTable("entities", {
   name: text("name").notNull(),
   slug: text("slug").notNull().unique(),
   categoryId: varchar("category_id", { length: 36 }).notNull().references(() => categories.id, { onDelete: "cascade" }),
+  subType: varchar("sub_type", { length: 50 }),
   description: text("description"),
   imageUrl: text("image_url"),
   localImagePath: text("local_image_path"),

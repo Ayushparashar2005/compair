@@ -13,56 +13,56 @@ const FALLBACK_DUEL_QUESTIONS: DuelQuestion[] = [
     questionId: 'fb-1',
     categoryName: 'GEOGRAPHY',
     stat: { id: 'elevation', name: 'Peak Elevation', unit: 'm' },
-    entityA: { id: 'fb-everest', name: 'Mount Everest', emoji: '🏔️', imageUrl: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80', value: 8849 },
-    entityB: { id: 'fb-k2', name: 'K2', emoji: '⛰️', imageUrl: 'https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=800&q=80', value: 8611 },
+    entityA: { id: 'fb-everest', name: 'Mount Everest', emoji: '🏔️', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Everest_kalapatthar.jpg/800px-Everest_kalapatthar.jpg', value: 8849 },
+    entityB: { id: 'fb-k2', name: 'K2', emoji: '⛰️', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/K2_2006b.jpg/800px-K2_2006b.jpg', value: 8611 },
     correctEntityId: 'fb-everest',
   },
   {
     questionId: 'fb-2',
     categoryName: 'ANIMALS',
     stat: { id: 'weight', name: 'Adult Weight', unit: 'kg' },
-    entityA: { id: 'fb-whale', name: 'Blue Whale', emoji: '🐋', imageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80', value: 150000 },
-    entityB: { id: 'fb-elephant', name: 'African Elephant', emoji: '🐘', imageUrl: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=800&q=80', value: 6000 },
+    entityA: { id: 'fb-whale', name: 'Blue Whale', emoji: '🐋', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Anim1754_-_Flickr_-_NOAA_Photo_Library.jpg/800px-Anim1754_-_Flickr_-_NOAA_Photo_Library.jpg', value: 150000 },
+    entityB: { id: 'fb-elephant', name: 'African Elephant', emoji: '🐘', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/African_Bush_Elephant.jpg/800px-African_Bush_Elephant.jpg', value: 6000 },
     correctEntityId: 'fb-whale',
   },
   {
     questionId: 'fb-3',
     categoryName: 'ARCHITECTURE',
     stat: { id: 'height', name: 'Architectural Height', unit: 'm' },
-    entityA: { id: 'fb-burj', name: 'Burj Khalifa', emoji: '🏙️', imageUrl: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80', value: 828 },
-    entityB: { id: 'fb-empire', name: 'Empire State Building', emoji: '🏢', imageUrl: 'https://images.unsplash.com/photo-1546436836-07a91091f160?w=800&q=80', value: 381 },
+    entityA: { id: 'fb-burj', name: 'Burj Khalifa', emoji: '🏙️', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Burj_Khalifa.jpg/800px-Burj_Khalifa.jpg', value: 828 },
+    entityB: { id: 'fb-empire', name: 'Empire State Building', emoji: '🏢', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/800px-Empire_State_Building_%28aerial_view%29.jpg', value: 381 },
     correctEntityId: 'fb-burj',
   },
   {
     questionId: 'fb-4',
     categoryName: 'SPEED',
     stat: { id: 'speed', name: 'Top Speed', unit: 'km/h' },
-    entityA: { id: 'fb-cheetah', name: 'Cheetah', emoji: '🐆', imageUrl: 'https://images.unsplash.com/photo-1534188753412-3e26d0d618d6?w=800&q=80', value: 120 },
-    entityB: { id: 'fb-bugatti', name: 'Bugatti Chiron Super Sport', emoji: '🏎️', imageUrl: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?w=800&q=80', value: 440 },
+    entityA: { id: 'fb-cheetah', name: 'Cheetah', emoji: '🐆', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/The_Cheetahs_of_the_Masai_Mara_%287115441117%29.jpg/800px-The_Cheetahs_of_the_Masai_Mara_%287115441117%29.jpg', value: 120 },
+    entityB: { id: 'fb-bugatti', name: 'Bugatti Chiron Super Sport', emoji: '🏎️', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Bugatti_Chiron_Super_Sport_300%2B.jpg/800px-Bugatti_Chiron_Super_Sport_300%2B.jpg', value: 440 },
     correctEntityId: 'fb-bugatti',
   },
   {
     questionId: 'fb-5',
     categoryName: 'CITIES',
     stat: { id: 'population', name: 'Metro Population', unit: 'residents' },
-    entityA: { id: 'fb-tokyo', name: 'Tokyo Metro Area', emoji: '🗼', imageUrl: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=800&q=80', value: 37400000 },
-    entityB: { id: 'fb-nyc', name: 'New York City Metro', emoji: '🗽', imageUrl: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800&q=80', value: 19800000 },
+    entityA: { id: 'fb-tokyo', name: 'Tokyo Metro Area', emoji: '🗼', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/800px-Skyscrapers_of_Shinjuku_2009_January.jpg', value: 37400000 },
+    entityB: { id: 'fb-nyc', name: 'New York City Metro', emoji: '🗽', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Statue_of_Liberty%2C_NY.jpg/800px-Statue_of_Liberty%2C_NY.jpg', value: 19800000 },
     correctEntityId: 'fb-tokyo',
   },
   {
     questionId: 'fb-6',
     categoryName: 'BUSINESS',
     stat: { id: 'market_cap', name: 'Peak Market Capitalization', unit: 'Billion USD' },
-    entityA: { id: 'fb-apple', name: 'Apple Inc.', emoji: '🍎', imageUrl: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=800&q=80', value: 3500 },
-    entityB: { id: 'fb-nike', name: 'Nike, Inc.', emoji: '👟', imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80', value: 120 },
+    entityA: { id: 'fb-apple', name: 'Apple Inc.', emoji: '🍎', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/800px-Apple_logo_black.svg.png', value: 3500 },
+    entityB: { id: 'fb-nike', name: 'Nike, Inc.', emoji: '👟', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/800px-Logo_NIKE.svg.png', value: 120 },
     correctEntityId: 'fb-apple',
   },
   {
     questionId: 'fb-7',
     categoryName: 'SPACE',
     stat: { id: 'diameter', name: 'Celestial Diameter', unit: 'km' },
-    entityA: { id: 'fb-earth', name: 'Planet Earth', emoji: '🌍', imageUrl: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=800&q=80', value: 12742 },
-    entityB: { id: 'fb-moon', name: 'The Moon', emoji: '🌕', imageUrl: 'https://images.unsplash.com/photo-1532693322450-2cb5c511067d?w=800&q=80', value: 3474 },
+    entityA: { id: 'fb-earth', name: 'Planet Earth', emoji: '🌍', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/800px-The_Earth_seen_from_Apollo_17.jpg', value: 12742 },
+    entityB: { id: 'fb-moon', name: 'The Moon', emoji: '🌕', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/800px-FullMoon2010.jpg', value: 3474 },
     correctEntityId: 'fb-earth',
   },
 ];
@@ -138,6 +138,14 @@ export async function generateDuelDeck(count: number = 7, categoryId?: string | 
         const valA = Number(row.value_a);
         const valB = Number(row.value_b);
         const correctEntityId = valA >= valB ? row.entity_a_id : row.entity_b_id;
+
+        const imageA = row.entity_a_local_path ?? row.entity_a_image_url;
+        const imageB = row.entity_b_local_path ?? row.entity_b_image_url;
+
+        if (!imageA || !imageB) {
+          i--;
+          continue;
+        }
 
         usedEntityIds.add(row.entity_a_id);
         usedEntityIds.add(row.entity_b_id);

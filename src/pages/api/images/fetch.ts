@@ -15,7 +15,7 @@ async function downloadAndSave(url: string, destPath: string) {
 
 async function getWikipediaImageUrl(name: string): Promise<string | null> {
   try {
-    const url = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(name)}&gsrlimit=1&prop=pageimages&format=json&piprop=original`;
+    const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(name)}&prop=pageimages&format=json&piprop=original&pithumbsize=800`;
     const res = await fetch(url, { headers: { 'User-Agent': 'CompairTriviaGame/1.0' } });
     if (!res.ok) return null;
     const data = await res.json();
@@ -23,6 +23,8 @@ async function getWikipediaImageUrl(name: string): Promise<string | null> {
       const pageId = Object.keys(data.query.pages)[0];
       if (data.query.pages[pageId].original?.source) {
         return data.query.pages[pageId].original.source.split('?')[0];
+      } else if (data.query.pages[pageId].thumbnail?.source) {
+        return data.query.pages[pageId].thumbnail.source.split('?')[0];
       }
     }
   } catch (e) {

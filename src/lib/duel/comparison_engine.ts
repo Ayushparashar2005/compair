@@ -7,6 +7,7 @@ import type {
   DuelQuestion, 
   Seat 
 } from './types';
+import { fetchAndCacheEntityImage } from '../services/image_fetcher';
 
 const FALLBACK_DUEL_QUESTIONS: DuelQuestion[] = [
   {
@@ -139,8 +140,15 @@ export async function generateDuelDeck(count: number = 7, categoryId?: string | 
         const valB = Number(row.value_b);
         const correctEntityId = valA >= valB ? row.entity_a_id : row.entity_b_id;
 
-        const imageA = row.entity_a_local_path ?? row.entity_a_image_url;
-        const imageB = row.entity_b_local_path ?? row.entity_b_image_url;
+        let imageA = row.entity_a_local_path ?? row.entity_a_image_url;
+        let imageB = row.entity_b_local_path ?? row.entity_b_image_url;
+
+        if (!imageA) {
+          imageA = await fetchAndCacheEntityImage(row.entity_a_id, row.entity_a_name, null);
+        }
+        if (!imageB) {
+          imageB = await fetchAndCacheEntityImage(row.entity_b_id, row.entity_b_name, null);
+        }
 
         if (!imageA || !imageB) {
           i--;
@@ -162,14 +170,14 @@ export async function generateDuelDeck(count: number = 7, categoryId?: string | 
             id: row.entity_a_id,
             name: row.entity_a_name,
             emoji: row.entity_a_emoji,
-            imageUrl: row.entity_a_local_path ?? row.entity_a_image_url,
+            imageUrl: imageA,
             value: valA,
           },
           entityB: {
             id: row.entity_b_id,
             name: row.entity_b_name,
             emoji: row.entity_b_emoji,
-            imageUrl: row.entity_b_local_path ?? row.entity_b_image_url,
+            imageUrl: imageB,
             value: valB,
           },
           correctEntityId,

@@ -58,20 +58,28 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(JSON.stringify({ error: 'No source image found' }), { status: 404 });
     }
 
-    const OUTPUT_DIR = path.resolve('public/images/entities');
-    if (!fs.existsSync(OUTPUT_DIR)) {
-      fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+    let finalPath = sourceUrl;
+    try {
+      const OUTPUT_DIR = path.resolve('public/images/entities');
+      if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+      }
+
+      const destPath = path.join(OUTPUT_DIR, `${entity.id}.jpg`);
+      await downloadAndSave(sourceUrl, destPath);
+      finalPath = `/images/entities/${entity.id}.jpg`;
+
+      await db.update(entities)
+        .set({ localImagePath: finalPath, imageUrl: entity.imageUrl ?? sourceUrl })
+        .where(eq(entities.id, entity.id));
+    } catch (fsErr) {
+      console.warn('[images/fetch] Filesystem is read-only (serverless runtime), using remote URL fallback:', fsErr);
+      await db.update(entities)
+        .set({ imageUrl: entity.imageUrl ?? sourceUrl })
+        .where(eq(entities.id, entity.id));
     }
 
-    const destPath = path.join(OUTPUT_DIR, `${entity.id}.jpg`);
-    await downloadAndSave(sourceUrl, destPath);
-    
-    const localImagePath = `/images/entities/${entity.id}.jpg`;
-    await db.update(entities)
-      .set({ localImagePath, imageUrl: entity.imageUrl ?? sourceUrl })
-      .where(eq(entities.id, entity.id));
-
-    return new Response(JSON.stringify({ success: true, path: localImagePath }), {
+    return new Response(JSON.stringify({ success: true, path: finalPath }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });

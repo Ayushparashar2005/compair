@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { ComparisonCard } from './ComparisonCard';
 import { AnswerReveal } from './AnswerReveal';
 import { GameOverScreen } from './GameOverScreen';
 import { StatHighlight } from './StatHighlight';
 import { AnswerBurst } from './AnswerBurst';
+import { DuelModal } from '../duel/DuelModal';
 import { useSFX } from '../../lib/hooks/useSFX';
 import { screenshake } from '../../lib/animation/effects';
 import { animateHeadlineIn } from '../../lib/animation/textSplit';
-import { useRef } from 'react';
 
 interface GameBoardProps {
   categoryId?: string;
 }
 
-type GameState = 'idle' | 'loading' | 'question' | 'answering' | 'revealed' | 'error' | 'gameover';
+type GameState = 'idle' | 'loading' | 'question' | 'answering' | 'revealed' | 'bonus_round' | 'error' | 'gameover';
 
 export function GameBoard({ categoryId }: GameBoardProps) {
   const [sessionId, setSessionId] = useState<string | null>(null);
@@ -24,40 +24,41 @@ export function GameBoard({ categoryId }: GameBoardProps) {
   const [allTimeBest, setAllTimeBest] = useState({ score: 0, streak: 0 });
   const [newBestFlags, setNewBestFlags] = useState({ score: false, streak: false });
   const [questionStartTime, setQuestionStartTime] = useState<number>(0);
+  const [bonusMultiplier, setBonusMultiplier] = useState<number>(1);
   const { play } = useSFX();
   const boardRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const prefetchPromiseRef = useRef<Promise<any> | null>(null);
 
-  useEffect(() => {
-    // Start game session on mount
-    const startGame = async () => {
-      // Load all-time best
-      try {
-        const stored = JSON.parse(localStorage.getItem('compair_record') ?? '{}');
-        setAllTimeBest({ score: stored.score ?? 0, streak: stored.streak ?? 0 });
-      } catch (e) {
-        // Ignore JSON parse errors
-      }
+  const initGame = useCallback(async () => {
+    // Load all-time best
+    try {
+      const stored = JSON.parse(localStorage.getItem('compair_record') ?? '{}');
+      setAllTimeBest({ score: stored.score ?? 0, streak: stored.streak ?? 0 });
+    } catch (e) {
+      // Ignore JSON parse errors
+    }
 
-      setGameState('loading');
-      try {
-        const res = await fetch('/api/game/start', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ categoryId })
-        });
-        if (!res.ok) throw new Error('Failed to start game');
-        const data = await res.json();
-        setSessionId(data.sessionId);
-        setStats({ score: 0, streak: 0, questionsAnswered: 0, correctAnswers: 0, bestStreak: 0 });
-        fetchNextQuestion(data.sessionId, 0);
-      } catch (err) {
-        setGameState('error');
-      }
-    };
-    startGame();
+    setGameState('loading');
+    try {
+      const res = await fetch('/api/game/start', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ categoryId })
+      });
+      if (!res.ok) throw new Error('Failed to start game');
+      const data = await res.json();
+      setSessionId(data.sessionId);
+      setStats({ score: 0, streak: 0, questionsAnswered: 0, correctAnswers: 0, bestStreak: 0 });
+      fetchNextQuestion(data.sessionId, 0);
+    } catch (err) {
+      setGameState('error');
+    }
   }, [categoryId]);
+
+  useEffect(() => {
+    initGame();
+  }, [initGame]);
 
   // Keyboard Navigation
   useEffect(() => {
@@ -88,7 +89,7 @@ export function GameBoard({ categoryId }: GameBoardProps) {
     return () => {
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [gameState, sessionId, stats.questionsAnswered]);
+  }, [gameState, sessionId, stats.questionsAnswered, bonusMultiplier]);
 
   // 10-second Time Limit per question
   useEffect(() => {
@@ -180,6 +181,13 @@ export function GameBoard({ categoryId }: GameBoardProps) {
       });
       
       const data = await res.json();
+      
+      // Apply bonus multiplier if any
+      if (bonusMultiplier > 1 && data.isCorrect) {
+        data.totalScore = Math.round(data.totalScore * bonusMultiplier);
+        setBonusMultiplier(1);
+      }
+
       setAnswerResult(data);
       const newQuestionsAnswered = stats.questionsAnswered + 1;
       setStats(prev => ({ 
@@ -260,7 +268,7 @@ export function GameBoard({ categoryId }: GameBoardProps) {
           An error occurred.
         </div>
         <button 
-          onClick={() => sessionId && fetchNextQuestion(sessionId)}
+          onClick={() => sessionId ? fetchNextQuestion(sessionId) : initGame()}
           className="mt-4 px-6 py-3 bg-black text-white font-mono font-bold uppercase border-4 border-black shadow-[4px_4px_0_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0_#000] active:translate-y-0 active:shadow-[2px_2px_0_#000] transition-all"
         >
           Try Again
@@ -400,6 +408,17 @@ export function GameBoard({ categoryId }: GameBoardProps) {
           isCorrect={answerResult?.isCorrect}
           explanation={buildExplanation()}
           onNext={() => fetchNextQuestion(sessionId!)}
+          onBonusRound={stats.streak >= 3 ? () => setGameState('bonus_round') : undefined}
+        />
+      )}
+
+      {gameState === 'bonus_round' && (
+        <DuelModal 
+          compairScore={stats.score}
+          onClose={(won) => {
+            if (won) setBonusMultiplier(1.25);
+            fetchNextQuestion(sessionId!);
+          }} 
         />
       )}
     </div>

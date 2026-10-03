@@ -87,7 +87,7 @@
   }
   
   /* Global border rounding adjustment for neo-brutalist feel (Sharp corners) */
-  .rounded-3xl, .rounded-2xl, .rounded-full, .rounded-xl, .rounded-lg, .rounded-md, .rounded-[24px] {
+  .rounded-3xl, .rounded-2xl, .rounded-full, .rounded-xl, .rounded-lg, .rounded-md, [class*="rounded-[24px]"] {
     border-radius: 0 !important;
   }
 

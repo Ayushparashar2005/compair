@@ -63,13 +63,37 @@ export function TransitionCanvas() {
 
         // Intercept link clicks
         const handleClick = (e: MouseEvent) => {
-          const a = (e.target as Element).closest('a');
-          if (a && a.href && a.href.startsWith(window.location.origin) && !a.hasAttribute('target')) {
-            e.preventDefault();
-            targetHrefRef.current = a.href;
-            setIsActive(true);
-            target = 1.5; // Wipe to cover
+          // If default already prevented or middle click or modifier keys pressed, let browser handle normally
+          if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
+            return;
           }
+
+          const a = (e.target as Element).closest('a');
+          if (!a || !a.href) return;
+
+          // Don't intercept target="_blank" or download links
+          if (a.target && a.target !== '_self') return;
+          if (a.hasAttribute('download')) return;
+
+          // Don't intercept hash anchor links (e.g. href="#main-content" or same-page hashes)
+          const url = new URL(a.href, window.location.href);
+          if (url.origin !== window.location.origin) return;
+          if (url.pathname === window.location.pathname && url.search === window.location.search && url.hash) {
+            return;
+          }
+
+          e.preventDefault();
+          targetHrefRef.current = a.href;
+          setIsActive(true);
+          target = 1.5; // Wipe to cover
+
+          // Safety fallback: if WebGPU frameLoop is throttled or paused, guarantee navigation happens
+          setTimeout(() => {
+            if (targetHrefRef.current) {
+              window.location.href = targetHrefRef.current;
+              targetHrefRef.current = null;
+            }
+          }, 450);
         };
 
         document.addEventListener('click', handleClick);

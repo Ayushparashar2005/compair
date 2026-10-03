@@ -42,10 +42,18 @@ const pathname = Astro.url.pathname;
           Com<span class="text-[var(--color-brand-accent)]">Pair</span>
           <div class="absolute -bottom-1 left-0 w-0 h-1 bg-black transition-all duration-300 group-hover:w-full"></div>
         </a>
-        <nav class="flex gap-8 font-mono text-sm font-bold uppercase tracking-wider">
+        <nav class="flex items-center gap-6 md:gap-8 font-mono text-xs md:text-sm font-bold uppercase tracking-wider">
           <a href="/play" class={`hover:text-[var(--color-brand-accent)] transition-colors relative group ${pathname.startsWith('/play') ? 'text-[var(--color-brand-accent)]' : ''}`}>
             Play
             <div class={`absolute -bottom-1 left-0 w-full h-[2px] bg-[var(--color-brand-accent)] transition-transform duration-300 origin-left ${pathname.startsWith('/play') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></div>
+          </a>
+          <a href="/duel" class={`hover:text-[var(--color-brand-accent)] transition-colors relative group ${pathname.startsWith('/duel') ? 'text-[var(--color-brand-accent)]' : ''}`}>
+            Duel
+            <div class={`absolute -bottom-1 left-0 w-full h-[2px] bg-[var(--color-brand-accent)] transition-transform duration-300 origin-left ${pathname.startsWith('/duel') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></div>
+          </a>
+          <a href="/leaderboard" class={`hover:text-[var(--color-brand-accent)] transition-colors relative group ${pathname.startsWith('/leaderboard') ? 'text-[var(--color-brand-accent)]' : ''}`}>
+            Ranks
+            <div class={`absolute -bottom-1 left-0 w-full h-[2px] bg-[var(--color-brand-accent)] transition-transform duration-300 origin-left ${pathname.startsWith('/leaderboard') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></div>
           </a>
           <a href="/explore" class={`hover:text-[var(--color-brand-accent)] transition-colors relative group ${pathname.startsWith('/explore') ? 'text-[var(--color-brand-accent)]' : ''}`}>
             Explore

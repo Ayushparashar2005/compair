@@ -40,6 +40,7 @@ export function ComparisonCard({
     : imageUrl;
     
   const { src: loadedSrc, isLoading, error } = useProgressiveImage(safeImageUrl);
+  const hasImage = Boolean(safeImageUrl && !error);
   const scrambledName = useTextScramble(name, 500, name);
   const revealedValue = useNumberCountUp(showBack ? statValue : null, 800);
   
@@ -85,7 +86,7 @@ export function ComparisonCard({
         </div>
       )}
 
-      {safeImageUrl && !error && (
+      {hasImage && (
         <div className="absolute inset-0 z-0 bg-[var(--color-brand-surface)]">
           <img 
             src={loadedSrc || safeImageUrl} 
@@ -97,12 +98,12 @@ export function ComparisonCard({
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
         </div>
       )}
-      {(!safeImageUrl || error) && (
+      {!hasImage && (
         <div className="text-7xl mb-4 mt-8">{emoji}</div>
       )}
       
       <div className="z-10 relative mt-auto flex flex-col items-center w-full px-6 pb-6 pt-12">
-        <h3 className={`text-3xl font-bold font-display text-center leading-tight mb-4 ${safeImageUrl ? 'text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]' : 'text-black'}`}>
+        <h3 className={`text-3xl font-bold font-display text-center leading-tight mb-4 ${hasImage ? 'text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]' : 'text-black'}`}>
           {scrambledName}
         </h3>
         

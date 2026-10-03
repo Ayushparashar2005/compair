@@ -3,28 +3,40 @@ import Layout from '../../components/layout/Layout.astro';
 import { ScaleComparison } from '../../components/entity/ScaleComparison';
 import { getEntityWithStats, getEntitiesByCategory } from '../../lib/services/entities';
 import { db } from '../../lib/db';
+import { categories } from '../../lib/db/schema/categories';
 import { eq } from 'drizzle-orm';
+
+export const prerender = false;
 
 const { slug } = Astro.params;
 
 if (!slug) return Astro.redirect('/explore');
 
-const entity = await getEntityWithStats(slug);
+let entity: any = null;
+let humanStatsMap = new Map<string, number>();
+let category: any = null;
+let relatedEntities: any[] = [];
+
+try {
+  entity = await getEntityWithStats(slug);
+  if (entity) {
+    // Get human baseline
+    const humanEntity = await getEntityWithStats('human');
+    humanStatsMap = new Map(humanEntity?.stats.map(s => [s.slug, s.value]) || []);
+
+    // Get category for CTA
+    const catResult = await db.select().from(categories).where(eq(categories.id, entity.categoryId)).limit(1);
+    category = catResult[0];
+
+    // Get related entities
+    const allInCategory = await getEntitiesByCategory(entity.categoryId);
+    relatedEntities = allInCategory.filter(e => e.id !== entity.id).slice(0, 4);
+  }
+} catch (e) {
+  console.error('[entity/[slug].astro] Error fetching entity data:', e);
+}
 
 if (!entity) return Astro.redirect('/explore');
-
-// Get human baseline
-const humanEntity = await getEntityWithStats('human');
-const humanStatsMap = new Map(humanEntity?.stats.map(s => [s.slug, s.value]) || []);
-
-// Get category for CTA
-import { categories } from '../../lib/db/schema/categories';
-const catResult = await db.select().from(categories).where(eq(categories.id, entity.categoryId)).limit(1);
-const category = catResult[0];
-
-// Get related entities
-const allInCategory = await getEntitiesByCategory(entity.categoryId);
-const relatedEntities = allInCategory.filter(e => e.id !== entity.id).slice(0, 4);
 ---
 
 <Layout 

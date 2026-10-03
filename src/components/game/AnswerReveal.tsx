@@ -10,9 +10,10 @@ interface AnswerRevealProps {
   isCorrect: boolean;
   explanation?: string;
   onNext: () => void;
+  onBonusRound?: () => void;
 }
 
-export function AnswerReveal({ entityA, entityB, stat, isCorrect, explanation, onNext }: AnswerRevealProps) {
+export function AnswerReveal({ entityA, entityB, stat, isCorrect, explanation, onNext, onBonusRound }: AnswerRevealProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -50,16 +51,32 @@ export function AnswerReveal({ entityA, entityB, stat, isCorrect, explanation, o
 
       <div className="mt-8 relative group flex flex-col gap-4">
         <CountdownRing durationMs={2500} onComplete={onNext} />
-        <button 
-          onClick={onNext}
-          className="w-full py-4 bg-black text-white font-bold font-mono uppercase tracking-widest text-xl 
-            border-4 border-black shadow-[4px_4px_0_rgba(0,0,0,1)] 
-            hover:-translate-y-1 hover:shadow-[6px_6px_0_rgba(0,0,0,1)] 
-            active:translate-y-0.5 active:shadow-[2px_2px_0_rgba(0,0,0,1)] 
-            transition-all duration-150 relative z-10"
-        >
-          Next →
-        </button>
+        
+        <div className="flex flex-col md:flex-row gap-4 w-full relative z-10">
+          {onBonusRound && (
+            <button 
+              onClick={onBonusRound}
+              className="flex-1 py-4 bg-blue-600 text-white font-bold font-mono uppercase tracking-widest text-lg md:text-xl 
+                border-4 border-black shadow-[4px_4px_0_rgba(0,0,0,1)] 
+                hover:-translate-y-1 hover:shadow-[6px_6px_0_rgba(0,0,0,1)] hover:bg-blue-500
+                active:translate-y-0.5 active:shadow-[2px_2px_0_rgba(0,0,0,1)] 
+                transition-all duration-150"
+            >
+              Play Bonus Round
+            </button>
+          )}
+
+          <button 
+            onClick={onNext}
+            className="flex-1 py-4 bg-black text-white font-bold font-mono uppercase tracking-widest text-lg md:text-xl 
+              border-4 border-black shadow-[4px_4px_0_rgba(0,0,0,1)] 
+              hover:-translate-y-1 hover:shadow-[6px_6px_0_rgba(0,0,0,1)] 
+              active:translate-y-0.5 active:shadow-[2px_2px_0_rgba(0,0,0,1)] 
+              transition-all duration-150"
+          >
+            Next →
+          </button>
+        </div>
       </div>
     </div>
   );

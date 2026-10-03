@@ -1,20 +1,27 @@
 ---
 import Layout from '../../components/layout/Layout.astro';
-import { db } from '../../lib/db';
-import { categories } from '../../lib/db/schema/categories';
-import { entities } from '../../lib/db/schema/entities';
-import { eq } from 'drizzle-orm';
 import { getCategoryBySlug } from '../../lib/services/categories';
 import { getEntitiesByCategory } from '../../lib/services/entities';
+
+export const prerender = false;
 
 const { slug } = Astro.params;
 
 if (!slug) return Astro.redirect('/explore');
 
-const category = await getCategoryBySlug(slug);
-if (!category) return Astro.redirect('/explore');
+let category = null;
+let categoryEntities: any[] = [];
 
-const categoryEntities = await getEntitiesByCategory(category.id);
+try {
+  category = await getCategoryBySlug(slug);
+  if (category) {
+    categoryEntities = await getEntitiesByCategory(category.id);
+  }
+} catch (e) {
+  console.error('[category/[slug].astro] Error fetching category data:', e);
+}
+
+if (!category) return Astro.redirect('/explore');
 ---
 
 <Layout title={category.name}>

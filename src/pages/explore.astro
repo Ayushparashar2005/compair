@@ -6,21 +6,30 @@ import { entities } from '../lib/db/schema/entities';
 import { categories } from '../lib/db/schema/categories';
 import { eq } from 'drizzle-orm';
 
-const allEntities = await db
-  .select({
-    id: entities.id,
-    name: entities.name,
-    slug: entities.slug,
-    emoji: entities.emoji,
-    categoryName: categories.name,
-    categoryColor: categories.color,
-  })
-  .from(entities)
-  .innerJoin(categories, eq(entities.categoryId, categories.id))
-  .orderBy(entities.name)
-  .limit(48);
+let allEntities: any[] = [];
+let allCategories: any[] = [];
+let dbError = false;
 
-const allCategories = await db.select().from(categories).orderBy(categories.name);
+try {
+  allEntities = await db
+    .select({
+      id: entities.id,
+      name: entities.name,
+      slug: entities.slug,
+      emoji: entities.emoji,
+      categoryName: categories.name,
+      categoryColor: categories.color,
+    })
+    .from(entities)
+    .innerJoin(categories, eq(entities.categoryId, categories.id))
+    .orderBy(entities.name)
+    .limit(48);
+
+  allCategories = await db.select().from(categories).orderBy(categories.name);
+} catch (e) {
+  console.error('[explore.astro] Failed to load entities or categories:', e);
+  dbError = true;
+}
 ---
 
 <Layout title="Explore">
@@ -33,6 +42,12 @@ const allCategories = await db.select().from(categories).orderBy(categories.name
         Browse all entities and discover interesting statistics.
       </p>
     </div>
+
+    {dbError && (
+      <div class="bg-amber-100 border-4 border-black p-4 mb-8 shadow-[4px_4px_0_#000] font-mono text-xs font-bold text-amber-900">
+        ⚠️ Unable to sync live catalog. Displaying cached explorer view.
+      </div>
+    )}
 
     <ExploreFilters 
       client:load 

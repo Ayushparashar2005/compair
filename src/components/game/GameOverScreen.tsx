@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import anime from 'animejs';
+import { DuelInviteCard } from '../duel/DuelInviteCard';
 
 interface GameOverScreenProps {
   score: number;
@@ -110,10 +111,14 @@ export function GameOverScreen({
         </button>
         <a 
           href="/play"
-          className="w-full py-5 bg-white border-4 border-black text-black font-bold font-mono tracking-widest uppercase text-lg shadow-[6px_6px_0_#000] hover:-translate-y-1 hover:shadow-[8px_8px_0_#000] active:translate-y-0.5 active:shadow-[2px_2px_0_#000] transition-all duration-150"
+          className="w-full py-5 bg-white border-4 border-black text-black font-bold font-mono tracking-widest uppercase text-lg shadow-[6px_6px_0_#000] hover:-translate-y-1 hover:shadow-[8px_8px_0_#000] active:translate-y-0.5 active:shadow-[2px_2px_0_#000] transition-all duration-150 text-center"
         >
           Choose category
         </a>
+      </div>
+
+      <div className="w-full mt-16 max-w-4xl">
+        <DuelInviteCard />
       </div>
     </div>
   );

@@ -36,32 +36,35 @@ const pathname = Astro.url.pathname;
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-[var(--color-brand-accent)] text-white font-mono font-bold px-4 py-2 z-[60] border-4 border-black shadow-[4px_4px_0_#000] outline-none">
       Skip to main content
     </a>
-    <header class="w-full border-b-4 border-black bg-white text-black sticky top-0 z-50 shadow-[0_4px_0_#000]">
+    <header class="w-full border-b-4 border-black bg-white text-black sticky top-0 z-50 shadow-[0_2px_0_#000]">
       <div class="w-full px-6 h-16 flex items-center justify-between">
         <a href="/" class="text-2xl font-display font-black tracking-tighter uppercase relative group">
           Com<span class="text-[var(--color-brand-accent)]">Pair</span>
-          <div class="absolute -bottom-1 left-0 w-0 h-1 bg-black transition-all duration-300 group-hover:w-full"></div>
         </a>
-        <nav class="flex items-center gap-6 md:gap-8 font-mono text-xs md:text-sm font-bold uppercase tracking-wider">
-          <a href="/play" class={`hover:text-[var(--color-brand-accent)] transition-colors relative group ${pathname.startsWith('/play') ? 'text-[var(--color-brand-accent)]' : ''}`}>
-            Play
-            <div class={`absolute -bottom-1 left-0 w-full h-[2px] bg-[var(--color-brand-accent)] transition-transform duration-300 origin-left ${pathname.startsWith('/play') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></div>
-          </a>
-          <a href="/duel" class={`hover:text-[var(--color-brand-accent)] transition-colors relative group ${pathname.startsWith('/duel') ? 'text-[var(--color-brand-accent)]' : ''}`}>
-            Duel
-            <div class={`absolute -bottom-1 left-0 w-full h-[2px] bg-[var(--color-brand-accent)] transition-transform duration-300 origin-left ${pathname.startsWith('/duel') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></div>
-          </a>
-          <a href="/leaderboard" class={`hover:text-[var(--color-brand-accent)] transition-colors relative group ${pathname.startsWith('/leaderboard') ? 'text-[var(--color-brand-accent)]' : ''}`}>
-            Ranks
-            <div class={`absolute -bottom-1 left-0 w-full h-[2px] bg-[var(--color-brand-accent)] transition-transform duration-300 origin-left ${pathname.startsWith('/leaderboard') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></div>
-          </a>
-          <a href="/explore" class={`hover:text-[var(--color-brand-accent)] transition-colors relative group ${pathname.startsWith('/explore') ? 'text-[var(--color-brand-accent)]' : ''}`}>
-            Explore
-            <div class={`absolute -bottom-1 left-0 w-full h-[2px] bg-[var(--color-brand-accent)] transition-transform duration-300 origin-left ${pathname.startsWith('/explore') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></div>
-          </a>
+        
+        <button id="mobile-menu-btn" class="md:hidden p-2 border-2 border-black" aria-label="Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        </button>
+
+        <nav id="main-nav" class="hidden md:flex absolute top-16 left-0 w-full bg-white border-b-4 border-black md:border-none md:static md:w-auto md:bg-transparent flex-col md:flex-row items-center gap-2 md:gap-4 font-mono text-sm font-bold uppercase tracking-wider p-4 md:p-0 z-40 shadow-[0_4px_0_#000] md:shadow-none">
+          <a href="/play" class={`px-4 py-2 transition-colors ${pathname.startsWith('/play') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Play</a>
+          <a href="/duel" class={`px-4 py-2 transition-colors ${pathname.startsWith('/duel') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Duel</a>
+          <a href="/leaderboard" class={`px-4 py-2 transition-colors ${pathname.startsWith('/leaderboard') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Ranks</a>
+          <a href="/explore" class={`px-4 py-2 transition-colors ${pathname.startsWith('/explore') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Explore</a>
         </nav>
       </div>
     </header>
+
+    <script>
+      const btn = document.getElementById('mobile-menu-btn');
+      const nav = document.getElementById('main-nav');
+      if (btn && nav) {
+        btn.addEventListener('click', () => {
+          nav.classList.toggle('hidden');
+          nav.classList.toggle('flex');
+        });
+      }
+    </script>
 
     <main id="main-content" class="flex-grow w-full">
       <slot />

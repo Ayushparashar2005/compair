@@ -15,6 +15,20 @@ interface GameBoardProps {
 
 type GameState = 'idle' | 'loading' | 'question' | 'answering' | 'revealed' | 'bonus_round' | 'error' | 'gameover';
 
+const STAT_VERB_MAP: Record<string, string> = {
+  weight:             'WHICH WEIGHS MORE?',
+  'top-speed':        'WHICH IS FASTER?',
+  height:             'WHICH IS TALLER?',
+  length:             'WHICH IS LONGER?',
+  lifespan:           'WHICH LIVES LONGER?',
+  depth:              'WHICH IS DEEPER?',
+  duration:           'WHICH LASTED LONGER?',
+  temperature:        'WHICH IS HOTTER?',
+  'distance-from-sun':'WHICH IS FARTHER FROM THE SUN?',
+  age:                'WHICH IS OLDER?',
+  volume:             'WHICH IS BIGGER?',
+};
+
 export function GameBoard({ categoryId }: GameBoardProps) {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [gameState, setGameState] = useState<GameState>('idle');
@@ -236,9 +250,8 @@ export function GameBoard({ categoryId }: GameBoardProps) {
   if (gameState === 'idle' || gameState === 'loading') {
     return (
       <div className="w-full max-w-4xl mx-auto flex flex-col items-center">
-        <div className="flex w-full justify-between items-center mb-8 px-4 opacity-50">
-          <div className="font-mono text-[var(--color-brand-text-secondary)]">SCORE: -</div>
-          <div className="font-display text-xl text-[var(--color-brand-text-secondary)]">LOADING...</div>
+        <div className="flex w-full justify-center items-center mb-8 px-4 opacity-50">
+          <div className="bg-white border-4 border-black px-6 py-3 shadow-[4px_4px_0_#000] font-mono font-bold">LOADING...</div>
         </div>
         <h2 className="text-3xl md:text-5xl font-display font-bold text-center mb-12 tracking-tight opacity-30 animate-pulse">
           WHICH IS HIGHER?
@@ -296,51 +309,57 @@ export function GameBoard({ categoryId }: GameBoardProps) {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto flex flex-col items-center" ref={boardRef}>
-      <div className="flex w-full justify-between items-center mb-8 px-4">
-        {/* Score pill */}
-        <div className="flex items-center gap-3 bg-white border-4 border-black px-5 py-2 shadow-[4px_4px_0_#000]">
-          <span className="font-mono text-xs uppercase text-[var(--color-brand-text-secondary)]">Score</span>
-          <span className="font-mono font-bold text-lg">{stats.score}</span>
-        </div>
-
-        {/* Question progress pips — 10 dots */}
-        <div className="hidden md:flex items-center gap-1.5">
-          {Array.from({ length: 10 }).map((_, i) => (
-            <div
-              key={i}
-              className={`w-2 h-2 rounded-full border border-black transition-all duration-300 ${
-                i < stats.questionsAnswered ? 'bg-black scale-100' : 'bg-black/10 scale-90'
-              }`}
-            />
-          ))}
-        </div>
-
-        {/* Streak pill */}
-        <div className={`flex items-center gap-2 px-5 py-2 border-4 border-black shadow-[4px_4px_0_#000] transition-all duration-300 ${
-          stats.streak >= 3 ? 'bg-[var(--color-brand-accent-warm)] text-white' : 'bg-white'
-        }`}>
-          <span className="text-base">{stats.streak >= 3 ? '🔥' : '—'}</span>
-          <span className="font-mono font-bold text-sm">{stats.streak >= 3 ? `×${stats.streak}` : 'STREAK'}</span>
-          {answerResult?.multiplier && answerResult.multiplier > 1 && (
-            <span className="font-mono text-xs px-1.5 py-0.5 bg-black/20 text-white font-bold animate-pulse ml-1">
-              ×{answerResult.multiplier}
-            </span>
-          )}
-        </div>
-      </div>
-
+    <div className="w-full max-w-4xl mx-auto flex flex-col items-center relative" ref={boardRef}>
+      
+      {/* Top Time Bar (Full width) */}
       {gameState === 'question' && (
-        <div className="w-full max-w-md mx-auto mb-6 h-2 bg-black/10 relative overflow-hidden">
+        <div className="absolute -top-4 md:-top-8 left-0 right-0 h-1 bg-black/10 overflow-hidden rounded-none z-30">
           <div 
-            className="absolute top-0 left-0 bottom-0 bg-[var(--color-brand-accent-warm)] origin-left"
+            className="h-full bg-[var(--color-brand-accent)] origin-left"
             style={{ animation: 'shrink 10s linear forwards' }}
           />
         </div>
       )}
 
-      <h2 key={question.questionId} ref={headlineRef} className="text-2xl md:text-4xl font-display font-bold text-center mb-8 tracking-tight [text-wrap:balance]">
-        WHICH HAS HIGHER <StatHighlight trigger={question.questionId}>{question.stat.name}?</StatHighlight>
+      {/* Unified HUD Strip */}
+      <div className="flex w-full justify-between items-center mb-8 px-4 z-20">
+        <div className="w-full bg-white border-4 border-black p-3 shadow-[4px_4px_0_#000] flex justify-between items-center">
+          {/* Score section */}
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-[10px] md:text-xs uppercase font-bold text-gray-500 hidden sm:inline">Score</span>
+            <span className="font-mono font-black text-lg md:text-xl text-[var(--color-brand-accent)]">{stats.score.toLocaleString()}</span>
+          </div>
+
+          {/* Question progress pips */}
+          <div className="flex items-center gap-1.5 md:gap-2 mx-4">
+            {Array.from({ length: 10 }).map((_, i) => (
+              <div
+                key={i}
+                className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full border border-black transition-all duration-300 ${
+                  i < stats.questionsAnswered ? 'bg-black scale-100' : 'bg-black/10 scale-90'
+                }`}
+              />
+            ))}
+          </div>
+
+          {/* Streak section */}
+          <div className={`flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 border-2 border-black transition-all duration-300 ${
+            stats.streak >= 3 ? 'bg-[var(--color-brand-accent-warm)] text-white' : 'bg-gray-100 text-gray-400'
+          }`}>
+            <span className="text-sm md:text-base">{stats.streak >= 3 ? '🔥' : '—'}</span>
+            <span className="font-mono font-bold text-xs md:text-sm">{stats.streak >= 3 ? `×${stats.streak}` : 'STREAK'}</span>
+            {answerResult?.multiplier && answerResult.multiplier > 1 && (
+              <span className="font-mono text-[10px] px-1 py-0.5 bg-black/20 text-white font-bold animate-pulse ml-1 hidden sm:inline">
+                ×{answerResult.multiplier}
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <h2 key={question.questionId} ref={headlineRef} className="text-2xl md:text-4xl lg:text-5xl font-display font-black text-center mb-8 tracking-tighter uppercase [text-wrap:balance]">
+        {STAT_VERB_MAP[question.stat.id] || `WHICH HAS HIGHER `}
+        {!STAT_VERB_MAP[question.stat.id] && <StatHighlight trigger={question.questionId}>{question.stat.name}?</StatHighlight>}
       </h2>
 
       {gameState === 'revealed' && answerResult !== null && (
@@ -377,13 +396,15 @@ export function GameBoard({ categoryId }: GameBoardProps) {
         />
         
         {/* Desktop Divider */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-[#f4f4f0] border-4 border-black items-center justify-center font-display font-black text-2xl z-10 hidden md:flex shadow-[6px_6px_0_#000]">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-[var(--color-brand-accent)] border-4 border-black items-center justify-center font-display font-black text-white text-2xl z-10 hidden md:flex shadow-[6px_6px_0_#000] rotate-3 transition-transform hover:scale-110">
           VS
         </div>
         
         {/* Mobile Divider */}
-        <div className="md:hidden flex items-center justify-center py-2 text-[var(--color-brand-text-secondary)] font-display font-bold">
-          VS
+        <div className="md:hidden flex items-center justify-center py-4 relative z-10">
+          <div className="px-4 py-2 bg-[var(--color-brand-accent)] border-2 border-black text-white font-display font-black rotate-2 shadow-[4px_4px_0_#000]">
+            VS
+          </div>
         </div>
 
         <ComparisonCard 

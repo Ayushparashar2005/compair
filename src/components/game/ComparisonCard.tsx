@@ -73,8 +73,8 @@ export function ComparisonCard({
         transition-all duration-300 ease-out text-left neo-glass border-4
         ${!disabled && !isRevealed ? 'hover:-translate-y-2 hover:shadow-[10px_10px_0_0_#000] cursor-pointer' : ''}
         ${disabled ? 'cursor-default' : ''}
-        ${isRevealed && isWinner ? '!border-[var(--color-brand-correct)]' : ''}
-        ${isRevealed && !isWinner ? 'grayscale opacity-75' : 'border-[var(--color-brand-border)]'}
+        ${isRevealed && isWinner ? '!border-[var(--color-brand-correct)] animate-winner-sparkle' : ''}
+        ${isRevealed && !isWinner ? 'grayscale opacity-50 transition-[filter,opacity] duration-[600ms]' : 'border-[var(--color-brand-border)]'}
         ${className}
       `}
     >

@@ -8,9 +8,19 @@ import Layout from '../components/layout/Layout.astro';
     <h1 class="text-3xl md:text-5xl font-bold font-display uppercase tracking-widest mb-8">
       Lost in the data
     </h1>
-    <p class="font-mono text-[var(--color-brand-text-secondary)] text-lg max-w-md mb-12">
-      We couldn't find the comparison you're looking for. It might have been moved or deleted.
+    <p id="notFoundMsg" class="font-mono text-[var(--color-brand-text-secondary)] text-lg max-w-md mb-8">
+      Was this page...
     </p>
+    
+    <div class="flex gap-4 mb-12 w-full max-w-lg">
+      <button onclick="document.getElementById('notFoundMsg').innerText='Neither. It just doesn\\'t exist.'; this.parentElement.style.opacity='0.5'" class="flex-1 bg-white border-4 border-black p-4 font-mono font-bold uppercase shadow-[4px_4px_0_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0_#000] transition-all">
+        (A) Never Here
+      </button>
+      <button onclick="document.getElementById('notFoundMsg').innerText='Neither. It just doesn\\'t exist.'; this.parentElement.style.opacity='0.5'" class="flex-1 bg-white border-4 border-black p-4 font-mono font-bold uppercase shadow-[4px_4px_0_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0_#000] transition-all">
+        (B) Lost in Space
+      </button>
+    </div>
+    
     <a 
       href="/"
       class="inline-flex items-center justify-center px-8 py-4 bg-[var(--color-brand-accent)] text-white font-mono font-bold uppercase tracking-widest text-lg border-4 border-black shadow-[6px_6px_0_#000] hover:-translate-y-1 hover:shadow-[8px_8px_0_#000] active:translate-y-0 active:shadow-[0px_0px_0_#000] transition-all duration-150"

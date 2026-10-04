@@ -307,11 +307,11 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
         </p>
 
         {/* Room Code Showcase */}
-        <div className="bg-[#f4f4f0] border-4 border-black p-6 mb-8 max-w-md mx-auto shadow-[4px_4px_0_#000]">
-          <span className="text-xs font-mono font-bold uppercase text-gray-500 tracking-widest block mb-1">
+        <div className="bg-[#f4f4f0] border-4 border-black p-4 sm:p-6 mb-8 max-w-md mx-auto shadow-[4px_4px_0_#000]">
+          <span className="text-[10px] sm:text-xs font-mono font-bold uppercase text-gray-500 tracking-widest block mb-1">
             ROOM INVITE CODE
           </span>
-          <div className="text-4xl md:text-5xl font-mono font-black tracking-widest text-black select-all py-1">
+          <div className="text-3xl xs:text-4xl md:text-5xl font-mono font-black tracking-widest text-black select-all py-1">
             {inviteCode}
           </div>
         </div>
@@ -367,31 +367,31 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
           {isTie ? '🤝 HARD FOUGHT DRAW' : isWinner ? '🏆 DUEL VICTORY!' : '💀 DEFEAT'}
         </div>
 
-        <h1 className="text-4xl md:text-6xl font-display font-black uppercase tracking-tight mb-6">
+        <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-display font-black uppercase tracking-tight mb-4 sm:mb-6">
           {isTie ? 'DEAD HEAT' : isWinner ? 'ARENA CHAMPION' : 'BETTER LUCK NEXT DUEL'}
         </h1>
 
         {/* Score comparison card */}
-        <div className="grid grid-cols-2 gap-4 bg-[#f4f4f0] border-4 border-black p-6 mb-8 max-w-lg mx-auto shadow-[6px_6px_0_#000]">
-          <div className="text-center border-r-2 border-black pr-2">
-            <span className="text-xs font-mono font-bold uppercase text-gray-500 block mb-1">
+        <div className="grid grid-cols-2 gap-2 sm:gap-4 bg-[#f4f4f0] border-4 border-black p-3 sm:p-6 mb-6 sm:mb-8 max-w-lg mx-auto shadow-[4px_4px_0_#000] sm:shadow-[6px_6px_0_#000]">
+          <div className="text-center border-r-2 border-black pr-1 sm:pr-2">
+            <span className="text-[10px] sm:text-xs font-mono font-bold uppercase text-gray-500 block mb-1">
               {myPlayer.name} (YOU)
             </span>
-            <div className="text-4xl md:text-5xl font-display font-black text-black">
+            <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-display font-black text-black">
               {myPlayer.score.toLocaleString()}
             </div>
-            <div className="text-xs font-mono font-bold text-[var(--color-brand-accent)] mt-1">
+            <div className="text-[10px] sm:text-xs font-mono font-bold text-[var(--color-brand-accent)] mt-1">
               🔥 Best Streak: {myPlayer.bestStreak}
             </div>
           </div>
-          <div className="text-center pl-2">
-            <span className="text-xs font-mono font-bold uppercase text-gray-500 block mb-1">
+          <div className="text-center pl-1 sm:pl-2">
+            <span className="text-[10px] sm:text-xs font-mono font-bold uppercase text-gray-500 block mb-1">
               {oppPlayer.name}
             </span>
-            <div className="text-4xl md:text-5xl font-display font-black text-gray-700">
+            <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-display font-black text-gray-700">
               {oppPlayer.score.toLocaleString()}
             </div>
-            <div className="text-xs font-mono font-bold text-gray-500 mt-1">
+            <div className="text-[10px] sm:text-xs font-mono font-bold text-gray-500 mt-1">
               🔥 Best Streak: {oppPlayer.bestStreak}
             </div>
           </div>
@@ -419,7 +419,7 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
                     <span className="font-black px-1.5 py-0.5 bg-black text-white text-[10px]">
                       R{rh.round}
                     </span>
-                    <span className="font-bold truncate max-w-[180px] sm:max-w-xs">
+                    <span className="font-bold truncate max-w-[90px] xs:max-w-[120px] sm:max-w-xs">
                       {rh.question.stat.name}
                     </span>
                   </div>
@@ -475,7 +475,7 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
     <div className="w-full max-w-4xl mx-auto flex flex-col items-center">
       {/* ── LIVE DUEL HUD ──────────────────────────────────────────────────────── */}
       <div className="w-full bg-white border-4 border-black p-2 sm:p-4 md:p-6 mb-4 sm:mb-6 shadow-[8px_8px_0_#000]">
-        <div className="grid grid-cols-3 items-center gap-1 sm:gap-2 md:gap-4 mb-2 sm:mb-4">
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-1 sm:gap-2 md:gap-4 mb-2 sm:mb-4">
           {/* Player 1 (You) */}
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-1.5 mb-1">
@@ -595,7 +595,7 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
 
       {/* ── REAL-TIME OPPONENT ALERT BADGE ─────────────────────────────────────── */}
       {state.status === 'in_round' && oppHasLocked && (
-        <div className="mb-4 inline-flex items-center gap-2 px-4 py-1.5 bg-yellow-400 text-black font-mono text-xs font-black uppercase border-2 border-black shadow-[3px_3px_0_#000] animate-bounce">
+        <div className="mb-4 inline-flex items-center gap-2 px-4 py-1.5 bg-yellow-400 text-black font-mono text-[10px] sm:text-xs font-black uppercase border-2 border-black shadow-[3px_3px_0_#000] animate-bounce max-w-[90%] text-center leading-tight">
           ⚡ {oppPlayer.name.toUpperCase()} HAS LOCKED IN! ANSWER FAST FOR SPEED BONUS!
         </div>
       )}

@@ -69,7 +69,7 @@ export function ComparisonCard({
         ...(isRevealed && isWinner ? { '--shadow-color': 'var(--color-brand-correct)' } as any : {})
       }}
       className={`
-        relative w-full flex flex-col items-center justify-center min-h-[160px] sm:min-h-[240px] md:min-h-[300px] overflow-hidden
+        relative w-full flex flex-col items-center justify-center min-h-[140px] sm:min-h-[200px] md:min-h-[300px] overflow-hidden
         transition-all duration-300 ease-out text-left neo-glass border-4
         ${!disabled && !isRevealed ? 'hover:-translate-y-2 hover:shadow-[10px_10px_0_0_#000] cursor-pointer' : ''}
         ${disabled ? 'cursor-default' : ''}
@@ -81,7 +81,7 @@ export function ComparisonCard({
       <VgpuHoverEffect isHovered={isHovered} />
 
       {isRevealed && isWinner && (
-        <div className="absolute top-4 right-4 w-10 h-10 bg-[var(--color-brand-correct)] border-4 border-black flex items-center justify-center text-black font-bold text-lg shadow-[4px_4px_0_#000] z-20">
+        <div className="absolute top-2 right-2 sm:top-4 sm:right-4 w-7 h-7 sm:w-10 sm:h-10 bg-[var(--color-brand-correct)] border-2 sm:border-4 border-black flex items-center justify-center text-black font-bold text-sm sm:text-lg shadow-[2px_2px_0_#000] sm:shadow-[4px_4px_0_#000] z-20">
           ✓
         </div>
       )}
@@ -102,7 +102,7 @@ export function ComparisonCard({
         <div className="text-5xl sm:text-7xl mb-2 sm:mb-4 mt-4 sm:mt-8">{emoji}</div>
       )}
       
-      <div className="z-10 relative mt-auto flex flex-col items-center w-full px-2 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-6 pt-4 sm:pt-8 md:pt-12">
+      <div className="z-10 relative mt-auto flex flex-col items-center w-full px-2 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-6 pt-2 sm:pt-8 md:pt-12">
         <h3 className={`text-base sm:text-xl md:text-3xl font-bold font-display text-center leading-tight mb-2 sm:mb-3 md:mb-4 line-clamp-2 ${hasImage ? 'text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]' : 'text-black'}`}>
           {scrambledName}
         </h3>

@@ -30,10 +30,15 @@
     --foreground: #000000;
   }
   
-  html {
+  html, body {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
   
+  * {
+    touch-action: manipulation;
+  }
+
   ::selection {
     background: var(--color-brand-accent);
     color: white;
@@ -79,6 +84,11 @@
     transition: transform 150ms ease, box-shadow 150ms ease;
   }
   
+  @media (max-width: 767px) {
+    body::before { animation: none; }
+    .neo-glass { box-shadow: 4px 4px 0px 0px var(--shadow-color); }
+  }
+
   a.neo-glass:hover, button.neo-glass:hover {
     transform: translate(-2px, -2px) !important;
     box-shadow: 10px 10px 0px 0px #000 !important;

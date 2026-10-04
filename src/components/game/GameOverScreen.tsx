@@ -70,9 +70,9 @@ export function GameOverScreen({
       <div className="text-xl md:text-2xl font-mono text-[var(--color-brand-text-secondary)] font-bold mb-2 uppercase tracking-widest">
         {getHeadlineEmoji()}
       </div>
-      <h2 ref={headlineRef} className="text-5xl md:text-7xl font-display font-black mb-12 tracking-tighter uppercase [text-wrap:balance]">GAME OVER</h2>
+      <h2 ref={headlineRef} className="text-3xl sm:text-5xl md:text-7xl font-display font-black mb-4 sm:mb-12 tracking-tighter uppercase [text-wrap:balance]">GAME OVER</h2>
       
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-full mb-12">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-6 w-full mb-4 sm:mb-12">
         <div className="col-span-2 md:col-span-2 bg-white border-4 border-black p-4 sm:p-6 md:p-8 text-left relative overflow-hidden shadow-[4px_4px_0_#000]">
           <div className="text-xs sm:text-sm font-mono text-[var(--color-brand-text-secondary)] mb-1 sm:mb-2 uppercase font-bold tracking-widest">Final Score</div>
           <div ref={scoreRef} className="text-5xl sm:text-6xl font-bold font-mono text-[var(--color-brand-accent)] tracking-tighter">0</div>
@@ -97,7 +97,7 @@ export function GameOverScreen({
       </div>
       
       {(allTimeBestScore !== undefined && allTimeBestStreak !== undefined) && (
-        <div className="text-[var(--color-brand-text-secondary)] font-mono text-sm mb-12 border-t-2 border-[var(--color-brand-border)] pt-6 w-full opacity-70">
+        <div className="text-[var(--color-brand-text-secondary)] font-mono text-sm mb-4 sm:mb-12 border-t-2 border-[var(--color-brand-border)] pt-3 sm:pt-6 w-full opacity-70">
           ALL-TIME BEST: <span className="font-bold text-[var(--color-brand-text-primary)]">{allTimeBestScore.toLocaleString()}</span> PTS | <span className="font-bold text-[var(--color-brand-text-primary)]">🔥 {allTimeBestStreak}</span> STREAK
         </div>
       )}
@@ -105,13 +105,13 @@ export function GameOverScreen({
       <div className="w-full max-w-md flex flex-col gap-4">
         <button 
           onClick={onRestart}
-          className="w-full py-5 bg-[var(--color-brand-accent)] text-white font-bold font-mono tracking-widest uppercase text-xl border-4 border-black shadow-[6px_6px_0_#000] hover:-translate-y-1 hover:shadow-[8px_8px_0_#000] active:translate-y-0.5 active:shadow-[2px_2px_0_#000] transition-all duration-150"
+          className="w-full py-3 sm:py-5 bg-[var(--color-brand-accent)] text-white font-bold font-mono tracking-widest uppercase text-base sm:text-xl border-4 border-black shadow-[6px_6px_0_#000] hover:-translate-y-1 hover:shadow-[8px_8px_0_#000] active:translate-y-0.5 active:shadow-[2px_2px_0_#000] transition-all duration-150"
         >
           Play again →
         </button>
         <a 
           href="/play"
-          className="w-full py-5 bg-white border-4 border-black text-black font-bold font-mono tracking-widest uppercase text-lg shadow-[6px_6px_0_#000] hover:-translate-y-1 hover:shadow-[8px_8px_0_#000] active:translate-y-0.5 active:shadow-[2px_2px_0_#000] transition-all duration-150 text-center"
+          className="w-full py-3 sm:py-5 bg-white border-4 border-black text-black font-bold font-mono tracking-widest uppercase text-sm sm:text-lg shadow-[6px_6px_0_#000] hover:-translate-y-1 hover:shadow-[8px_8px_0_#000] active:translate-y-0.5 active:shadow-[2px_2px_0_#000] transition-all duration-150 text-center"
         >
           Choose category
         </a>

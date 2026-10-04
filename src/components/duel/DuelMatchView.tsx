@@ -474,8 +474,8 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col items-center">
       {/* ── LIVE DUEL HUD ──────────────────────────────────────────────────────── */}
-      <div className="w-full bg-white border-4 border-black p-4 md:p-6 mb-6 shadow-[8px_8px_0_#000]">
-        <div className="grid grid-cols-3 items-center gap-2 md:gap-4 mb-4">
+      <div className="w-full bg-white border-4 border-black p-2 sm:p-4 md:p-6 mb-4 sm:mb-6 shadow-[8px_8px_0_#000]">
+        <div className="grid grid-cols-3 items-center gap-1 sm:gap-2 md:gap-4 mb-2 sm:mb-4">
           {/* Player 1 (You) */}
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-1.5 mb-1">
@@ -486,8 +486,8 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
                 {myPlayer.name}
               </span>
             </div>
-            <div className="text-2xl md:text-4xl font-display font-black text-black tracking-tight">
-              {myPlayer.score.toLocaleString()} <span className="text-xs font-mono font-normal text-gray-500">PTS</span>
+            <div className="text-xl sm:text-2xl md:text-4xl font-display font-black text-black tracking-tight">
+              {myPlayer.score.toLocaleString()} <span className="text-[10px] sm:text-xs font-mono font-normal text-gray-500">PTS</span>
             </div>
             {/* Streak & Status */}
             <div className="flex items-center gap-2 mt-1.5">
@@ -544,8 +544,8 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
                 {isHouse ? 'AI' : 'RIVAL'}
               </span>
             </div>
-            <div className="text-2xl md:text-4xl font-display font-black text-gray-700 tracking-tight">
-              {oppPlayer.score.toLocaleString()} <span className="text-xs font-mono font-normal text-gray-400">PTS</span>
+            <div className="text-xl sm:text-2xl md:text-4xl font-display font-black text-gray-700 tracking-tight">
+              {oppPlayer.score.toLocaleString()} <span className="text-[10px] sm:text-xs font-mono font-normal text-gray-400">PTS</span>
             </div>
             {/* Streak & Status */}
             <div className="flex items-center gap-2 mt-1.5">
@@ -588,7 +588,7 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
         <span className="inline-block px-3 py-1 bg-black text-white font-mono text-[11px] font-black uppercase tracking-widest mb-3 shadow-[2px_2px_0_#000]">
           {q.categoryName ?? 'COMPARISON SHOWDOWN'} • {q.stat.name}
         </span>
-        <h2 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tight text-black [text-wrap:balance]">
+        <h2 className="text-xl sm:text-3xl md:text-5xl font-display font-black uppercase tracking-tight text-black [text-wrap:balance]">
           WHICH HAS A HIGHER {q.stat.name}?
         </h2>
       </div>
@@ -731,7 +731,7 @@ function BattleCard({
     <button
       onClick={onSelect}
       disabled={disabled}
-      className={`w-full text-left p-6 md:p-8 border-4 transition-all duration-200 flex flex-col justify-between min-h-[320px] md:min-h-[420px] relative shadow-[6px_6px_0_#000] ${cardStyle} ${
+      className={`w-full text-left p-4 sm:p-6 md:p-8 border-4 transition-all duration-200 flex flex-col justify-between min-h-[220px] sm:min-h-[300px] md:min-h-[420px] relative shadow-[6px_6px_0_#000] ${cardStyle} ${
         !disabled && !isMyPick
           ? 'hover:-translate-y-1 hover:shadow-[10px_10px_0_#000] cursor-pointer'
           : 'cursor-default'
@@ -763,10 +763,10 @@ function BattleCard({
             src={entity.imageUrl}
             alt={entity.name}
             onError={() => setImgError(true)}
-            className="w-36 h-36 md:w-44 md:h-44 object-cover border-4 border-black shadow-[4px_4px_0_#000]"
+            className="w-24 h-24 sm:w-36 sm:h-36 md:w-44 md:h-44 object-cover border-4 border-black shadow-[4px_4px_0_#000]"
           />
         ) : (
-          <div className="w-36 h-36 md:w-44 md:h-44 bg-[#f4f4f0] border-4 border-black flex items-center justify-center text-6xl shadow-[4px_4px_0_#000]">
+          <div className="w-24 h-24 sm:w-36 sm:h-36 md:w-44 md:h-44 bg-[#f4f4f0] border-4 border-black flex items-center justify-center text-4xl sm:text-6xl shadow-[4px_4px_0_#000]">
             {entity.emoji ?? '📊'}
           </div>
         )}
@@ -774,7 +774,7 @@ function BattleCard({
 
       {/* Center: Entity Name */}
       <div className="text-center w-full mb-4">
-        <h3 className="text-2xl md:text-3xl font-display font-black uppercase tracking-tight text-black line-clamp-2">
+        <h3 className="text-lg sm:text-2xl md:text-3xl font-display font-black uppercase tracking-tight text-black line-clamp-2">
           {entity.name}
         </h3>
       </div>

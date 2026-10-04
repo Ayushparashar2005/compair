@@ -71,7 +71,7 @@ export function ExploreFilters({ initialEntities, categories }: ExploreFiltersPr
             placeholder="Search all 140,000+ entities..." 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-white border-4 border-black text-black px-6 py-4 focus:outline-none shadow-[4px_4px_0_#000] focus:shadow-[6px_6px_0_#000] transition-all font-mono"
+            className="w-full bg-white border-4 border-black text-black px-6 py-3 sm:py-4 focus:outline-none shadow-[4px_4px_0_#000] focus:shadow-[6px_6px_0_#000] transition-all font-mono"
           />
         </div>
         
@@ -100,15 +100,15 @@ export function ExploreFilters({ initialEntities, categories }: ExploreFiltersPr
             {isLoading ? 'Searching...' : 'No entities found matching your criteria.'}
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
             {results.map(entity => (
               <a 
                 key={entity.id}
                 href={`/entity/${entity.slug}`}
                 className="flex flex-col p-4 neo-glass hover:-translate-y-1 hover:shadow-[10px_10px_0_#000] transition-all duration-200"
               >
-                <div className="text-4xl mb-4">{entity.emoji}</div>
-                <h3 className="font-display font-bold text-lg mb-1">{entity.name}</h3>
+                <div className="text-3xl sm:text-4xl mb-2 sm:mb-4">{entity.emoji}</div>
+                <h3 className="font-display font-bold text-sm sm:text-lg mb-1">{entity.name}</h3>
                 <div 
                   className="text-xs font-mono py-1 px-2 w-max mt-auto font-bold border-2 border-current"
                   style={{ backgroundColor: `${entity.categoryColor}20`, color: entity.categoryColor || undefined }}

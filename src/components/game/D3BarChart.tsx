@@ -23,9 +23,13 @@ export function D3BarChart({ entityA, entityB, stat, isCorrect }: D3BarChartProp
     ];
     
     const width = wrapperRef.current.clientWidth || 600;
-    const height = 160;
-    const barHeight = 40;
-    const gap = 30;
+    const isMobile = width < 400;
+    const barHeight = isMobile ? 28 : 40;
+    const gap = isMobile ? 20 : 30;
+    const height = isMobile ? 120 : 160;
+    const labelFontSize = isMobile ? '10px' : '12px';
+    const valueFontSize = isMobile ? '12px' : '14px';
+    
     const maxValue = d3.max(data, d => d.value) || 1;
 
     const svg = d3.select(wrapperRef.current)
@@ -46,7 +50,7 @@ export function D3BarChart({ entityA, entityB, stat, isCorrect }: D3BarChartProp
       .join('rect')
       .attr('class', 'track')
       .attr('x', 0)
-      .attr('y', (d, i) => i * (barHeight + gap) + 20)
+      .attr('y', (d, i) => i * (barHeight + gap) + (isMobile ? 16 : 20))
       .attr('width', width)
       .attr('height', barHeight)
       .attr('rx', 8)
@@ -58,7 +62,7 @@ export function D3BarChart({ entityA, entityB, stat, isCorrect }: D3BarChartProp
       .join('rect')
       .attr('class', 'bar')
       .attr('x', 0)
-      .attr('y', (d, i) => i * (barHeight + gap) + 20)
+      .attr('y', (d, i) => i * (barHeight + gap) + (isMobile ? 16 : 20))
       .attr('width', 0)
       .attr('height', barHeight)
       .attr('rx', 8)
@@ -78,12 +82,12 @@ export function D3BarChart({ entityA, entityB, stat, isCorrect }: D3BarChartProp
       .join('text')
       .attr('class', 'name-label')
       .attr('x', 0)
-      .attr('y', (d, i) => i * (barHeight + gap) + 12)
+      .attr('y', (d, i) => i * (barHeight + gap) + (isMobile ? 10 : 12))
       .attr('font-family', 'var(--font-mono)')
-      .attr('font-size', '12px')
+      .attr('font-size', labelFontSize)
       .attr('font-weight', '500')
       .attr('fill', 'var(--color-brand-text-secondary)')
-      .text(d => d.name);
+      .text(d => (isMobile && d.name.length > 18) ? d.name.slice(0, 16) + '…' : d.name);
 
     // Animated values (inside or end of bars)
     const valueLabels = svg.selectAll('.value-label')
@@ -91,10 +95,10 @@ export function D3BarChart({ entityA, entityB, stat, isCorrect }: D3BarChartProp
       .join('text')
       .attr('class', 'value-label')
       .attr('x', 0)
-      .attr('y', (d, i) => i * (barHeight + gap) + 20 + barHeight / 2)
+      .attr('y', (d, i) => i * (barHeight + gap) + (isMobile ? 16 : 20) + barHeight / 2)
       .attr('dy', '0.35em')
       .attr('font-family', 'var(--font-mono)')
-      .attr('font-size', '14px')
+      .attr('font-size', valueFontSize)
       .attr('font-weight', '700')
       .attr('fill', '#fff'); // will update color during tween if needed
 

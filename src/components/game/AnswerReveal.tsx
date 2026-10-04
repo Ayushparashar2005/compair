@@ -25,7 +25,7 @@ export function AnswerReveal({ entityA, entityB, stat, isCorrect, explanation, o
   return (
     <div 
       ref={containerRef}
-      className="mt-3 sm:mt-8 p-3 sm:p-6 neo-glass w-full max-w-2xl mx-auto border-4 border-black shadow-[4px_4px_0_#000] sm:shadow-[8px_8px_0_#000]"
+      className="mt-3 sm:mt-8 p-3 sm:p-6 neo-glass w-full max-w-2xl mx-auto border-4 border-black shadow-[4px_4px_0_#000] sm:shadow-[8px_8px_0_#000] max-h-[60vh] overflow-y-auto"
       style={{
         animation: 'crossBlurReveal 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards'
       }}

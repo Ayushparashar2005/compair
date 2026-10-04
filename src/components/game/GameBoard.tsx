@@ -38,6 +38,7 @@ export function GameBoard({ categoryId }: GameBoardProps) {
   const [allTimeBest, setAllTimeBest] = useState({ score: 0, streak: 0 });
   const [newBestFlags, setNewBestFlags] = useState({ score: false, streak: false });
   const [questionStartTime, setQuestionStartTime] = useState<number>(0);
+  const [timeRemaining, setTimeRemaining] = useState<number>(10);
   const [bonusMultiplier, setBonusMultiplier] = useState<number>(1);
   const { play } = useSFX();
   const boardRef = useRef<HTMLDivElement>(null);
@@ -116,6 +117,19 @@ export function GameBoard({ categoryId }: GameBoardProps) {
     return () => {
       if (timerId) clearTimeout(timerId);
     };
+  }, [gameState, question]);
+
+  // Visual numeric timer
+  useEffect(() => {
+    let intervalId: ReturnType<typeof setInterval>;
+    if (gameState === 'question') {
+      setTimeRemaining(10);
+      const start = Date.now();
+      intervalId = setInterval(() => {
+        setTimeRemaining(Math.max(0, 10 - Math.floor((Date.now() - start) / 1000)));
+      }, 100);
+    }
+    return () => clearInterval(intervalId);
   }, [gameState, question]);
 
   // Headline Animation
@@ -257,15 +271,15 @@ export function GameBoard({ categoryId }: GameBoardProps) {
           WHICH IS HIGHER?
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6 w-full px-4 relative">
-          <div className="flex flex-col items-center justify-center p-8 md:p-12 min-h-[240px] sm:min-h-[300px] neo-glass">
-            <div className="w-32 h-32 md:w-40 md:h-40 bg-black/10 animate-pulse mb-6 mx-auto" />
+          <div className="flex flex-col items-center justify-center p-8 md:p-12 min-h-[140px] sm:min-h-[240px] md:min-h-[300px] neo-glass">
+            <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-black/10 animate-pulse mb-6 mx-auto" />
             <div className="h-6 w-3/4 bg-black/10 animate-pulse mb-3 mx-auto" />
             <div className="h-4 w-1/2 bg-black/10 animate-pulse mx-auto" />
           </div>
           <div className="md:hidden flex items-center justify-center py-2 text-[var(--color-brand-text-secondary)] font-display font-bold opacity-50">VS</div>
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-[#f4f4f0] border-4 border-black items-center justify-center z-10 hidden md:flex animate-pulse" />
-          <div className="flex flex-col items-center justify-center p-8 md:p-12 min-h-[240px] sm:min-h-[300px] neo-glass">
-            <div className="w-32 h-32 md:w-40 md:h-40 bg-black/10 animate-pulse mb-6 mx-auto" style={{ animationDelay: '150ms' }} />
+          <div className="flex flex-col items-center justify-center p-8 md:p-12 min-h-[140px] sm:min-h-[240px] md:min-h-[300px] neo-glass">
+            <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-black/10 animate-pulse mb-6 mx-auto" style={{ animationDelay: '150ms' }} />
             <div className="h-6 w-3/4 bg-black/10 animate-pulse mb-3 mx-auto" style={{ animationDelay: '150ms' }} />
             <div className="h-4 w-1/2 bg-black/10 animate-pulse mx-auto" style={{ animationDelay: '150ms' }} />
           </div>
@@ -330,16 +344,25 @@ export function GameBoard({ categoryId }: GameBoardProps) {
             <span className="font-mono font-black text-lg md:text-xl text-[var(--color-brand-accent)]">{stats.score.toLocaleString()}</span>
           </div>
 
-          {/* Question progress pips */}
-          <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 mx-2 sm:mx-4 overflow-hidden max-w-[100px] sm:max-w-none justify-center">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <div
-                key={i}
-                className={`w-1 h-1 sm:w-1.5 sm:h-1.5 md:w-2 md:h-2 rounded-full border border-black transition-all duration-300 flex-shrink-0 ${
-                  i < stats.questionsAnswered ? 'bg-black scale-100' : 'bg-black/10 scale-90'
-                }`}
-              />
-            ))}
+          {/* Timer and Progress */}
+          <div className="flex flex-row md:flex-col items-center justify-center mx-2 sm:mx-4 gap-2 md:gap-0">
+            <div className={`font-display font-black text-xl sm:text-2xl md:text-3xl transition-colors md:mb-1 ${
+              timeRemaining <= 3 && gameState === 'question' ? 'text-red-500 animate-bounce' : 'text-black'
+            }`}>
+              {gameState === 'question' ? `${timeRemaining}s` : '--'}
+            </div>
+            
+            {/* Question progress pips */}
+            <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 overflow-hidden max-w-[100px] sm:max-w-none justify-center">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <div
+                  key={i}
+                  className={`w-1 h-1 sm:w-1.5 sm:h-1.5 md:w-2 md:h-2 rounded-full border border-black transition-all duration-300 flex-shrink-0 ${
+                    i < stats.questionsAnswered ? 'bg-black scale-100' : 'bg-black/10 scale-90'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
 
           {/* Streak section */}
@@ -365,7 +388,7 @@ export function GameBoard({ categoryId }: GameBoardProps) {
       {gameState === 'revealed' && answerResult !== null && (
         <div className="w-full flex justify-center mb-3 sm:mb-8 z-20" style={{ animation: 'slideInUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards' }}>
           <div className={`flex flex-col items-center justify-center px-4 sm:px-8 py-1.5 sm:py-3 border-2 sm:border-4 border-black shadow-[4px_4px_0_0_#000] sm:shadow-[8px_8px_0_0_#000] ${answerResult.isCorrect ? 'bg-[var(--color-brand-correct)] text-black' : 'bg-[var(--color-brand-incorrect)] text-black'}`}>
-            <div className="text-4xl font-display font-black uppercase tracking-widest">
+            <div className="text-2xl sm:text-4xl font-display font-black uppercase tracking-widest">
               {answerResult.isTimeOut ? 'TIME OUT' : answerResult.isCorrect ? 'CORRECT' : 'WRONG'}
             </div>
             {answerResult.isCorrect && answerResult.multiplier > 1.2 && (

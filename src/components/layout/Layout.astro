@@ -20,7 +20,7 @@ const pathname = Astro.url.pathname;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#09090b" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
@@ -33,30 +33,33 @@ const pathname = Astro.url.pathname;
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
   </head>
-  <body class="min-h-screen flex flex-col antialiased">
+  <body class="min-h-screen flex flex-col antialiased bg-[#fafafa] text-gray-900">
     <TransitionCanvas client:only="react" />
     <VgpuBackground client:only="react" />
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-[var(--color-brand-accent)] text-white font-mono font-bold px-4 py-2 z-[60] border-4 border-black shadow-[4px_4px_0_#000] outline-none">
+    
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-[var(--color-brand-accent)] text-white font-mono font-bold px-4 py-2 z-[60] rounded-lg outline-none shadow-lg">
       Skip to main content
     </a>
-    <header class="w-full border-b-4 border-black bg-white text-black sticky top-0 z-50 shadow-[0_2px_0_#000]">
-      <div class="w-full px-6 h-16 flex items-center justify-between">
-        <a href="/" class="text-2xl font-display font-black tracking-tighter uppercase relative group">
+
+    <!-- Floating Glass Header -->
+    <header class="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-5xl z-50 bg-white/70 backdrop-blur-xl rounded-full transition-all duration-300" style="border: 2px solid rgba(0,0,0,0.1); box-shadow: 0 4px 0 rgba(0,0,0,0.06);">
+      <div class="px-6 h-14 flex items-center justify-between">
+        <a href="/" class="text-xl font-display font-bold tracking-tight uppercase relative group text-gray-900">
           Com<span class="text-[var(--color-brand-accent)]">Pair</span>
         </a>
         
-        <button id="mobile-menu-btn" class="md:hidden p-2 border-2 border-black" aria-label="Menu">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-500 hover:text-black transition-colors" aria-label="Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
         </button>
 
-        <nav id="main-nav" class="hidden md:flex fixed md:static inset-0 bg-white md:bg-transparent z-[60] md:z-40 flex-col md:flex-row items-center justify-center md:justify-end gap-6 md:gap-4 font-mono text-2xl md:text-sm font-black md:font-bold uppercase tracking-wider p-6 md:p-0">
-          <button id="close-menu-btn" class="md:hidden absolute top-4 right-4 p-2 border-4 border-black" aria-label="Close Menu">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        <nav id="main-nav" class="hidden md:flex fixed md:static inset-0 bg-[#fafafa]/95 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none z-[60] md:z-40 flex-col md:flex-row items-center justify-center md:justify-end gap-8 md:gap-6 font-body text-xl md:text-sm font-medium p-6 md:p-0">
+          <button id="close-menu-btn" class="md:hidden absolute top-6 right-6 p-2 text-gray-500 hover:text-black transition-colors" aria-label="Close Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           </button>
-          <a href="/play" class={`w-full md:w-auto text-center py-6 md:py-2 px-4 transition-colors border-b-4 border-black md:border-none ${pathname.startsWith('/play') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Play</a>
-          <a href="/duel" class={`w-full md:w-auto text-center py-6 md:py-2 px-4 transition-colors border-b-4 border-black md:border-none ${pathname.startsWith('/duel') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Duel</a>
-          <a href="/leaderboard" class={`w-full md:w-auto text-center py-6 md:py-2 px-4 transition-colors border-b-4 border-black md:border-none ${pathname.startsWith('/leaderboard') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Ranks</a>
-          <a href="/explore" class={`w-full md:w-auto text-center py-6 md:py-2 px-4 transition-colors border-b-4 border-black md:border-none md:last:border-none ${pathname.startsWith('/explore') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Explore</a>
+          <a href="/play" class={`transition-colors relative overflow-hidden group py-1 ${pathname.startsWith('/play') ? 'text-black' : 'text-gray-500 hover:text-black'}`}>Play<span class={`absolute left-0 bottom-0 w-full h-0.5 bg-black transform origin-left transition-transform duration-300 ${pathname.startsWith('/play') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span></a>
+          <a href="/duel" class={`transition-colors relative overflow-hidden group py-1 ${pathname.startsWith('/duel') ? 'text-black' : 'text-gray-500 hover:text-black'}`}>Duel<span class={`absolute left-0 bottom-0 w-full h-0.5 bg-black transform origin-left transition-transform duration-300 ${pathname.startsWith('/duel') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span></a>
+          <a href="/leaderboard" class={`transition-colors relative overflow-hidden group py-1 ${pathname.startsWith('/leaderboard') ? 'text-black' : 'text-gray-500 hover:text-black'}`}>Ranks<span class={`absolute left-0 bottom-0 w-full h-0.5 bg-black transform origin-left transition-transform duration-300 ${pathname.startsWith('/leaderboard') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span></a>
+          <a href="/explore" class={`transition-colors relative overflow-hidden group py-1 ${pathname.startsWith('/explore') ? 'text-black' : 'text-gray-500 hover:text-black'}`}>Explore<span class={`absolute left-0 bottom-0 w-full h-0.5 bg-black transform origin-left transition-transform duration-300 ${pathname.startsWith('/explore') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span></a>
         </nav>
       </div>
     </header>
@@ -76,7 +79,6 @@ const pathname = Astro.url.pathname;
         btn.addEventListener('click', toggleMenu);
         closeBtn.addEventListener('click', toggleMenu);
         
-        // Close menu on link click
         nav.querySelectorAll('a').forEach(link => {
           link.addEventListener('click', () => {
             if (window.innerWidth < 768) {
@@ -87,19 +89,19 @@ const pathname = Astro.url.pathname;
       }
     </script>
 
-    <main id="main-content" class="flex-grow w-full">
+    <!-- Adjust main padding to account for fixed header -->
+    <main id="main-content" class="flex-grow w-full pt-24 pb-8 flex flex-col">
       <slot />
     </main>
 
     {!hideFooter && (
-      <footer class="w-full border-t-4 border-black bg-black text-white mt-auto py-12">
-        <div class="w-full px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div class="text-2xl font-display font-black tracking-tighter uppercase">
+      <footer class="w-full mt-auto py-8 rounded-t-3xl border-t-2 border-black !bg-transparent glass-panel border-b-0 border-x-0" style="border-radius: 1.5rem 1.5rem 0 0; border: 2px solid rgba(0,0,0,0.12); border-bottom: none; box-shadow: 0 -4px 0 rgba(0,0,0,0.04);">
+        <div class="w-full max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+          <div class="text-lg font-display font-bold tracking-tight uppercase opacity-80 text-gray-900">
             Com<span class="text-[var(--color-brand-accent)]">Pair</span>
           </div>
-          <div class="text-center md:text-right font-mono text-sm text-white/70">
-            <p>Don't just memorize facts.</p>
-            <p>Develop an intuition for reality.</p>
+          <div class="font-body text-xs text-gray-500">
+            <p>Develop an intuition for reality. Not just trivia.</p>
           </div>
         </div>
       </footer>

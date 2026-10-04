@@ -4,7 +4,6 @@ import { GameBoard } from '../components/game/GameBoard';
 import { db } from '../lib/db';
 import { sql } from 'drizzle-orm';
 
-// Fetch a quick stat for the ticker
 let totalPlays = "12,483";
 try {
   const result = await db.execute(sql`SELECT COUNT(*) as count FROM game_sessions`);
@@ -17,42 +16,50 @@ try {
 ---
 
 <Layout title="Home" hideFooter={true}>
-  <div class="min-h-[100dvh] flex flex-col border-b-4 border-black bg-transparent">
+  <div class="flex-grow flex flex-col relative w-full items-center justify-center min-h-[calc(100vh-6rem)]">
     
+    <!-- Hero Background Effects -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none -z-10 flex items-center justify-center">
+      <div class="w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-[var(--color-brand-accent)]/10 blur-[100px] rounded-full animate-pulse"></div>
+      <div class="absolute top-1/4 right-1/4 w-[40vw] h-[40vw] bg-indigo-500/10 blur-[120px] rounded-full"></div>
+    </div>
+
     <!-- Top Section: Typography & Proposition -->
-    <div class="w-full flex flex-col px-6 md:px-12 py-5 lg:py-24 border-b-4 border-black relative overflow-hidden bg-[var(--color-brand-surface)]">
-      <div class="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-12 items-center">
+    <div class="w-full max-w-6xl px-6 md:px-12 py-12 md:py-20 flex flex-col relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
         
-        <div class="flex flex-col items-start text-left">
-          <div class="inline-block px-3 py-1 bg-black text-white text-[10px] sm:text-xs font-mono font-bold uppercase tracking-widest mb-6">
+        <div class="flex flex-col items-start text-left animate-slide-in-up">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md neo-border bg-white neo-shadow-sm text-[10px] sm:text-xs font-mono font-bold tracking-widest mb-8 text-black uppercase">
+            <span class="w-2 h-2 rounded-full bg-[var(--color-brand-accent)] animate-pulse border border-black"></span>
             KNOWLEDGE COMPARISON ENGINE
           </div>
-          <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-display font-black mb-4 sm:mb-8 tracking-tighter leading-[1.1] uppercase [text-wrap:balance]">
+          
+          <h1 class="text-[clamp(2.5rem,7vw,4.5rem)] font-display font-black mb-6 tracking-tight leading-[1.05] [text-wrap:balance] text-black drop-shadow-sm">
             How well do you <br class="hidden sm:block"/>
-            <span class="text-white relative inline-block my-2 -skew-y-2 px-2">
-              <span class="absolute inset-0 bg-black -z-10"></span>
-              understand
+            <span class="relative inline-block px-2">
+              <span class="relative z-10 text-white">understand</span>
+              <span class="absolute inset-0 bg-[var(--color-brand-accent)] neo-border -z-0 rotate-1"></span>
             </span> 
             the world?
           </h1>
           
-          <p class="text-lg md:text-xl text-black font-mono font-medium max-w-lg mb-10 leading-relaxed">
+          <p class="text-base md:text-lg text-gray-800 font-mono font-medium max-w-lg mb-10 leading-relaxed">
             Real facts. Real numbers. One guess. Build an intuition for reality, not just memorized trivia.
           </p>
           
           <div class="flex flex-col gap-4 w-full sm:w-auto">
-            <a href="/play" class="w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-10 py-4 sm:py-5 bg-[var(--color-brand-accent)] text-white font-mono font-black text-base sm:text-xl tracking-widest border-4 border-black shadow-[6px_6px_0_#000] hover:-translate-y-1 hover:shadow-[8px_8px_0_#000] active:translate-y-0 active:shadow-[0px_0px_0_#000] transition-all duration-150 uppercase">
-              Start Game →
+            <a href="/play" class="group relative w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-[var(--color-brand-accent)] neo-border neo-shadow text-black font-display font-black uppercase tracking-widest text-lg sm:text-xl rounded-xl neo-btn">
+              <span class="relative z-10 flex items-center gap-2">Start Game <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-[3] stroke-linecap="square" stroke-linejoin="miter" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></span>
             </a>
             
-            <div class="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-4 mt-2 w-full sm:w-auto">
-              <a href="/duel" class="w-full sm:w-auto text-center font-mono text-sm font-bold uppercase border-2 border-black bg-white px-4 py-3 sm:py-2 hover:bg-black hover:text-white transition-colors">
-                ⚔️ Duel Mode
+            <div class="flex flex-col sm:flex-row flex-wrap gap-3 mt-4 w-full sm:w-auto">
+              <a href="/duel" class="w-full sm:w-auto text-center font-mono text-sm font-bold uppercase tracking-wider px-5 py-2.5 rounded-full neo-border bg-white text-black neo-btn hover:neo-shadow-accent flex items-center justify-center gap-2">
+                <span>⚔️</span> Duel Mode
               </a>
-              <a href="/explore" class="w-full sm:w-auto text-center font-mono text-sm font-bold uppercase border-2 border-black bg-white px-4 py-3 sm:py-2 hover:bg-black hover:text-white transition-colors">
+              <a href="/explore" class="w-full sm:w-auto text-center font-mono text-sm font-bold uppercase tracking-wider px-5 py-2.5 rounded-full neo-border bg-white text-black neo-btn hover:neo-shadow-accent">
                 Explore Data
               </a>
-              <a href="/leaderboard" class="w-full sm:w-auto text-center font-mono text-sm font-bold uppercase border-2 border-black bg-white px-4 py-3 sm:py-2 hover:bg-black hover:text-white transition-colors">
+              <a href="/leaderboard" class="w-full sm:w-auto text-center font-mono text-sm font-bold uppercase tracking-wider px-5 py-2.5 rounded-full neo-border bg-white text-black neo-btn hover:neo-shadow-accent">
                 Rankings
               </a>
             </div>
@@ -60,33 +67,36 @@ try {
         </div>
         
         {/* Abstract illustration / Live preview card */}
-        <div class="hidden lg:flex lg:justify-end justify-center relative w-full pr-0 lg:pr-8 mt-8 lg:mt-0 opacity-90 lg:opacity-100 scale-90 lg:scale-100">
-          <div class="w-full max-w-sm bg-white border-4 border-black shadow-[12px_12px_0_#000] p-6 flex flex-col items-center rotate-3 hover:rotate-0 transition-transform duration-500 translate-x-0 lg:translate-x-8">
-            <div class="w-full flex justify-between items-center mb-6 border-b-2 border-black pb-2">
-              <div class="w-3 h-3 rounded-full bg-red-500"></div>
-              <div class="text-xs font-mono font-bold tracking-widest uppercase">Sample Question</div>
-              <div class="w-3 h-3"></div>
+        <div class="hidden lg:flex lg:justify-end justify-center relative w-full pr-0 mt-8 lg:mt-0">
+          <div class="w-full max-w-sm neo-panel p-6 flex flex-col items-center rounded-2xl rotate-2 hover:rotate-0 transition-transform duration-700 translate-x-0 lg:translate-x-8 group">
+            <div class="w-full flex justify-between items-center mb-6 border-b-2 border-black pb-3">
+              <div class="flex gap-1.5">
+                <div class="w-3 h-3 rounded-full bg-red-500 border-2 border-black"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500 border-2 border-black"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500 border-2 border-black"></div>
+              </div>
+              <div class="text-[10px] font-mono text-black font-black tracking-widest uppercase bg-black/5 px-2 py-0.5 rounded-sm neo-border-sm">Preview</div>
             </div>
             
-            <h3 class="font-display font-black text-2xl uppercase tracking-tighter text-center mb-6 animate-pulse">
+            <h3 class="font-display font-black text-xl uppercase tracking-widest text-center mb-8 text-black">
               WHICH WEIGHS MORE?
             </h3>
             
-            <div class="flex gap-4 w-full mb-4">
-              <div class="flex-1 bg-gray-100 border-2 border-black aspect-square flex flex-col items-center justify-center p-2">
-                <div class="text-4xl mb-2">🐘</div>
-                <div class="text-xs font-bold font-mono text-center">AFRICAN ELEPHANT</div>
+            <div class="flex gap-4 w-full mb-6">
+              <div class="flex-1 rounded-xl bg-white neo-border neo-shadow-sm aspect-square flex flex-col items-center justify-center p-3 neo-btn">
+                <div class="text-4xl mb-3 drop-shadow-sm transition-transform group-hover:scale-110">🐘</div>
+                <div class="text-[10px] font-black font-mono text-center text-black tracking-tighter">AFRICAN ELEPHANT</div>
               </div>
-              <div class="flex-1 bg-gray-100 border-2 border-black aspect-square flex flex-col items-center justify-center p-2">
-                <div class="text-4xl mb-2">🚗</div>
-                <div class="text-xs font-bold font-mono text-center">TOYOTA COROLLA</div>
+              <div class="flex-1 rounded-xl bg-white neo-border neo-shadow-sm aspect-square flex flex-col items-center justify-center p-3 neo-btn">
+                <div class="text-4xl mb-3 drop-shadow-sm transition-transform group-hover:scale-110">🚗</div>
+                <div class="text-[10px] font-black font-mono text-center text-black tracking-tighter">TOYOTA COROLLA</div>
               </div>
             </div>
             
-            <div class="w-full mt-2 pt-4 border-t-2 border-black border-dashed flex justify-between items-center opacity-50 font-mono text-xs font-bold">
-              <span>6,000 KG</span>
-              <span>VS</span>
-              <span>1,300 KG</span>
+            <div class="w-full mt-2 pt-4 border-t-2 border-black border-dashed flex justify-between items-center font-mono text-[10px] font-black text-black">
+              <span class="bg-black text-white px-2 py-0.5">6,000 KG</span>
+              <span class="text-[var(--color-brand-accent)] text-lg">VS</span>
+              <span class="bg-black text-white px-2 py-0.5">1,300 KG</span>
             </div>
           </div>
         </div>
@@ -94,69 +104,27 @@ try {
     </div>
 
     <!-- Categories quick links -->
-    <div class="w-full bg-white border-b-4 border-black overflow-hidden relative z-20">
-      <div class="flex items-center gap-3 md:gap-4 px-6 py-4 overflow-x-auto whitespace-nowrap hide-scrollbar flex-nowrap">
-        <span class="font-mono text-xs font-bold uppercase tracking-widest text-gray-500 mr-2 flex-shrink-0">Quick Jump:</span>
-        <a href="/play?category=zoology" class="px-4 py-1.5 border-2 border-black font-mono text-sm font-bold uppercase hover:bg-[oklch(85%_0.15_145)] hover:text-black transition-colors">🐘 Zoology</a>
-        <a href="/play?category=astronomy" class="px-4 py-1.5 border-2 border-black font-mono text-sm font-bold uppercase hover:bg-[oklch(85%_0.15_285)] hover:text-black transition-colors">🪐 Astronomy</a>
-        <a href="/play?category=geography" class="px-4 py-1.5 border-2 border-black font-mono text-sm font-bold uppercase hover:bg-[oklch(85%_0.15_200)] hover:text-black transition-colors">🏔️ Geography</a>
-        <a href="/play?category=history" class="px-4 py-1.5 border-2 border-black font-mono text-sm font-bold uppercase hover:bg-[oklch(85%_0.15_45)] hover:text-black transition-colors">🏛️ History</a>
-        <a href="/play?category=human-body" class="px-4 py-1.5 border-2 border-black font-mono text-sm font-bold uppercase hover:bg-[oklch(85%_0.15_345)] hover:text-black transition-colors">🧠 Human Body</a>
-        <a href="/play?category=botany" class="px-4 py-1.5 border-2 border-black font-mono text-sm font-bold uppercase hover:bg-[oklch(85%_0.15_110)] hover:text-black transition-colors">🌲 Botany</a>
+    <div class="w-full max-w-6xl mx-auto px-6 pb-12 mt-4 lg:-mt-4">
+      <div class="flex items-center gap-3 md:gap-4 overflow-x-auto whitespace-nowrap hide-scrollbar flex-nowrap py-2 [mask-image:linear-gradient(to_right,black_80%,transparent_100%)]">
+        <span class="font-mono text-[10px] font-bold uppercase tracking-widest text-black mr-2 flex-shrink-0">Jump To:</span>
+        <a href="/play?category=zoology" class="px-4 py-2 rounded-lg neo-border bg-white font-mono text-xs font-bold uppercase neo-btn hover:neo-shadow-sm text-black">🐘 Zoology</a>
+        <a href="/play?category=astronomy" class="px-4 py-2 rounded-lg neo-border bg-white font-mono text-xs font-bold uppercase neo-btn hover:neo-shadow-sm text-black">🪐 Astronomy</a>
+        <a href="/play?category=geography" class="px-4 py-2 rounded-lg neo-border bg-white font-mono text-xs font-bold uppercase neo-btn hover:neo-shadow-sm text-black">🏔️ Geography</a>
+        <a href="/play?category=history" class="px-4 py-2 rounded-lg neo-border bg-white font-mono text-xs font-bold uppercase neo-btn hover:neo-shadow-sm text-black">🏛️ History</a>
+        <a href="/play?category=human-body" class="px-4 py-2 rounded-lg neo-border bg-white font-mono text-xs font-bold uppercase neo-btn hover:neo-shadow-sm text-black">🧠 Human Body</a>
+        <a href="/play?category=botany" class="px-4 py-2 rounded-lg neo-border bg-white font-mono text-xs font-bold uppercase neo-btn hover:neo-shadow-sm text-black">🌲 Botany</a>
       </div>
     </div>
 
-    <!-- Bottom Section: Game Board Applet -->
-    <div class="w-full flex items-center justify-center p-1 sm:p-4 md:p-8 lg:p-16 relative">
-      <div class="w-full max-w-4xl">
+    <!-- Bottom Section: Game Board Applet (If needed on home page, optional for new design) -->
+    <!-- Leaving intact for functionality but wrapping nicely -->
+    <div class="w-full max-w-5xl mx-auto flex items-center justify-center p-4 relative mb-12">
+      <div class="w-full relative z-20">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent blur-3xl -z-10 rounded-full"></div>
         <GameBoard client:only="react" />
       </div>
     </div>
     
-  </div>
-
-  <!-- Decorative ticker -->
-  <div class="hidden sm:flex w-full overflow-hidden bg-black text-white font-mono text-sm py-4 border-b-4 border-black relative z-10">
-    <div class="flex whitespace-nowrap animate-[scroll_20s_linear_infinite]">
-      <div class="flex items-center gap-12 px-6">
-        <span class="flex items-center gap-2"><div class="w-2 h-2 bg-white rounded-full animate-pulse"></div> {totalPlays} games played</span>
-        <span>•</span>
-        <span>Build intuition</span>
-        <span>•</span>
-        <span>Not just trivia</span>
-        <span>•</span>
-      </div>
-    </div>
-    <div class="flex whitespace-nowrap animate-[scroll_20s_linear_infinite]" aria-hidden="true">
-      <div class="flex items-center gap-12 px-6">
-        <span class="flex items-center gap-2"><div class="w-2 h-2 bg-white rounded-full animate-pulse"></div> {totalPlays} games played</span>
-        <span>•</span>
-        <span>Build intuition</span>
-        <span>•</span>
-        <span>Not just trivia</span>
-        <span>•</span>
-      </div>
-    </div>
-    <div class="flex whitespace-nowrap animate-[scroll_20s_linear_infinite]" aria-hidden="true">
-      <div class="flex items-center gap-12 px-6">
-        <span class="flex items-center gap-2"><div class="w-2 h-2 bg-white rounded-full animate-pulse"></div> {totalPlays} games played</span>
-        <span>•</span>
-        <span>Build intuition</span>
-        <span>•</span>
-        <span>Not just trivia</span>
-        <span>•</span>
-      </div>
-    </div>
-    <div class="flex whitespace-nowrap animate-[scroll_20s_linear_infinite]" aria-hidden="true">
-      <div class="flex items-center gap-12 px-6">
-        <span class="flex items-center gap-2"><div class="w-2 h-2 bg-white rounded-full animate-pulse"></div> {totalPlays} games played</span>
-        <span>•</span>
-        <span>Build intuition</span>
-        <span>•</span>
-        <span>Not just trivia</span>
-        <span>•</span>
-      </div>
-    </div>
   </div>
 </Layout>
 

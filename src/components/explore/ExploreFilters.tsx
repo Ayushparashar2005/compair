@@ -71,14 +71,14 @@ export function ExploreFilters({ initialEntities, categories }: ExploreFiltersPr
             placeholder="Search all 140,000+ entities..." 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-white border-4 border-black text-black px-6 py-3 sm:py-4 focus:outline-none shadow-[4px_4px_0_#000] focus:shadow-[6px_6px_0_#000] transition-all font-mono"
+            className="w-full bg-white text-black neo-border px-6 py-3 sm:py-4 rounded-2xl focus:outline-none focus:neo-shadow-accent neo-shadow-sm transition-all font-mono font-black placeholder:text-gray-500"
           />
         </div>
         
         <div className="flex overflow-x-auto pb-2 md:pb-0 hide-scrollbar gap-2 shrink-0 max-w-full md:max-w-xl">
           <button 
             onClick={() => setSelectedCategory(null)}
-            className={`px-5 py-2 whitespace-nowrap transition-all font-mono font-bold text-sm border-2 border-black ${selectedCategory === null ? 'bg-black text-white shadow-[3px_3px_0_#000]' : 'bg-white text-black hover:-translate-y-0.5 hover:shadow-[3px_3px_0_#000]'}`}
+            className={`px-5 py-2 whitespace-nowrap transition-all font-mono font-black text-sm rounded-xl ${selectedCategory === null ? 'bg-black text-white neo-border-sm neo-shadow-sm' : 'bg-white text-black neo-border-sm hover:neo-shadow-sm hover:-translate-y-0.5'}`}
           >
             All Categories
           </button>
@@ -86,7 +86,7 @@ export function ExploreFilters({ initialEntities, categories }: ExploreFiltersPr
             <button 
               key={cat.id}
               onClick={() => setSelectedCategory(cat.name)}
-              className={`px-5 py-2 whitespace-nowrap transition-all font-mono font-bold text-sm border-2 border-black ${selectedCategory === cat.name ? 'bg-black text-white shadow-[3px_3px_0_#000]' : 'bg-white text-black hover:-translate-y-0.5 hover:shadow-[3px_3px_0_#000]'}`}
+              className={`px-5 py-2 whitespace-nowrap transition-all font-mono font-black text-sm rounded-xl ${selectedCategory === cat.name ? 'bg-black text-white neo-border-sm neo-shadow-sm' : 'bg-white text-black neo-border-sm hover:neo-shadow-sm hover:-translate-y-0.5'}`}
             >
               {cat.name}
             </button>
@@ -96,7 +96,7 @@ export function ExploreFilters({ initialEntities, categories }: ExploreFiltersPr
 
       <div className={`transition-opacity duration-300 ${isLoading ? 'opacity-50' : 'opacity-100'}`}>
         {results.length === 0 ? (
-          <div className="text-center py-24 text-[var(--color-brand-text-secondary)] font-mono">
+          <div className="text-center py-24 text-gray-500 font-mono">
             {isLoading ? 'Searching...' : 'No entities found matching your criteria.'}
           </div>
         ) : (
@@ -105,13 +105,13 @@ export function ExploreFilters({ initialEntities, categories }: ExploreFiltersPr
               <a 
                 key={entity.id}
                 href={`/entity/${entity.slug}`}
-                className="flex flex-col p-4 neo-glass hover:-translate-y-1 hover:shadow-[10px_10px_0_#000] transition-all duration-200"
+                className="flex flex-col p-4 bg-white neo-border rounded-2xl hover:-translate-y-1 hover:neo-shadow-lg transition-all duration-300 neo-shadow-sm"
               >
-                <div className="text-3xl sm:text-4xl mb-2 sm:mb-4">{entity.emoji}</div>
-                <h3 className="font-display font-bold text-sm sm:text-lg mb-1">{entity.name}</h3>
+                <div className="text-3xl sm:text-4xl mb-2 sm:mb-4 drop-shadow-sm">{entity.emoji}</div>
+                <h3 className="font-display font-black text-sm sm:text-lg mb-1 text-black">{entity.name}</h3>
                 <div 
-                  className="text-xs font-mono py-1 px-2 w-max mt-auto font-bold border-2 border-current"
-                  style={{ backgroundColor: `${entity.categoryColor}20`, color: entity.categoryColor || undefined }}
+                  className="text-xs font-mono py-1 px-3 w-max mt-auto font-black neo-border-sm rounded-lg"
+                  style={{ backgroundColor: entity.categoryColor || '#eee', color: '#000' }}
                 >
                   {entity.categoryName}
                 </div>

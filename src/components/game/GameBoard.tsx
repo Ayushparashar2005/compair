@@ -265,23 +265,23 @@ export function GameBoard({ categoryId }: GameBoardProps) {
     return (
       <div className="w-full max-w-4xl mx-auto flex flex-col items-center">
         <div className="flex w-full justify-center items-center mb-8 px-4 opacity-50">
-          <div className="bg-white border-4 border-black px-6 py-3 shadow-[4px_4px_0_#000] font-mono font-bold">LOADING...</div>
+          <div className="glass-panel px-6 py-3 rounded-2xl font-mono font-bold text-gray-800 tracking-widest">LOADING...</div>
         </div>
-        <h2 className="text-3xl md:text-5xl font-display font-bold text-center mb-12 tracking-tight opacity-30 animate-pulse">
+        <h2 className="text-3xl md:text-5xl font-display font-bold text-center mb-12 tracking-tight opacity-30 animate-pulse text-gray-900">
           WHICH IS HIGHER?
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6 w-full px-4 relative">
-          <div className="flex flex-col items-center justify-center p-8 md:p-12 min-h-[140px] sm:min-h-[240px] md:min-h-[300px] neo-glass">
-            <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-black/10 animate-pulse mb-6 mx-auto" />
-            <div className="h-6 w-3/4 bg-black/10 animate-pulse mb-3 mx-auto" />
-            <div className="h-4 w-1/2 bg-black/10 animate-pulse mx-auto" />
+          <div className="flex flex-col items-center justify-center p-8 md:p-12 min-h-[140px] sm:min-h-[240px] md:min-h-[300px] neo-panel rounded-2xl">
+            <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-black/5 animate-pulse mb-6 mx-auto rounded-full neo-border" />
+            <div className="h-6 w-3/4 bg-black/5 animate-pulse mb-3 mx-auto rounded-full neo-border" />
+            <div className="h-4 w-1/2 bg-black/5 animate-pulse mx-auto rounded-full neo-border" />
           </div>
-          <div className="md:hidden flex items-center justify-center py-2 text-[var(--color-brand-text-secondary)] font-display font-bold opacity-50">VS</div>
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-[#f4f4f0] border-4 border-black items-center justify-center z-10 hidden md:flex animate-pulse" />
-          <div className="flex flex-col items-center justify-center p-8 md:p-12 min-h-[140px] sm:min-h-[240px] md:min-h-[300px] neo-glass">
-            <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-black/10 animate-pulse mb-6 mx-auto" style={{ animationDelay: '150ms' }} />
-            <div className="h-6 w-3/4 bg-black/10 animate-pulse mb-3 mx-auto" style={{ animationDelay: '150ms' }} />
-            <div className="h-4 w-1/2 bg-black/10 animate-pulse mx-auto" style={{ animationDelay: '150ms' }} />
+          <div className="md:hidden flex items-center justify-center py-2 text-black font-display font-black">VS</div>
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white neo-border rounded-full items-center justify-center z-10 hidden md:flex animate-pulse neo-shadow" />
+          <div className="flex flex-col items-center justify-center p-8 md:p-12 min-h-[140px] sm:min-h-[240px] md:min-h-[300px] neo-panel rounded-2xl">
+            <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-black/5 animate-pulse mb-6 mx-auto rounded-full neo-border" style={{ animationDelay: '150ms' }} />
+            <div className="h-6 w-3/4 bg-black/5 animate-pulse mb-3 mx-auto rounded-full neo-border" style={{ animationDelay: '150ms' }} />
+            <div className="h-4 w-1/2 bg-black/5 animate-pulse mx-auto rounded-full neo-border" style={{ animationDelay: '150ms' }} />
           </div>
         </div>
       </div>
@@ -296,7 +296,7 @@ export function GameBoard({ categoryId }: GameBoardProps) {
         </div>
         <button 
           onClick={() => sessionId ? fetchNextQuestion(sessionId) : initGame()}
-          className="mt-4 px-6 py-3 bg-black text-white font-mono font-bold uppercase border-4 border-black shadow-[4px_4px_0_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0_#000] active:translate-y-0 active:shadow-[2px_2px_0_#000] transition-all"
+          className="mt-4 px-6 py-3 bg-black/5 text-gray-800 font-mono font-bold uppercase rounded-xl border border-black/10 hover:bg-black/10 transition-all"
         >
           Try Again
         </button>
@@ -327,7 +327,7 @@ export function GameBoard({ categoryId }: GameBoardProps) {
       
       {/* Unified HUD Strip */}
       <div className="flex w-full justify-between items-center mb-3 sm:mb-8 px-1.5 sm:px-4 z-20">
-        <div className="w-full bg-white border-4 border-black p-3 shadow-[4px_4px_0_#000] flex justify-between items-center relative overflow-hidden">
+        <div className="w-full glass-panel rounded-2xl p-3 flex justify-between items-center relative overflow-hidden">
           
           {/* Top Time Bar (Inside HUD) */}
           {gameState === 'question' && (
@@ -340,15 +340,15 @@ export function GameBoard({ categoryId }: GameBoardProps) {
           )}
 
           {/* Score section */}
-          <div className="flex items-center gap-2 sm:gap-3 z-10">
-            <span className="font-mono text-[10px] md:text-xs uppercase font-bold text-gray-500">Score</span>
-            <span className="font-mono font-black text-lg md:text-xl text-[var(--color-brand-accent)]">{stats.score.toLocaleString()}</span>
+          <div className="flex items-center gap-2 sm:gap-3 z-10 bg-white px-4 py-2 rounded-xl neo-border neo-shadow-sm">
+            <span className="font-mono text-[10px] md:text-xs uppercase font-black text-black">Score</span>
+            <span className="font-mono font-black text-lg md:text-xl text-black drop-shadow-sm">{stats.score.toLocaleString()}</span>
           </div>
 
           {/* Timer and Progress */}
           <div className="flex flex-row md:flex-col items-center justify-center mx-2 sm:mx-4 gap-2 md:gap-0">
-            <div className={`font-display font-black text-xl sm:text-2xl md:text-3xl transition-colors md:mb-1 ${
-              timeRemaining <= 3 && gameState === 'question' ? 'text-red-500 animate-bounce' : 'text-black'
+            <div className={`font-display font-black text-xl sm:text-2xl md:text-3xl transition-colors md:mb-1 px-3 py-1 bg-white rounded-lg neo-border ${
+              timeRemaining <= 3 && gameState === 'question' ? 'text-red-600 neo-shadow-accent animate-bounce' : 'text-black neo-shadow-sm'
             }`}>
               {gameState === 'question' ? `${timeRemaining}s` : '--'}
             </div>
@@ -358,8 +358,8 @@ export function GameBoard({ categoryId }: GameBoardProps) {
               {Array.from({ length: 10 }).map((_, i) => (
                 <div
                   key={i}
-                  className={`w-1 h-1 sm:w-1.5 sm:h-1.5 md:w-2 md:h-2 rounded-full border border-black transition-all duration-300 flex-shrink-0 ${
-                    i < stats.questionsAnswered ? 'bg-black scale-100' : 'bg-black/10 scale-90'
+                  className={`w-1 h-1 sm:w-1.5 sm:h-1.5 md:w-2 md:h-2 rounded-full border border-white/20 transition-all duration-300 flex-shrink-0 ${
+                    i < stats.questionsAnswered ? 'bg-[var(--color-brand-accent)] scale-100 shadow-[0_0_8px_rgba(255,138,0,0.8)]' : 'bg-white/10 scale-90'
                   }`}
                 />
               ))}
@@ -367,8 +367,8 @@ export function GameBoard({ categoryId }: GameBoardProps) {
           </div>
 
           {/* Streak section */}
-          <div className={`flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 border-2 border-black transition-all duration-300 ${
-            stats.streak >= 3 ? 'bg-[var(--color-brand-accent-warm)] text-white' : 'bg-gray-100 text-gray-400'
+          <div className={`flex items-center gap-1 md:gap-2 px-3 md:px-4 py-2 rounded-xl transition-all duration-300 ${
+            stats.streak >= 3 ? 'bg-[var(--color-brand-accent)] border-2 border-black text-black neo-shadow-sm' : 'bg-white neo-border text-black neo-shadow-sm'
           }`}>
             <span className="text-sm md:text-base">{stats.streak >= 3 ? '🔥' : '—'}</span>
             <span className="font-mono font-bold text-xs md:text-sm">{stats.streak >= 3 ? `×${stats.streak}` : 'STREAK'}</span>
@@ -388,8 +388,8 @@ export function GameBoard({ categoryId }: GameBoardProps) {
 
       {gameState === 'revealed' && answerResult !== null && (
         <div className="w-full flex justify-center mb-3 sm:mb-8 z-20" style={{ animation: 'slideInUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards' }}>
-          <div className={`flex flex-col items-center justify-center px-4 sm:px-8 py-1.5 sm:py-3 border-2 sm:border-4 border-black shadow-[4px_4px_0_0_#000] sm:shadow-[8px_8px_0_0_#000] ${answerResult.isCorrect ? 'bg-[var(--color-brand-correct)] text-black' : 'bg-[var(--color-brand-incorrect)] text-black'}`}>
-            <div className="text-2xl sm:text-4xl font-display font-black uppercase tracking-widest">
+          <div className={`flex flex-col items-center justify-center px-6 sm:px-10 py-2 sm:py-4 rounded-2xl neo-border ${answerResult.isCorrect ? 'bg-[#4ade80] text-black shadow-[4px_4px_0_#15803d]' : 'bg-[#f87171] text-black shadow-[4px_4px_0_#991b1b]'}`}>
+            <div className="text-2xl sm:text-4xl font-display font-black uppercase tracking-widest drop-shadow-sm">
               {answerResult.isTimeOut ? 'TIME OUT' : answerResult.isCorrect ? 'CORRECT' : 'WRONG'}
             </div>
             {answerResult.isCorrect && answerResult.multiplier > 1.2 && (
@@ -420,13 +420,13 @@ export function GameBoard({ categoryId }: GameBoardProps) {
         />
         
         {/* Desktop Divider */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-[var(--color-brand-accent)] border-4 border-black items-center justify-center font-display font-black text-white text-2xl z-10 hidden md:flex shadow-[6px_6px_0_#000] rotate-3 transition-transform hover:scale-110">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white neo-border rounded-full items-center justify-center font-display font-black text-black text-2xl z-10 hidden md:flex neo-shadow-accent transition-transform hover:scale-110">
           VS
         </div>
         
         {/* Mobile Divider */}
         <div className="md:hidden flex items-center justify-center py-2 relative z-10">
-          <div className="px-3 sm:px-4 py-1 sm:py-2 bg-[var(--color-brand-accent)] border-2 border-black text-white font-display font-black rotate-2 shadow-[2px_2px_0_#000] sm:shadow-[4px_4px_0_#000]">
+          <div className="px-4 py-2 rounded-full bg-white neo-border text-black font-display font-black neo-shadow-accent">
             VS
           </div>
         </div>

@@ -54,7 +54,10 @@ export function D3BarChart({ entityA, entityB, stat, isCorrect }: D3BarChartProp
       .attr('width', width)
       .attr('height', barHeight)
       .attr('rx', 8)
-      .attr('fill', 'rgba(0,0,0,0.05)');
+      .attr('fill', 'rgba(0,0,0,0.02)')
+      .attr('stroke', '#09090b')
+      .attr('stroke-width', 1.5)
+      .style('filter', 'drop-shadow(2px 2px 0px rgba(9,9,11,0.1))');
 
     // Draw animated bars
     svg.selectAll('.bar')
@@ -67,10 +70,11 @@ export function D3BarChart({ entityA, entityB, stat, isCorrect }: D3BarChartProp
       .attr('height', barHeight)
       .attr('rx', 8)
       .attr('fill', d => {
-        return d.value === maxValue ? 'var(--color-brand-correct)' : '#000000';
+        return d.value === maxValue ? '#4ade80' : '#d4d4d8';
       })
-      .attr('stroke', '#000')
+      .attr('stroke', '#09090b')
       .attr('stroke-width', 2)
+      .style('filter', d => d.value === maxValue ? 'drop-shadow(4px 4px 0px #09090b)' : 'drop-shadow(2px 2px 0px #09090b)')
       .transition()
       .duration(1200)
       .ease(d3.easeElasticOut.amplitude(1).period(0.5))
@@ -85,9 +89,9 @@ export function D3BarChart({ entityA, entityB, stat, isCorrect }: D3BarChartProp
       .attr('y', (d, i) => i * (barHeight + gap) + (isMobile ? 10 : 12))
       .attr('font-family', 'var(--font-mono)')
       .attr('font-size', labelFontSize)
-      .attr('font-weight', '500')
-      .attr('fill', 'var(--color-brand-text-secondary)')
-      .text(d => (isMobile && d.name.length > 18) ? d.name.slice(0, 16) + '…' : d.name);
+      .attr('font-weight', '800')
+      .attr('fill', '#09090b')
+      .text(d => (isMobile && d.name.length > 18) ? d.name.slice(0, 16) + '…' : d.name.toUpperCase());
 
     // Animated values (inside or end of bars)
     const valueLabels = svg.selectAll('.value-label')
@@ -99,8 +103,8 @@ export function D3BarChart({ entityA, entityB, stat, isCorrect }: D3BarChartProp
       .attr('dy', '0.35em')
       .attr('font-family', 'var(--font-mono)')
       .attr('font-size', valueFontSize)
-      .attr('font-weight', '700')
-      .attr('fill', '#fff'); // will update color during tween if needed
+      .attr('font-weight', '900')
+      .attr('fill', '#000'); // will update color during tween if needed
 
     valueLabels.transition()
       .duration(1200)
@@ -119,16 +123,16 @@ export function D3BarChart({ entityA, entityB, stat, isCorrect }: D3BarChartProp
           if (barWidth > estTextWidth + 20) {
             // Fits inside
             d3.select(node)
-              .attr('x', barWidth - 10)
+              .attr('x', barWidth - 12)
               .attr('text-anchor', 'end')
-              .attr('fill', '#fff')
+              .attr('fill', '#000')
               .text(textStr);
           } else {
             // Outside
             d3.select(node)
-              .attr('x', barWidth + 10)
+              .attr('x', barWidth + 12)
               .attr('text-anchor', 'start')
-              .attr('fill', 'var(--color-brand-text-primary)')
+              .attr('fill', '#09090b')
               .text(textStr);
           }
         };

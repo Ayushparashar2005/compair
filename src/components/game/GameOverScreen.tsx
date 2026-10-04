@@ -62,56 +62,56 @@ export function GameOverScreen({
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col items-center justify-center py-8 text-center">
       {(isNewBestScore || isNewBestStreak) && (
-        <div className="text-white font-mono text-sm font-bold px-4 py-2 border-2 border-black mb-6 animate-pulse uppercase tracking-widest bg-[var(--color-brand-accent)] shadow-[2px_2px_0_#000]">
+        <div className="text-black font-mono text-sm font-black px-4 py-2 rounded-lg neo-border-sm mb-6 animate-pulse uppercase tracking-widest bg-[var(--color-brand-accent)] neo-shadow-sm">
           ⚡ NEW PERSONAL BEST{isNewBestScore && isNewBestStreak ? '!' : isNewBestScore ? ' SCORE!' : ' STREAK!'}
         </div>
       )}
       
-      <div className="text-xl md:text-2xl font-mono text-[var(--color-brand-text-secondary)] font-bold mb-2 uppercase tracking-widest">
+      <div className="text-xl md:text-2xl font-mono text-gray-500 font-bold mb-2 uppercase tracking-widest">
         {getHeadlineEmoji()}
       </div>
-      <h2 ref={headlineRef} className="text-3xl sm:text-5xl md:text-7xl font-display font-black mb-4 sm:mb-12 tracking-tighter uppercase [text-wrap:balance]">GAME OVER</h2>
+      <h2 ref={headlineRef} className="text-3xl sm:text-5xl md:text-7xl font-display font-black mb-4 sm:mb-12 tracking-tighter uppercase [text-wrap:balance] text-black drop-shadow-sm">GAME OVER</h2>
       
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-6 w-full mb-4 sm:mb-12">
-        <div className="col-span-2 md:col-span-2 bg-white border-4 border-black p-4 sm:p-6 md:p-8 text-left relative overflow-hidden shadow-[4px_4px_0_#000]">
-          <div className="text-xs sm:text-sm font-mono text-[var(--color-brand-text-secondary)] mb-1 sm:mb-2 uppercase font-bold tracking-widest">Final Score</div>
-          <div ref={scoreRef} className="text-5xl sm:text-6xl font-bold font-mono text-[var(--color-brand-accent)] tracking-tighter">0</div>
-          <div className="absolute bottom-0 left-0 h-2 bg-[var(--color-brand-accent)] transition-all duration-1000" style={{ width: `${Math.min(100, (score / 1500) * 100)}%` }}></div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 w-full mb-4 sm:mb-12">
+        <div className="col-span-2 md:col-span-2 neo-panel p-4 sm:p-6 md:p-8 text-left relative overflow-hidden rounded-2xl">
+          <div className="text-xs sm:text-sm font-mono text-black mb-1 sm:mb-2 uppercase font-black tracking-widest">Final Score</div>
+          <div ref={scoreRef} className="text-5xl sm:text-6xl font-black font-mono text-[var(--color-brand-accent)] tracking-tighter" style={{ textShadow: '2px 2px 0 #000' }}>0</div>
+          <div className="absolute bottom-0 left-0 h-1.5 border-r-2 border-black bg-[var(--color-brand-accent)] transition-all duration-1000" style={{ width: `${Math.min(100, (score / 1500) * 100)}%` }}></div>
         </div>
         
-        <div className="col-span-1 md:col-span-1 bg-white border-4 border-black p-4 sm:p-6 text-left relative overflow-hidden shadow-[4px_4px_0_#000]">
-          <div className="text-xs sm:text-sm font-mono text-[var(--color-brand-text-secondary)] mb-1 sm:mb-2 uppercase font-bold tracking-widest">Accuracy</div>
-          <div ref={accuracyRef} className="text-3xl sm:text-4xl font-bold font-mono">0%</div>
-          <div className="absolute bottom-0 left-0 h-2 bg-black transition-all duration-1000" style={{ width: `${accuracy}%` }}></div>
+        <div className="col-span-1 md:col-span-1 neo-panel p-4 sm:p-6 text-left relative overflow-hidden rounded-2xl">
+          <div className="text-xs sm:text-sm font-mono text-black mb-1 sm:mb-2 uppercase font-black tracking-widest">Accuracy</div>
+          <div ref={accuracyRef} className="text-3xl sm:text-4xl font-black font-mono text-black">0%</div>
+          <div className="absolute bottom-0 left-0 h-1.5 border-r-2 border-black bg-gray-900 transition-all duration-1000" style={{ width: `${accuracy}%` }}></div>
         </div>
         
-        <div className="col-span-1 md:col-span-1 bg-white border-4 border-black p-4 sm:p-6 text-left shadow-[4px_4px_0_#000]">
-          <div className="text-xs sm:text-sm font-mono text-[var(--color-brand-text-secondary)] mb-1 sm:mb-2 uppercase font-bold tracking-widest">Best Streak</div>
-          <div className="text-3xl sm:text-4xl font-bold font-mono text-[var(--color-brand-accent-warm)]">🔥 {streak}</div>
+        <div className="col-span-1 md:col-span-1 neo-panel p-4 sm:p-6 text-left rounded-2xl">
+          <div className="text-xs sm:text-sm font-mono text-black mb-1 sm:mb-2 uppercase font-black tracking-widest">Best Streak</div>
+          <div className="text-3xl sm:text-4xl font-black font-mono text-[var(--color-brand-accent)]" style={{ textShadow: '1.5px 1.5px 0 #000' }}>🔥 {streak}</div>
         </div>
         
-        <div className="col-span-2 md:col-span-4 bg-white border-4 border-black p-4 sm:p-6 text-left flex flex-col sm:flex-row items-start sm:items-center justify-between shadow-[4px_4px_0_#000] gap-2">
-          <div className="text-xs sm:text-sm font-mono text-[var(--color-brand-text-secondary)] uppercase font-bold tracking-widest">Correct Answers</div>
-          <div className="text-2xl sm:text-3xl font-bold font-mono">{correctAnswers}<span className="text-lg sm:text-xl text-[var(--color-brand-text-secondary)] ml-1">/ {questionsAnswered}</span></div>
+        <div className="col-span-2 md:col-span-4 neo-panel p-4 sm:p-6 text-left flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-2xl gap-2">
+          <div className="text-xs sm:text-sm font-mono text-black uppercase font-black tracking-widest">Correct Answers</div>
+          <div className="text-2xl sm:text-3xl font-black font-mono text-black">{correctAnswers}<span className="text-lg sm:text-xl text-gray-500 ml-1">/ {questionsAnswered}</span></div>
         </div>
       </div>
       
       {(allTimeBestScore !== undefined && allTimeBestStreak !== undefined) && (
-        <div className="text-[var(--color-brand-text-secondary)] font-mono text-sm mb-4 sm:mb-12 border-t-2 border-[var(--color-brand-border)] pt-3 sm:pt-6 w-full opacity-70">
-          ALL-TIME BEST: <span className="font-bold text-[var(--color-brand-text-primary)]">{allTimeBestScore.toLocaleString()}</span> PTS | <span className="font-bold text-[var(--color-brand-text-primary)]">🔥 {allTimeBestStreak}</span> STREAK
+        <div className="text-gray-900 font-mono text-sm mb-4 sm:mb-12 border-t-2 border-black border-dashed pt-3 sm:pt-6 w-full font-bold">
+          ALL-TIME BEST: <span className="font-black text-black bg-white px-2 py-0.5 rounded-sm neo-border-sm mx-1">{allTimeBestScore.toLocaleString()}</span> PTS | <span className="font-black text-black bg-white px-2 py-0.5 rounded-sm neo-border-sm mx-1">🔥 {allTimeBestStreak}</span> STREAK
         </div>
       )}
       
       <div className="w-full max-w-md flex flex-col gap-4">
         <button 
           onClick={onRestart}
-          className="w-full py-3 sm:py-5 bg-[var(--color-brand-accent)] text-white font-bold font-mono tracking-widest uppercase text-base sm:text-xl border-4 border-black shadow-[6px_6px_0_#000] hover:-translate-y-1 hover:shadow-[8px_8px_0_#000] active:translate-y-0.5 active:shadow-[2px_2px_0_#000] transition-all duration-150"
+          className="w-full py-4 sm:py-5 bg-[var(--color-brand-accent)] text-black font-black font-mono tracking-widest uppercase text-base sm:text-xl rounded-xl neo-border neo-shadow neo-btn group"
         >
-          Play again →
+          Play again <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
         </button>
         <a 
           href="/play"
-          className="w-full py-3 sm:py-5 bg-white border-4 border-black text-black font-bold font-mono tracking-widest uppercase text-sm sm:text-lg shadow-[6px_6px_0_#000] hover:-translate-y-1 hover:shadow-[8px_8px_0_#000] active:translate-y-0.5 active:shadow-[2px_2px_0_#000] transition-all duration-150 text-center"
+          className="w-full py-4 sm:py-5 bg-white neo-border text-black font-black font-mono tracking-widest uppercase text-sm sm:text-lg rounded-xl neo-btn hover:neo-shadow-sm text-center"
         >
           Choose category
         </a>

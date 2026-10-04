@@ -61,18 +61,17 @@ const duelBots = [
 ---
 
 <Layout title="Leaderboard & Arenas | Compair">
-  <main class="w-full min-h-screen bg-[#f4f4f0] text-black font-mono overflow-x-hidden relative py-6 md:py-12 px-4">
-    <div class="absolute inset-0 grid-bg opacity-30 pointer-events-none" />
-
-    <div class="max-w-4xl mx-auto relative z-10">
-      <header class="mb-6 pb-4 md:mb-12 text-center md:text-left border-b-4 border-black md:pb-8">
-        <div class="inline-block px-4 py-1 bg-black text-white text-sm font-bold uppercase tracking-widest mb-4">
+  <main class="w-full min-h-[100dvh] bg-transparent text-gray-900 font-mono overflow-x-hidden relative py-6 md:py-12 px-4 flex flex-col items-center">
+    
+    <div class="max-w-4xl w-full mx-auto relative z-10 flex flex-col">
+      <header class="mb-6 pb-4 md:mb-12 text-center md:text-left border-b-2 border-black md:pb-8">
+        <div class="inline-block px-4 py-1.5 bg-white text-black text-sm font-black uppercase tracking-widest mb-4 rounded-full neo-border-sm neo-shadow-sm">
           Rankings & Arenas
         </div>
-        <h1 class="text-4xl sm:text-5xl md:text-7xl font-display font-black tracking-tighter uppercase mb-2 sm:mb-4 [text-wrap:balance]">
+        <h1 class="text-4xl sm:text-5xl md:text-7xl font-display font-black tracking-tighter uppercase mb-2 sm:mb-4 [text-wrap:balance] text-black drop-shadow-sm">
           Leaderboard
         </h1>
-        <p class="text-base sm:text-lg text-[var(--color-brand-text-secondary)] max-w-2xl">
+        <p class="text-base sm:text-lg text-gray-800 font-bold max-w-2xl">
           Top runs in Compair speed comparison, plus the Strategy Duel AI champions that appear during Bonus Rounds.
         </p>
       </header>
@@ -93,24 +92,24 @@ const duelBots = [
               const isTop = i === 0;
 
               return (
-                <div class="bg-white border-4 border-black p-3 sm:p-4 md:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[4px_4px_0_#000] hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#000] transition-all">
+                <div class="neo-panel p-4 md:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl hover:-translate-y-1 hover:neo-shadow-lg transition-all group">
                   <div class="flex items-center gap-4 w-full sm:w-auto">
                     <div class={`text-3xl font-display font-black ${isTop ? 'text-[var(--color-brand-accent)]' : 'text-gray-400'}`}>
                       #{i + 1}
                     </div>
                     <div>
-                      <div class="font-bold text-lg uppercase">
+                      <div class="font-black text-lg uppercase text-black">
                         {run.displayName || run.username || `Anonymous Runner #${run.id.slice(0, 5)}`}
                       </div>
-                      <div class="text-xs text-gray-500 font-bold">
+                      <div class="text-xs text-gray-700 font-black">
                         {run.correctAnswers} correct • {accuracy}% accuracy
                       </div>
                     </div>
                   </div>
 
-                  <div class="text-right w-full sm:w-auto border-t-2 sm:border-t-0 border-dashed border-gray-200 pt-2 sm:pt-0">
-                    <div class="text-3xl font-display font-black text-[var(--color-brand-accent)]">
-                      {run.score.toLocaleString()} <span class="text-sm font-mono text-black font-bold">PTS</span>
+                  <div class="text-right w-full sm:w-auto border-t-2 border-dashed border-black sm:border-t-0 pt-2 sm:pt-0">
+                    <div class="text-3xl font-display font-black text-[var(--color-brand-accent)]" style="text-shadow: 1px 1px 0 #000;">
+                      {run.score.toLocaleString()} <span class="text-sm font-mono text-black font-black">PTS</span>
                     </div>
                   </div>
                 </div>
@@ -118,11 +117,11 @@ const duelBots = [
             })}
           </div>
         ) : (
-          <div class="bg-white border-4 border-black p-8 text-center shadow-[4px_4px_0_#000]">
-            <p class="font-bold uppercase tracking-wider text-gray-500 mb-4">No ranked runs recorded yet today</p>
+          <div class="neo-panel p-8 text-center rounded-2xl">
+            <p class="font-black uppercase tracking-wider text-black mb-4">No ranked runs recorded yet today</p>
             <a
               href="/play"
-              class="inline-block px-6 py-3 bg-black text-white font-bold font-mono uppercase tracking-widest hover:bg-gray-800"
+              class="inline-block px-8 py-4 bg-[var(--color-brand-accent)] text-black font-black font-mono uppercase tracking-widest rounded-xl neo-border neo-shadow-sm neo-btn"
             >
               Play a game to set the high score →
             </a>
@@ -141,30 +140,30 @@ const duelBots = [
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           {duelBots.map(bot => (
-            <div class="bg-white border-4 border-black p-4 sm:p-6 flex flex-col justify-between shadow-[4px_4px_0_#000] hover:-translate-y-1 hover:shadow-[8px_8px_0_#000] transition-all">
+            <div class="neo-panel p-5 flex flex-col justify-between rounded-2xl hover:-translate-y-1 hover:neo-shadow-lg transition-all group">
               <div>
-                <div class="text-4xl mb-3">{bot.avatar}</div>
-                <div class="inline-block px-2.5 py-0.5 bg-black text-white text-[10px] font-bold uppercase tracking-widest mb-2">
+                <div class="text-4xl mb-3 transition-transform group-hover:scale-110 drop-shadow-sm">{bot.avatar}</div>
+                <div class="inline-block px-3 py-1 bg-white text-black text-[10px] font-black uppercase tracking-widest mb-3 rounded-full neo-border-sm neo-shadow-sm">
                   {bot.tier}
                 </div>
-                <h3 class="text-xl font-display font-black uppercase mb-1">{bot.name}</h3>
-                <div class="text-xs font-bold text-gray-500 mb-3">Rating: <strong class="text-black">{bot.elo} ELO</strong></div>
-                <p class="text-xs text-gray-600 leading-relaxed mb-4 line-clamp-3">{bot.description}</p>
+                <h3 class="text-xl font-display font-black uppercase mb-1 text-black">{bot.name}</h3>
+                <div class="text-xs font-black text-gray-700 mb-3">Rating: <strong class="text-black">{bot.elo} ELO</strong></div>
+                <p class="text-xs text-gray-800 font-bold leading-relaxed mb-4 line-clamp-3">{bot.description}</p>
               </div>
 
-              <div class="border-t-2 border-dashed border-gray-300 pt-3 flex justify-between items-center text-xs font-bold">
-                <span class="text-gray-500">Style: {bot.style}</span>
-                <span class="text-green-700">Win: {bot.winRate}</span>
+              <div class="border-t-2 border-dashed border-black pt-4 flex justify-between items-center text-xs font-black">
+                <span class="text-black">Style: {bot.style}</span>
+                <span class="text-[#15803d]">Win: {bot.winRate}</span>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      <div class="text-center mt-12">
+      <div class="text-center mt-12 mb-12">
         <a 
           href="/" 
-          class="inline-block px-8 py-4 bg-white border-4 border-black font-bold font-mono uppercase tracking-widest hover:-translate-y-1 hover:shadow-[4px_4px_0_#000] active:translate-y-0 active:shadow-none transition-all"
+          class="inline-block px-8 py-4 bg-white text-black font-black font-mono uppercase tracking-widest rounded-xl neo-border neo-shadow-sm neo-btn"
         >
           ← Back to Game
         </a>
@@ -172,12 +171,3 @@ const duelBots = [
     </div>
   </main>
 </Layout>
-
-<style>
-  .grid-bg {
-    background-size: 40px 40px;
-    background-image: 
-      linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
-  }
-</style>

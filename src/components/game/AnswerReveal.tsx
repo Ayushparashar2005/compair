@@ -25,13 +25,13 @@ export function AnswerReveal({ entityA, entityB, stat, isCorrect, explanation, o
   return (
     <div 
       ref={containerRef}
-      className="fixed md:relative bottom-0 left-0 right-0 z-[45] bg-white mt-0 md:mt-8 p-4 sm:p-6 w-full max-w-2xl mx-auto border-t-4 border-x-0 md:border-4 border-black shadow-[0_-4px_0_rgba(0,0,0,0.1)] md:shadow-[8px_8px_0_#000] max-h-[70vh] md:max-h-none overflow-y-auto"
+      className="fixed md:relative bottom-0 left-0 right-0 z-[45] bg-white/95 md:bg-white/80 mt-0 md:mt-8 p-4 sm:p-6 w-full max-w-2xl mx-auto rounded-t-3xl md:rounded-3xl border-t-[3px] md:border-2 border-black shadow-[0_-4px_0_#000] md:neo-shadow-lg max-h-[70vh] md:max-h-none overflow-y-auto"
       style={{
         animation: 'slideInUp 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards'
       }}
     >
       {/* Mobile drag handle */}
-      <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4 md:hidden"></div>
+      <div className="w-12 h-1.5 bg-black/10 rounded-full mx-auto mb-4 md:hidden"></div>
       {/* Removed the verdict/button header to be replaced by the full-width button at bottom */}
       
       <div className="w-full">
@@ -44,9 +44,9 @@ export function AnswerReveal({ entityA, entityB, stat, isCorrect, explanation, o
       </div>
       
       {explanation && (
-        <div className="mt-3 sm:mt-8 pt-3 sm:pt-6 border-t border-[var(--color-brand-border)]">
-          <p className="text-[var(--color-brand-text-secondary)]">
-            <strong className="text-[var(--color-brand-text-primary)]">Did you know?</strong> {explanation}
+        <div className="mt-3 sm:mt-8 pt-3 sm:pt-6 border-t border-black/5">
+          <p className="text-gray-900 font-mono text-sm sm:text-base leading-relaxed">
+            <strong className="bg-[var(--color-brand-accent)] text-black font-black uppercase px-2 py-0.5 neo-border-sm mr-2 text-xs rounded-sm inline-block -translate-y-0.5">DID YOU KNOW?</strong> {explanation}
           </p>
         </div>
       )}
@@ -58,11 +58,8 @@ export function AnswerReveal({ entityA, entityB, stat, isCorrect, explanation, o
           {onBonusRound && (
             <button 
               onClick={onBonusRound}
-              className="flex-1 py-2.5 sm:py-4 bg-blue-600 text-white font-bold font-mono uppercase tracking-widest text-sm sm:text-lg md:text-xl 
-                border-4 border-black shadow-[4px_4px_0_rgba(0,0,0,1)] 
-                hover:-translate-y-1 hover:shadow-[6px_6px_0_rgba(0,0,0,1)] hover:bg-blue-500
-                active:translate-y-0.5 active:shadow-[2px_2px_0_rgba(0,0,0,1)] 
-                transition-all duration-150"
+              className="flex-1 py-3 sm:py-4 bg-indigo-200 text-black font-black font-mono uppercase tracking-widest text-sm sm:text-lg md:text-xl 
+                neo-border rounded-xl neo-shadow-sm neo-btn flex items-center justify-center gap-2"
             >
               Play Bonus Round
             </button>
@@ -70,13 +67,10 @@ export function AnswerReveal({ entityA, entityB, stat, isCorrect, explanation, o
 
           <button 
             onClick={onNext}
-            className="flex-1 py-2.5 sm:py-4 bg-black text-white font-bold font-mono uppercase tracking-widest text-sm sm:text-lg md:text-xl 
-              border-4 border-black shadow-[4px_4px_0_rgba(0,0,0,1)] 
-              hover:-translate-y-1 hover:shadow-[6px_6px_0_rgba(0,0,0,1)] 
-              active:translate-y-0.5 active:shadow-[2px_2px_0_rgba(0,0,0,1)] 
-              transition-all duration-150"
+            className="flex-1 py-3 sm:py-4 bg-white text-black font-black font-mono uppercase tracking-widest text-sm sm:text-lg md:text-xl 
+              neo-border rounded-xl neo-shadow-accent neo-btn group flex items-center justify-center gap-2"
           >
-            Next →
+            Next <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
           </button>
         </div>
       </div>

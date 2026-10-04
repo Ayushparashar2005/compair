@@ -11,8 +11,8 @@ fn hash(p: vec2f) -> f32 {
 }
 
 @fragment fn fs_main(@location(0) uv: vec2f) -> @location(0) vec4f {
-    // Base brutalist color: #f4f4f0
-    var color = vec3f(0.957, 0.957, 0.941);
+    // Base light mode color: #fafafa
+    var color = vec3f(0.98, 0.98, 0.98);
 
     let aspect = params.resolution.x / params.resolution.y;
     let st = uv * vec2f(aspect, 1.0);
@@ -23,7 +23,7 @@ fn hash(p: vec2f) -> f32 {
     
     // Remap noise from ~[-1, 1] to [0, 1] and scale for subtlety
     let grain = (noiseVal * 0.5 + 0.5) * 0.04;
-    color = color - vec3f(grain);
+    color = color - vec3f(grain * 0.5);
 
     // Voronoi cells to create a brutalist but organic grid structure
     let vScale = 3.0;
@@ -39,7 +39,7 @@ fn hash(p: vec2f) -> f32 {
 
     // Static fine grain noise
     let fineNoise = hash(st * 500.0 + params.time) * 0.03;
-    color = color - vec3f(fineNoise);
+    color = color - vec3f(fineNoise * 0.5);
     
     // A sweeping scanline accent (brand orange #FF8A00)
     let sweep = fract(params.time * 0.15 + st.y * 2.0);

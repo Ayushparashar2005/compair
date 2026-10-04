@@ -16,8 +16,8 @@ if (category && category !== 'all') {
 }
 ---
 
-<Layout title={`Playing ${categoryName}`}>
-  <div class="mb-8 flex items-center justify-center">
+<Layout title={`Playing ${categoryName}`} hideFooter={true}>
+  <div class="mb-4 sm:mb-8 flex items-center justify-center">
     <div class="px-4 py-1 rounded-full border border-[var(--color-brand-border)] font-mono text-sm text-[var(--color-brand-text-secondary)]">
       CATEGORY: <span class="text-[var(--color-brand-accent)]">{categoryName.toUpperCase()}</span>
     </div>

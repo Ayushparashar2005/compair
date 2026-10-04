@@ -322,7 +322,7 @@ export function GameBoard({ categoryId }: GameBoardProps) {
       )}
 
       {/* Unified HUD Strip */}
-      <div className="flex w-full justify-between items-center mb-8 px-4 z-20">
+      <div className="flex w-full justify-between items-center mb-3 sm:mb-8 px-2 sm:px-4 z-20">
         <div className="w-full bg-white border-4 border-black p-3 shadow-[4px_4px_0_#000] flex justify-between items-center">
           {/* Score section */}
           <div className="flex items-center gap-3">
@@ -357,14 +357,14 @@ export function GameBoard({ categoryId }: GameBoardProps) {
         </div>
       </div>
 
-      <h2 key={question.questionId} ref={headlineRef} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-black text-center mb-8 tracking-tighter uppercase [text-wrap:balance]">
+      <h2 key={question.questionId} ref={headlineRef} className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-display font-black text-center mb-3 sm:mb-8 tracking-tighter uppercase [text-wrap:balance]">
         {STAT_VERB_MAP[question.stat.id] || `WHICH HAS HIGHER `}
         {!STAT_VERB_MAP[question.stat.id] && <StatHighlight trigger={question.questionId}>{question.stat.name}?</StatHighlight>}
       </h2>
 
       {gameState === 'revealed' && answerResult !== null && (
-        <div className="w-full flex justify-center mb-8 z-20" style={{ animation: 'slideInUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards' }}>
-          <div className={`flex flex-col items-center justify-center px-8 py-3 border-4 border-black shadow-[8px_8px_0_0_#000] ${answerResult.isCorrect ? 'bg-[var(--color-brand-correct)] text-black' : 'bg-[var(--color-brand-incorrect)] text-black'}`}>
+        <div className="w-full flex justify-center mb-3 sm:mb-8 z-20" style={{ animation: 'slideInUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards' }}>
+          <div className={`flex flex-col items-center justify-center px-4 sm:px-8 py-1.5 sm:py-3 border-2 sm:border-4 border-black shadow-[4px_4px_0_0_#000] sm:shadow-[8px_8px_0_0_#000] ${answerResult.isCorrect ? 'bg-[var(--color-brand-correct)] text-black' : 'bg-[var(--color-brand-incorrect)] text-black'}`}>
             <div className="text-4xl font-display font-black uppercase tracking-widest">
               {answerResult.isTimeOut ? 'TIME OUT' : answerResult.isCorrect ? 'CORRECT' : 'WRONG'}
             </div>
@@ -381,7 +381,7 @@ export function GameBoard({ categoryId }: GameBoardProps) {
         <AnswerBurst isCorrect={answerResult.isCorrect} />
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6 w-full px-4 relative">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4 md:gap-6 w-full px-2 sm:px-4 relative">
         <ComparisonCard 
           name={question.entityA.name}
           emoji={question.entityA.emoji}
@@ -401,8 +401,8 @@ export function GameBoard({ categoryId }: GameBoardProps) {
         </div>
         
         {/* Mobile Divider */}
-        <div className="md:hidden flex items-center justify-center py-4 relative z-10">
-          <div className="px-4 py-2 bg-[var(--color-brand-accent)] border-2 border-black text-white font-display font-black rotate-2 shadow-[4px_4px_0_#000]">
+        <div className="md:hidden flex items-center justify-center py-2 relative z-10">
+          <div className="px-3 sm:px-4 py-1 sm:py-2 bg-[var(--color-brand-accent)] border-2 border-black text-white font-display font-black rotate-2 shadow-[2px_2px_0_#000] sm:shadow-[4px_4px_0_#000]">
             VS
           </div>
         </div>

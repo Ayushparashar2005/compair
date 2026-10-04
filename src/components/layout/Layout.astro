@@ -8,9 +8,10 @@ interface Props {
   description?: string;
   ogImage?: string;
   ogType?: string;
+  hideFooter?: boolean;
 }
 
-const { title, description = "Real facts. Real numbers. One guess. A knowledge comparison game.", ogImage = "/favicon.svg", ogType = "website" } = Astro.props;
+const { title, description = "Real facts. Real numbers. One guess. A knowledge comparison game.", ogImage = "/favicon.svg", ogType = "website", hideFooter = false } = Astro.props;
 const pathname = Astro.url.pathname;
 ---
 
@@ -80,16 +81,18 @@ const pathname = Astro.url.pathname;
       <slot />
     </main>
 
-    <footer class="w-full border-t-4 border-black bg-black text-white mt-auto py-12">
-      <div class="w-full px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-        <div class="text-2xl font-display font-black tracking-tighter uppercase">
-          Com<span class="text-[var(--color-brand-accent)]">Pair</span>
+    {!hideFooter && (
+      <footer class="w-full border-t-4 border-black bg-black text-white mt-auto py-12">
+        <div class="w-full px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+          <div class="text-2xl font-display font-black tracking-tighter uppercase">
+            Com<span class="text-[var(--color-brand-accent)]">Pair</span>
+          </div>
+          <div class="text-center md:text-right font-mono text-sm text-white/70">
+            <p>Don't just memorize facts.</p>
+            <p>Develop an intuition for reality.</p>
+          </div>
         </div>
-        <div class="text-center md:text-right font-mono text-sm text-white/70">
-          <p>Don't just memorize facts.</p>
-          <p>Develop an intuition for reality.</p>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    )}
   </body>
 </html>

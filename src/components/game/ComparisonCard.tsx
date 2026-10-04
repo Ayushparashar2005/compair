@@ -69,7 +69,7 @@ export function ComparisonCard({
         ...(isRevealed && isWinner ? { '--shadow-color': 'var(--color-brand-correct)' } as any : {})
       }}
       className={`
-        relative w-full flex flex-col items-center justify-center min-h-[240px] sm:min-h-[300px] overflow-hidden
+        relative w-full flex flex-col items-center justify-center min-h-[160px] sm:min-h-[240px] md:min-h-[300px] overflow-hidden
         transition-all duration-300 ease-out text-left neo-glass border-4
         ${!disabled && !isRevealed ? 'hover:-translate-y-2 hover:shadow-[10px_10px_0_0_#000] cursor-pointer' : ''}
         ${disabled ? 'cursor-default' : ''}
@@ -99,22 +99,22 @@ export function ComparisonCard({
         </div>
       )}
       {!hasImage && (
-        <div className="text-7xl mb-4 mt-8">{emoji}</div>
+        <div className="text-5xl sm:text-7xl mb-2 sm:mb-4 mt-4 sm:mt-8">{emoji}</div>
       )}
       
-      <div className="z-10 relative mt-auto flex flex-col items-center w-full px-4 sm:px-6 pb-4 sm:pb-6 pt-8 sm:pt-12">
-        <h3 className={`text-xl sm:text-2xl md:text-3xl font-bold font-display text-center leading-tight mb-3 sm:mb-4 line-clamp-2 ${hasImage ? 'text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]' : 'text-black'}`}>
+      <div className="z-10 relative mt-auto flex flex-col items-center w-full px-2 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-6 pt-4 sm:pt-8 md:pt-12">
+        <h3 className={`text-base sm:text-xl md:text-3xl font-bold font-display text-center leading-tight mb-2 sm:mb-3 md:mb-4 line-clamp-2 ${hasImage ? 'text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]' : 'text-black'}`}>
           {scrambledName}
         </h3>
         
-        <div className={`h-14 sm:h-16 flex items-center justify-center w-full bg-white border-4 border-black text-black shadow-[4px_4px_0_#000] transition-all`}>
+        <div className={`h-10 sm:h-14 md:h-16 flex items-center justify-center w-full bg-white border-2 md:border-4 border-black text-black shadow-[2px_2px_0_#000] md:shadow-[4px_4px_0_#000] transition-all`}>
           {showBack ? (
-            <div className="text-2xl sm:text-3xl font-mono font-bold">
-              {revealedValue !== null ? revealedValue.toLocaleString() : statValue.toLocaleString()} <span className="text-lg sm:text-xl opacity-80 uppercase">{statUnit}</span>
+            <div className="text-xl sm:text-2xl md:text-3xl font-mono font-bold">
+              {revealedValue !== null ? revealedValue.toLocaleString() : statValue.toLocaleString()} <span className="text-sm sm:text-lg md:text-xl opacity-80 uppercase">{statUnit}</span>
             </div>
           ) : (
-            <div className="text-2xl sm:text-3xl font-mono font-bold blur-[6px] select-none opacity-60">
-              {statValue.toLocaleString().replace(/[0-9]/g, '8')} <span className="text-lg sm:text-xl uppercase">{statUnit}</span>
+            <div className="text-xl sm:text-2xl md:text-3xl font-mono font-bold blur-[6px] select-none opacity-60">
+              {statValue.toLocaleString().replace(/[0-9]/g, '8')} <span className="text-sm sm:text-lg md:text-xl uppercase">{statUnit}</span>
             </div>
           )}
         </div>

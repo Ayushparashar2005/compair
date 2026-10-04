@@ -11,8 +11,8 @@ if (!id) {
 export const prerender = false;
 ---
 
-<Layout title={`Duel #${id} | Compair`}>
-  <main class="w-full min-h-screen bg-[#f4f4f0] text-black font-mono overflow-x-hidden relative py-12 px-4 flex flex-col items-center justify-center">
+<Layout title={`Duel #${id} | Compair`} hideFooter={true}>
+  <main class="w-full min-h-[100dvh] bg-[#f4f4f0] text-black font-mono overflow-x-hidden relative py-4 sm:py-12 px-2 sm:px-4 flex flex-col items-center justify-center">
     <div class="absolute inset-0 grid-bg opacity-30 pointer-events-none"></div>
     <div class="w-full max-w-4xl relative z-10">
       <DuelMatchView client:only="react" sessionId={id} />

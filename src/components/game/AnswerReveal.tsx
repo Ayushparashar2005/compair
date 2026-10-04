@@ -25,11 +25,13 @@ export function AnswerReveal({ entityA, entityB, stat, isCorrect, explanation, o
   return (
     <div 
       ref={containerRef}
-      className="mt-3 sm:mt-8 p-3 sm:p-6 neo-glass w-full max-w-2xl mx-auto border-4 border-black shadow-[4px_4px_0_#000] sm:shadow-[8px_8px_0_#000] max-h-[60vh] overflow-y-auto"
+      className="fixed md:relative bottom-0 left-0 right-0 z-[45] bg-white mt-0 md:mt-8 p-4 sm:p-6 w-full max-w-2xl mx-auto border-t-4 border-x-0 md:border-4 border-black shadow-[0_-4px_0_rgba(0,0,0,0.1)] md:shadow-[8px_8px_0_#000] max-h-[70vh] md:max-h-none overflow-y-auto"
       style={{
-        animation: 'crossBlurReveal 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards'
+        animation: 'slideInUp 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards'
       }}
     >
+      {/* Mobile drag handle */}
+      <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4 md:hidden"></div>
       {/* Removed the verdict/button header to be replaced by the full-width button at bottom */}
       
       <div className="w-full">

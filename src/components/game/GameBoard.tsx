@@ -325,22 +325,23 @@ export function GameBoard({ categoryId }: GameBoardProps) {
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col items-center relative" ref={boardRef}>
       
-      {/* Top Time Bar (Full width) */}
-      {gameState === 'question' && (
-        <div className="absolute -top-4 md:-top-8 left-0 right-0 h-1 bg-black/10 overflow-hidden rounded-none z-30">
-          <div 
-            className="h-full bg-[var(--color-brand-accent)] origin-left"
-            style={{ animation: 'shrink 10s linear forwards' }}
-          />
-        </div>
-      )}
-
       {/* Unified HUD Strip */}
-      <div className="flex w-full justify-between items-center mb-3 sm:mb-8 px-2 sm:px-4 z-20">
-        <div className="w-full bg-white border-4 border-black p-3 shadow-[4px_4px_0_#000] flex justify-between items-center">
+      <div className="flex w-full justify-between items-center mb-3 sm:mb-8 px-1.5 sm:px-4 z-20">
+        <div className="w-full bg-white border-4 border-black p-3 shadow-[4px_4px_0_#000] flex justify-between items-center relative overflow-hidden">
+          
+          {/* Top Time Bar (Inside HUD) */}
+          {gameState === 'question' && (
+            <div className="absolute top-0 left-0 right-0 h-1 bg-black/10 z-30">
+              <div 
+                className="h-full bg-[var(--color-brand-accent)] origin-left"
+                style={{ animation: 'shrink 10s linear forwards' }}
+              />
+            </div>
+          )}
+
           {/* Score section */}
-          <div className="flex items-center gap-3">
-            <span className="font-mono text-[10px] md:text-xs uppercase font-bold text-gray-500 hidden sm:inline">Score</span>
+          <div className="flex items-center gap-2 sm:gap-3 z-10">
+            <span className="font-mono text-[10px] md:text-xs uppercase font-bold text-gray-500">Score</span>
             <span className="font-mono font-black text-lg md:text-xl text-[var(--color-brand-accent)]">{stats.score.toLocaleString()}</span>
           </div>
 
@@ -353,7 +354,7 @@ export function GameBoard({ categoryId }: GameBoardProps) {
             </div>
             
             {/* Question progress pips */}
-            <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 overflow-hidden max-w-[100px] sm:max-w-none justify-center">
+            <div className="hidden xs:flex items-center gap-1 sm:gap-1.5 md:gap-2 overflow-hidden max-w-[100px] sm:max-w-none justify-center">
               {Array.from({ length: 10 }).map((_, i) => (
                 <div
                   key={i}
@@ -380,7 +381,7 @@ export function GameBoard({ categoryId }: GameBoardProps) {
         </div>
       </div>
 
-      <h2 key={question.questionId} ref={headlineRef} className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-display font-black text-center mb-3 sm:mb-8 tracking-tighter uppercase [text-wrap:balance]">
+      <h2 key={question.questionId} ref={headlineRef} className="text-[clamp(0.875rem,3.5vw,2.5rem)] md:text-4xl lg:text-5xl font-display font-black text-center mb-3 sm:mb-8 tracking-tighter uppercase [text-wrap:balance] line-clamp-2 px-2 max-w-full">
         {STAT_VERB_MAP[question.stat.id] || `WHICH HAS HIGHER `}
         {!STAT_VERB_MAP[question.stat.id] && <StatHighlight trigger={question.questionId}>{question.stat.name}?</StatHighlight>}
       </h2>
@@ -404,7 +405,7 @@ export function GameBoard({ categoryId }: GameBoardProps) {
         <AnswerBurst isCorrect={answerResult.isCorrect} />
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4 md:gap-6 w-full px-2 sm:px-4 relative">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5 sm:gap-4 md:gap-6 w-full px-1.5 sm:px-4 relative">
         <ComparisonCard 
           name={question.entityA.name}
           emoji={question.entityA.emoji}

@@ -27,7 +27,7 @@ try {
           <div class="inline-block px-3 py-1 bg-black text-white text-[10px] sm:text-xs font-mono font-bold uppercase tracking-widest mb-6">
             KNOWLEDGE COMPARISON ENGINE
           </div>
-          <h1 class="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl font-display font-black mb-6 md:mb-8 tracking-tighter leading-[1.1] uppercase [text-wrap:balance]">
+          <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-display font-black mb-4 sm:mb-8 tracking-tighter leading-[1.1] uppercase [text-wrap:balance]">
             How well do you <br class="hidden sm:block"/>
             <span class="text-white relative inline-block my-2 -skew-y-2 px-2">
               <span class="absolute inset-0 bg-black -z-10"></span>
@@ -45,14 +45,14 @@ try {
               Start Game →
             </a>
             
-            <div class="flex flex-wrap gap-2 mt-1 sm:gap-4 sm:mt-2">
-              <a href="/duel" class="font-mono text-sm font-bold uppercase border-2 border-black bg-white px-4 py-2 hover:bg-black hover:text-white transition-colors">
+            <div class="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-4 mt-2 w-full sm:w-auto">
+              <a href="/duel" class="w-full sm:w-auto text-center font-mono text-sm font-bold uppercase border-2 border-black bg-white px-4 py-3 sm:py-2 hover:bg-black hover:text-white transition-colors">
                 ⚔️ Duel Mode
               </a>
-              <a href="/explore" class="font-mono text-sm font-bold uppercase border-2 border-black bg-white px-4 py-2 hover:bg-black hover:text-white transition-colors">
+              <a href="/explore" class="w-full sm:w-auto text-center font-mono text-sm font-bold uppercase border-2 border-black bg-white px-4 py-3 sm:py-2 hover:bg-black hover:text-white transition-colors">
                 Explore Data
               </a>
-              <a href="/leaderboard" class="font-mono text-sm font-bold uppercase border-2 border-black bg-white px-4 py-2 hover:bg-black hover:text-white transition-colors">
+              <a href="/leaderboard" class="w-full sm:w-auto text-center font-mono text-sm font-bold uppercase border-2 border-black bg-white px-4 py-3 sm:py-2 hover:bg-black hover:text-white transition-colors">
                 Rankings
               </a>
             </div>
@@ -107,7 +107,7 @@ try {
     </div>
 
     <!-- Bottom Section: Game Board Applet -->
-    <div class="w-full flex items-center justify-center p-2 md:p-8 lg:p-16 relative">
+    <div class="w-full flex items-center justify-center p-1 sm:p-4 md:p-8 lg:p-16 relative">
       <div class="w-full max-w-4xl">
         <GameBoard client:only="react" />
       </div>

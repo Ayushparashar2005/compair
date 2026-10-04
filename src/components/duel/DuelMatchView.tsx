@@ -374,7 +374,7 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
         {/* Score comparison card */}
         <div className="grid grid-cols-2 gap-2 sm:gap-4 bg-[#f4f4f0] border-4 border-black p-3 sm:p-6 mb-6 sm:mb-8 max-w-lg mx-auto shadow-[4px_4px_0_#000] sm:shadow-[6px_6px_0_#000]">
           <div className="text-center border-r-2 border-black pr-1 sm:pr-2">
-            <span className="text-[10px] sm:text-xs font-mono font-bold uppercase text-gray-500 block mb-1">
+            <span className="text-[10px] sm:text-xs font-mono font-bold uppercase text-gray-500 block mb-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
               {myPlayer.name} (YOU)
             </span>
             <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-display font-black text-black">
@@ -385,7 +385,7 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
             </div>
           </div>
           <div className="text-center pl-1 sm:pl-2">
-            <span className="text-[10px] sm:text-xs font-mono font-bold uppercase text-gray-500 block mb-1">
+            <span className="text-[10px] sm:text-xs font-mono font-bold uppercase text-gray-500 block mb-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
               {oppPlayer.name}
             </span>
             <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-display font-black text-gray-700">
@@ -419,7 +419,7 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
                     <span className="font-black px-1.5 py-0.5 bg-black text-white text-[10px]">
                       R{rh.round}
                     </span>
-                    <span className="font-bold truncate max-w-[90px] xs:max-w-[120px] sm:max-w-xs">
+                    <span className="font-bold truncate max-w-[calc(100%-100px)] sm:max-w-xs">
                       {rh.question.stat.name}
                     </span>
                   </div>
@@ -474,102 +474,103 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col items-center">
       {/* ── LIVE DUEL HUD ──────────────────────────────────────────────────────── */}
-      <div className="w-full bg-white border-4 border-black p-2 sm:p-4 md:p-6 mb-4 sm:mb-6 shadow-[8px_8px_0_#000]">
-        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-1 sm:gap-2 md:gap-4 mb-2 sm:mb-4">
+      <div className="w-full bg-white border-4 border-black p-2 sm:p-4 md:p-6 mb-3 sm:mb-6 shadow-[4px_4px_0_#000] sm:shadow-[8px_8px_0_#000]">
+        
+        {/* Row 1: Names and Scores */}
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-1 sm:gap-4 mb-2">
+          
           {/* Player 1 (You) */}
-          <div className="flex flex-col items-start">
-            <div className="flex items-center gap-1.5 mb-1">
-              <span className="font-mono text-xs font-black uppercase bg-black text-white px-2 py-0.5 shadow-[1px_1px_0_#000]">
+          <div className="flex flex-col items-start min-w-0 pr-1">
+            <div className="flex items-center gap-1.5 mb-1 max-w-full">
+              <span className="hidden xs:inline-block font-mono text-xs font-black uppercase bg-black text-white px-2 py-0.5 shadow-[1px_1px_0_#000]">
                 YOU
               </span>
-              <span className="font-mono text-xs md:text-sm font-bold truncate max-w-[100px] md:max-w-[150px]">
+              <span className="font-mono text-xs sm:text-sm md:text-base font-bold truncate">
                 {myPlayer.name}
               </span>
             </div>
-            <div className="text-xl sm:text-2xl md:text-4xl font-display font-black text-black tracking-tight">
-              {myPlayer.score.toLocaleString()} <span className="text-[10px] sm:text-xs font-mono font-normal text-gray-500">PTS</span>
-            </div>
-            {/* Streak & Status */}
-            <div className="flex items-center gap-2 mt-1.5">
-              {myPlayer.streak > 0 && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[var(--color-brand-accent)] text-white text-[10px] md:text-xs font-mono font-black border border-black shadow-[1px_1px_0_#000] animate-pulse">
-                  🔥 {myPlayer.streak} STREAK
-                </span>
-              )}
-              {state.status === 'in_round' && (
-                <span
-                  className={`text-[10px] font-mono font-black uppercase tracking-wider px-1.5 py-0.5 border ${
-                    myPlayer.hasAnswered
-                      ? 'bg-green-100 text-green-800 border-green-600'
-                      : 'bg-yellow-100 text-yellow-800 border-yellow-600 animate-pulse'
-                  }`}
-                >
-                  {myPlayer.hasAnswered ? '⚡ LOCKED IN' : 'THINKING...'}
-                </span>
-              )}
+            <div className="text-xl sm:text-3xl md:text-4xl font-display font-black text-black tracking-tight truncate max-w-full">
+              {myPlayer.score.toLocaleString()}
             </div>
           </div>
 
-          {/* Center Battle Hub: Round & Timer */}
-          <div className="flex flex-col items-center justify-center text-center">
-            <span className="font-mono text-[10px] md:text-xs font-black uppercase tracking-widest text-gray-500 mb-1">
+          {/* Center: Round Indicator */}
+          <div className="flex flex-col items-center justify-center text-center px-2">
+            <span className="font-mono text-[10px] sm:text-xs font-black uppercase tracking-widest text-gray-500">
               ROUND {state.currentRound} / {state.totalRounds}
             </span>
-
-            {/* Countdown / Round Indicator */}
-            {state.status === 'in_round' ? (
-              <div
-                className={`w-12 h-12 md:w-16 md:h-16 rounded-none border-4 border-black flex items-center justify-center font-display font-black text-xl md:text-2xl shadow-[3px_3px_0_#000] transition-colors ${
-                  timeRemaining <= 3
-                    ? 'bg-red-500 text-white animate-bounce'
-                    : 'bg-[#f4f4f0] text-black'
-                }`}
-              >
-                {timeRemaining}s
-              </div>
-            ) : (
-              <div className="px-3 py-1 bg-black text-white font-mono text-xs font-black uppercase tracking-widest border-2 border-black animate-pulse">
-                {advanceCountdown !== null ? `NEXT IN ${advanceCountdown}s` : 'REVEALING...'}
-              </div>
-            )}
           </div>
 
           {/* Player 2 (Opponent) */}
-          <div className="flex flex-col items-end">
-            <div className="flex items-center gap-1.5 mb-1">
-              <span className="font-mono text-xs md:text-sm font-bold truncate max-w-[100px] md:max-w-[150px]">
+          <div className="flex flex-col items-end min-w-0 pl-1">
+            <div className="flex items-center gap-1.5 mb-1 max-w-full">
+              <span className="font-mono text-xs sm:text-sm md:text-base font-bold truncate">
                 {oppPlayer.name}
               </span>
-              <span className="font-mono text-xs font-black uppercase bg-gray-200 text-gray-800 px-2 py-0.5 border border-black shadow-[1px_1px_0_#000]">
+              <span className="hidden xs:inline-block font-mono text-xs font-black uppercase bg-gray-200 text-gray-800 px-2 py-0.5 border border-black shadow-[1px_1px_0_#000]">
                 {isHouse ? 'AI' : 'RIVAL'}
               </span>
             </div>
-            <div className="text-xl sm:text-2xl md:text-4xl font-display font-black text-gray-700 tracking-tight">
-              {oppPlayer.score.toLocaleString()} <span className="text-[10px] sm:text-xs font-mono font-normal text-gray-400">PTS</span>
-            </div>
-            {/* Streak & Status */}
-            <div className="flex items-center gap-2 mt-1.5">
-              {oppPlayer.streak > 0 && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-orange-100 text-orange-800 text-[10px] md:text-xs font-mono font-bold border border-black">
-                  🔥 {oppPlayer.streak} STREAK
-                </span>
-              )}
-              {state.status === 'in_round' && (
-                <span
-                  className={`text-[10px] font-mono font-black uppercase tracking-wider px-1.5 py-0.5 border ${
-                    oppPlayer.hasAnswered
-                      ? 'bg-green-100 text-green-800 border-green-600'
-                      : 'bg-gray-100 text-gray-600 border-gray-400'
-                  }`}
-                >
-                  {oppPlayer.hasAnswered ? '⚡ LOCKED IN' : 'THINKING...'}
-                </span>
-              )}
+            <div className="text-xl sm:text-3xl md:text-4xl font-display font-black text-gray-700 tracking-tight truncate max-w-full">
+              {oppPlayer.score.toLocaleString()}
             </div>
           </div>
         </div>
 
-        {/* Real-time Tug-of-War Score Bar */}
+        {/* Row 2: Status and Timer */}
+        <div className="flex justify-between items-center gap-2 mb-2">
+          
+          {/* Player 1 Status */}
+          <div className="flex items-center gap-1 w-1/3 min-w-0">
+            {myPlayer.streak > 0 ? (
+              <span className="truncate px-1 sm:px-2 py-0.5 bg-[var(--color-brand-accent)] text-white text-[9px] sm:text-xs font-mono font-black border border-black shadow-[1px_1px_0_#000]">
+                🔥 {myPlayer.streak}
+              </span>
+            ) : (
+              <div className="w-1"></div>
+            )}
+            {state.status === 'in_round' && (
+              <span className={`hidden sm:inline-block truncate text-[9px] sm:text-[10px] font-mono font-black uppercase tracking-wider px-1.5 py-0.5 border ${myPlayer.hasAnswered ? 'bg-green-100 text-green-800 border-green-600' : 'bg-yellow-100 text-yellow-800 border-yellow-600'}`}>
+                {myPlayer.hasAnswered ? '⚡ LOCKED' : 'THINKING'}
+              </span>
+            )}
+          </div>
+
+          {/* Timer Progress */}
+          <div className="flex-1 max-w-[120px] sm:max-w-[200px] h-3 sm:h-4 bg-gray-200 border-2 border-black overflow-hidden relative">
+            {state.status === 'in_round' ? (
+              <div 
+                className={`h-full transition-all duration-200 ease-linear ${timeRemaining <= 3 ? 'bg-red-500' : 'bg-[var(--color-brand-accent)]'}`}
+                style={{ width: `${Math.max(0, (timeRemaining / (state.roundTimeLimitMs / 1000)) * 100)}%` }}
+              />
+            ) : (
+              <div className="absolute inset-0 bg-black flex items-center justify-center">
+                <span className="text-[8px] text-white font-mono uppercase">{advanceCountdown !== null ? `NEXT ${advanceCountdown}s` : 'REVEALING'}</span>
+              </div>
+            )}
+            {state.status === 'in_round' && (
+              <div className="absolute inset-0 flex items-center justify-center text-[8px] sm:text-[10px] font-black font-mono mix-blend-difference text-white">
+                {timeRemaining}s
+              </div>
+            )}
+          </div>
+
+          {/* Player 2 Status */}
+          <div className="flex items-center justify-end gap-1 w-1/3 min-w-0">
+            {state.status === 'in_round' && (
+              <span className={`hidden sm:inline-block truncate text-[9px] sm:text-[10px] font-mono font-black uppercase tracking-wider px-1.5 py-0.5 border ${oppPlayer.hasAnswered ? 'bg-green-100 text-green-800 border-green-600' : 'bg-gray-100 text-gray-600 border-gray-400'}`}>
+                {oppPlayer.hasAnswered ? '⚡ LOCKED' : 'THINKING'}
+              </span>
+            )}
+            {oppPlayer.streak > 0 && (
+              <span className="truncate px-1 sm:px-2 py-0.5 bg-orange-100 text-orange-800 text-[9px] sm:text-xs font-mono font-bold border border-black">
+                🔥 {oppPlayer.streak}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Real-time Tug-of-War Score Bar (Row 3) */}
         <div className="w-full bg-gray-200 h-3 border-2 border-black flex overflow-hidden relative shadow-[1px_1px_0_#000]">
           <div
             className="h-full bg-[var(--color-brand-accent)] transition-all duration-500 ease-out"
@@ -584,24 +585,25 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
       </div>
 
       {/* ── QUESTION BANNER ────────────────────────────────────────────────────── */}
-      <div className="text-center mb-8 px-4">
-        <span className="inline-block px-3 py-1 bg-black text-white font-mono text-[11px] font-black uppercase tracking-widest mb-3 shadow-[2px_2px_0_#000]">
+      <div className="text-center mb-4 px-2">
+        <span className="inline-block px-2 py-0.5 sm:px-3 sm:py-1 bg-black text-white font-mono text-[9px] sm:text-[11px] font-black uppercase tracking-widest mb-1.5 sm:mb-3 shadow-[2px_2px_0_#000]">
           {q.categoryName ?? 'COMPARISON SHOWDOWN'} • {q.stat.name}
         </span>
-        <h2 className="text-xl sm:text-3xl md:text-5xl font-display font-black uppercase tracking-tight text-black [text-wrap:balance]">
+        <h2 className="text-[clamp(0.875rem,4vw,2rem)] sm:text-3xl md:text-5xl font-display font-black uppercase tracking-tight text-black [text-wrap:balance]">
           WHICH HAS A HIGHER {q.stat.name}?
         </h2>
       </div>
 
       {/* ── REAL-TIME OPPONENT ALERT BADGE ─────────────────────────────────────── */}
       {state.status === 'in_round' && oppHasLocked && (
-        <div className="mb-4 inline-flex items-center gap-2 px-4 py-1.5 bg-yellow-400 text-black font-mono text-[10px] sm:text-xs font-black uppercase border-2 border-black shadow-[3px_3px_0_#000] animate-bounce max-w-[90%] text-center leading-tight">
-          ⚡ {oppPlayer.name.toUpperCase()} HAS LOCKED IN! ANSWER FAST FOR SPEED BONUS!
+        <div className="mb-2 sm:mb-4 inline-flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 sm:py-1.5 bg-yellow-400 text-black font-mono text-[9px] sm:text-xs font-black uppercase border-2 border-black shadow-[3px_3px_0_#000] animate-bounce max-w-[95%] text-center leading-tight">
+          <span className="animate-pulse mr-1">●</span>
+          ⚡ {oppPlayer.name.toUpperCase()} LOCKED IN!
         </div>
       )}
 
       {/* ── COMPARISON CARDS ARENA ─────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full px-4 relative mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-6 w-full px-2 sm:px-4 relative mb-4 sm:mb-8">
         {/* CARD A */}
         <BattleCard
           entity={q.entityA}
@@ -673,7 +675,7 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
             {/* Instant Skip Countdown Button */}
             <button
               onClick={triggerNextRound}
-              className="px-6 py-2.5 bg-black text-white font-mono font-black uppercase text-xs tracking-wider border-2 border-black hover:bg-gray-800 transition-colors shadow-[2px_2px_0_#000]"
+              className="min-h-[44px] px-6 py-2.5 bg-black text-white font-mono font-black uppercase text-xs tracking-wider border-2 border-black hover:bg-gray-800 transition-colors shadow-[2px_2px_0_#000]"
             >
               NEXT ROUND NOW →
             </button>
@@ -731,50 +733,50 @@ function BattleCard({
     <button
       onClick={onSelect}
       disabled={disabled}
-      className={`w-full text-left p-4 sm:p-6 md:p-8 border-4 transition-all duration-200 flex flex-col justify-between min-h-[220px] sm:min-h-[300px] md:min-h-[420px] relative shadow-[6px_6px_0_#000] ${cardStyle} ${
+      className={`w-full text-left p-3 sm:p-6 md:p-8 border-4 transition-all duration-200 flex flex-col justify-between min-h-[130px] xs:min-h-[160px] sm:min-h-[250px] md:min-h-[380px] relative shadow-[4px_4px_0_#000] sm:shadow-[6px_6px_0_#000] ${cardStyle} ${
         !disabled && !isMyPick
           ? 'hover:-translate-y-1 hover:shadow-[10px_10px_0_#000] cursor-pointer'
           : 'cursor-default'
       }`}
     >
       {/* Pick Ribbons */}
-      <div className="absolute top-4 right-4 flex flex-col gap-1 items-end z-10">
+      <div className="absolute top-2 right-2 sm:top-4 sm:right-4 flex flex-col gap-1 items-end z-10">
         {isMyPick && (
-          <span className="px-3 py-1 bg-[var(--color-brand-accent)] text-white font-mono text-xs font-black uppercase tracking-wider border-2 border-black shadow-[2px_2px_0_#000]">
+          <span className="px-2 py-0.5 sm:px-3 sm:py-1 bg-[var(--color-brand-accent)] text-white font-mono text-[9px] sm:text-xs font-black uppercase tracking-wider border-2 border-black shadow-[2px_2px_0_#000]">
             ⚡ YOUR PICK
           </span>
         )}
         {isOpponentPick && isRevealed && (
-          <span className="px-3 py-1 bg-black text-white font-mono text-xs font-black uppercase tracking-wider border-2 border-black shadow-[2px_2px_0_#000]">
+          <span className="px-2 py-0.5 sm:px-3 sm:py-1 bg-black text-white font-mono text-[9px] sm:text-xs font-black uppercase tracking-wider border-2 border-black shadow-[2px_2px_0_#000]">
             RIVAL'S PICK
           </span>
         )}
         {isRevealed && isCorrectWinner && (
-          <span className="px-3 py-1 bg-green-500 text-white font-mono text-xs font-black uppercase tracking-wider border-2 border-black shadow-[2px_2px_0_#000] animate-bounce">
+          <span className="px-2 py-0.5 sm:px-3 sm:py-1 bg-green-500 text-white font-mono text-[9px] sm:text-xs font-black uppercase tracking-wider border-2 border-black shadow-[2px_2px_0_#000] animate-bounce">
             🏆 HIGHER STAT
           </span>
         )}
       </div>
 
       {/* Top: Entity Image or Emoji */}
-      <div className="w-full flex justify-center mb-6">
+      <div className="w-full flex justify-center mb-2 sm:mb-4">
         {entity.imageUrl && !imgError ? (
           <img
             src={entity.imageUrl}
             alt={entity.name}
             onError={() => setImgError(true)}
-            className="w-24 h-24 sm:w-36 sm:h-36 md:w-44 md:h-44 object-cover border-4 border-black shadow-[4px_4px_0_#000]"
+            className="w-16 h-16 xs:w-20 xs:h-20 sm:w-32 sm:h-32 md:w-44 md:h-44 object-cover border-2 sm:border-4 border-black shadow-[2px_2px_0_#000] sm:shadow-[4px_4px_0_#000]"
           />
         ) : (
-          <div className="w-24 h-24 sm:w-36 sm:h-36 md:w-44 md:h-44 bg-[#f4f4f0] border-4 border-black flex items-center justify-center text-4xl sm:text-6xl shadow-[4px_4px_0_#000]">
+          <div className="w-16 h-16 xs:w-20 xs:h-20 sm:w-32 sm:h-32 md:w-44 md:h-44 bg-[#f4f4f0] border-2 sm:border-4 border-black flex items-center justify-center text-2xl xs:text-3xl sm:text-5xl shadow-[2px_2px_0_#000] sm:shadow-[4px_4px_0_#000]">
             {entity.emoji ?? '📊'}
           </div>
         )}
       </div>
 
       {/* Center: Entity Name */}
-      <div className="text-center w-full mb-4">
-        <h3 className="text-lg sm:text-2xl md:text-3xl font-display font-black uppercase tracking-tight text-black line-clamp-2">
+      <div className="text-center w-full mb-2 sm:mb-4">
+        <h3 className="text-base sm:text-2xl md:text-3xl font-display font-black uppercase tracking-tight text-black line-clamp-2">
           {entity.name}
         </h3>
       </div>

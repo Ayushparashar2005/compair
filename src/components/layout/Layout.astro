@@ -19,7 +19,9 @@ const pathname = Astro.url.pathname;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title} - ComPair</title>
@@ -47,30 +49,38 @@ const pathname = Astro.url.pathname;
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
         </button>
 
-        <nav id="main-nav" class="hidden md:flex absolute top-16 left-0 w-full bg-white border-b-4 border-black md:border-none md:static md:w-auto md:bg-transparent flex-col md:flex-row items-stretch md:items-center gap-0 md:gap-4 font-mono text-base md:text-sm font-bold uppercase tracking-wider p-0 md:p-0 z-40 shadow-[0_4px_0_#000] md:shadow-none">
-          <a href="/play" class={`px-5 md:px-4 py-4 md:py-2 transition-colors border-b-2 border-black/10 md:border-none ${pathname.startsWith('/play') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Play</a>
-          <a href="/duel" class={`px-5 md:px-4 py-4 md:py-2 transition-colors border-b-2 border-black/10 md:border-none ${pathname.startsWith('/duel') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Duel</a>
-          <a href="/leaderboard" class={`px-5 md:px-4 py-4 md:py-2 transition-colors border-b-2 border-black/10 md:border-none ${pathname.startsWith('/leaderboard') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Ranks</a>
-          <a href="/explore" class={`px-5 md:px-4 py-4 md:py-2 transition-colors ${pathname.startsWith('/explore') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Explore</a>
+        <nav id="main-nav" class="hidden md:flex fixed md:static inset-0 bg-white md:bg-transparent z-[60] md:z-40 flex-col md:flex-row items-center justify-center md:justify-end gap-6 md:gap-4 font-mono text-2xl md:text-sm font-black md:font-bold uppercase tracking-wider p-6 md:p-0">
+          <button id="close-menu-btn" class="md:hidden absolute top-4 right-4 p-2 border-4 border-black" aria-label="Close Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+          <a href="/play" class={`w-full md:w-auto text-center py-6 md:py-2 px-4 transition-colors border-b-4 border-black md:border-none ${pathname.startsWith('/play') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Play</a>
+          <a href="/duel" class={`w-full md:w-auto text-center py-6 md:py-2 px-4 transition-colors border-b-4 border-black md:border-none ${pathname.startsWith('/duel') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Duel</a>
+          <a href="/leaderboard" class={`w-full md:w-auto text-center py-6 md:py-2 px-4 transition-colors border-b-4 border-black md:border-none ${pathname.startsWith('/leaderboard') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Ranks</a>
+          <a href="/explore" class={`w-full md:w-auto text-center py-6 md:py-2 px-4 transition-colors border-b-4 border-black md:border-none md:last:border-none ${pathname.startsWith('/explore') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Explore</a>
         </nav>
       </div>
     </header>
 
     <script>
       const btn = document.getElementById('mobile-menu-btn');
+      const closeBtn = document.getElementById('close-menu-btn');
       const nav = document.getElementById('main-nav');
-      if (btn && nav) {
-        btn.addEventListener('click', () => {
-          nav.classList.toggle('hidden');
-          nav.classList.toggle('flex');
-        });
+      
+      const toggleMenu = () => {
+        nav?.classList.toggle('hidden');
+        nav?.classList.toggle('flex');
+        document.body.style.overflow = nav?.classList.contains('flex') ? 'hidden' : '';
+      };
+
+      if (btn && closeBtn && nav) {
+        btn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
         
         // Close menu on link click
         nav.querySelectorAll('a').forEach(link => {
           link.addEventListener('click', () => {
             if (window.innerWidth < 768) {
-              nav.classList.add('hidden');
-              nav.classList.remove('flex');
+              toggleMenu();
             }
           });
         });

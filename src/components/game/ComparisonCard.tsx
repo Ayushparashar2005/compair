@@ -69,7 +69,7 @@ export function ComparisonCard({
         ...(isRevealed && isWinner ? { '--shadow-color': 'var(--color-brand-correct)' } as any : {})
       }}
       className={`
-        relative w-full flex flex-col items-center justify-center min-h-[140px] sm:min-h-[200px] md:min-h-[300px] overflow-hidden
+        relative w-full flex flex-col items-center justify-center min-h-[120px] xs:min-h-[140px] sm:min-h-[180px] md:min-h-[280px] overflow-hidden
         transition-all duration-300 ease-out text-left neo-glass border-4
         ${!disabled && !isRevealed ? 'hover:-translate-y-2 hover:shadow-[10px_10px_0_0_#000] cursor-pointer' : ''}
         ${disabled ? 'cursor-default' : ''}
@@ -102,12 +102,12 @@ export function ComparisonCard({
         <div className="text-5xl sm:text-7xl mb-2 sm:mb-4 mt-4 sm:mt-8">{emoji}</div>
       )}
       
-      <div className="z-10 relative mt-auto flex flex-col items-center w-full px-2 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-6 pt-2 sm:pt-8 md:pt-12">
-        <h3 className={`text-base sm:text-xl md:text-3xl font-bold font-display text-center leading-tight mb-2 sm:mb-3 md:mb-4 line-clamp-2 ${hasImage ? 'text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]' : 'text-black'}`}>
+      <div className="z-10 relative mt-auto flex flex-col items-center w-full px-1.5 sm:px-4 md:px-6 pb-2 sm:pb-4 md:pb-6">
+        <h3 className={`text-sm xs:text-base sm:text-xl md:text-3xl font-bold font-display text-center leading-tight mb-1 sm:mb-3 md:mb-4 line-clamp-1 xs:line-clamp-2 ${hasImage ? 'text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]' : 'text-black'}`}>
           {scrambledName}
         </h3>
         
-        <div className={`h-10 sm:h-14 md:h-16 flex items-center justify-center w-full bg-white border-2 md:border-4 border-black text-black shadow-[2px_2px_0_#000] md:shadow-[4px_4px_0_#000] transition-all`}>
+        <div className={`h-9 sm:h-12 md:h-16 flex items-center justify-center w-full bg-white border-2 md:border-4 border-black text-black shadow-[2px_2px_0_#000] md:shadow-[4px_4px_0_#000] transition-all`}>
           {showBack ? (
             <div className="text-xl sm:text-2xl md:text-3xl font-mono font-bold">
               {revealedValue !== null ? revealedValue.toLocaleString() : statValue.toLocaleString()} <span className="text-sm sm:text-lg md:text-xl opacity-80 uppercase">{statUnit}</span>

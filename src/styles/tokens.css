@@ -1,0 +1,51 @@
+:root {
+  /* Spacing scale — tighter on mobile */
+  --sp-xs:   4px;
+  --sp-sm:   8px;
+  --sp-md:  12px;
+  --sp-lg:  16px;
+  --sp-xl:  24px;
+  --sp-2xl: 32px;
+  --sp-3xl: 48px;
+
+  /* Touch target minimum */
+  --touch-min: 44px;
+
+  /* Card heights — the numbers everything must fit within */
+  --card-h-mobile:   130px;  /* on 320px */
+  --card-h-sm:       180px;  /* on 375-430px */
+  --card-h-md:       260px;  /* on 768px+ */
+  --card-h-lg:       320px;  /* on 1024px+ */
+
+  /* HUD height */
+  --hud-h-mobile:    48px;
+  --hud-h-sm:        56px;
+  --hud-h-md:        72px;
+
+  /* Header height — fixed */
+  --header-h:        64px;
+
+  /* VS divider */
+  --vs-h-mobile:     28px;
+  --vs-h-sm:         36px;
+
+  /* Typography scale */
+  --text-display-mobile: clamp(1.5rem, 5vw, 2.25rem);   /* h1 on mobile */
+  --text-display-sm:     clamp(2rem, 6vw, 3.5rem);
+  --text-display-lg:     clamp(3rem, 7vw, 5rem);
+  --text-ui-sm:          clamp(0.625rem, 2vw, 0.75rem);  /* tiny mono labels */
+  --text-ui-md:          clamp(0.75rem, 2.5vw, 0.875rem);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --sp-xs:   6px;
+    --sp-sm:  10px;
+    --sp-md:  16px;
+    --sp-lg:  24px;
+    --sp-xl:  32px;
+    --sp-2xl: 48px;
+    --sp-3xl: 64px;
+    --card-h-mobile: 180px;
+  }
+}

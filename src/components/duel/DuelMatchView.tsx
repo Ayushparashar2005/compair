@@ -276,7 +276,7 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
         <p className="font-mono text-gray-700 text-sm mb-6">{errorMsg || 'Unable to join duel match.'}</p>
         <a
           href="/duel"
-          className="inline-block px-8 py-3 bg-black text-white font-mono font-bold uppercase tracking-widest text-sm hover:bg-gray-800 transition-colors shadow-[4px_4px_0_#000]"
+          className="inline-block px-4 sm:px-8 py-3 bg-black text-white font-mono font-bold uppercase tracking-widest text-sm hover:bg-gray-800 transition-colors shadow-[4px_4px_0_#000]"
         >
           ← Return to Duel Lobby
         </a>
@@ -445,13 +445,13 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <button
             onClick={handleRematch}
-            className="w-full sm:w-auto px-8 py-4 bg-[var(--color-brand-accent)] text-white font-mono font-black uppercase text-sm tracking-wider border-4 border-black shadow-[4px_4px_0_#000] hover:-translate-y-0.5 active:translate-y-0 transition-all"
+            className="w-full sm:w-auto px-4 sm:px-8 py-4 bg-[var(--color-brand-accent)] text-white font-mono font-black uppercase text-sm tracking-wider border-4 border-black shadow-[4px_4px_0_#000] hover:-translate-y-0.5 active:translate-y-0 transition-all"
           >
             ⚔️ REMATCH (SAME ARENA)
           </button>
           <a
             href="/duel"
-            className="w-full sm:w-auto px-8 py-4 bg-white text-black font-mono font-black uppercase text-sm tracking-wider border-4 border-black shadow-[4px_4px_0_#000] hover:bg-gray-100 transition-colors"
+            className="w-full sm:w-auto px-4 sm:px-8 py-4 bg-white text-black font-mono font-black uppercase text-sm tracking-wider border-4 border-black shadow-[4px_4px_0_#000] hover:bg-gray-100 transition-colors"
           >
             🏠 RETURN TO LOBBY
           </a>
@@ -601,7 +601,7 @@ export function DuelMatchView({ sessionId }: DuelMatchViewProps) {
       )}
 
       {/* ── COMPARISON CARDS ARENA ─────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full px-4 relative mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full px-4 relative mb-8">
         {/* CARD A */}
         <BattleCard
           entity={q.entityA}
@@ -731,7 +731,7 @@ function BattleCard({
     <button
       onClick={onSelect}
       disabled={disabled}
-      className={`w-full text-left p-6 md:p-8 border-4 transition-all duration-200 flex flex-col justify-between min-h-[360px] md:min-h-[420px] relative shadow-[6px_6px_0_#000] ${cardStyle} ${
+      className={`w-full text-left p-6 md:p-8 border-4 transition-all duration-200 flex flex-col justify-between min-h-[320px] md:min-h-[420px] relative shadow-[6px_6px_0_#000] ${cardStyle} ${
         !disabled && !isMyPick
           ? 'hover:-translate-y-1 hover:shadow-[10px_10px_0_#000] cursor-pointer'
           : 'cursor-default'

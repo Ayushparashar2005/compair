@@ -54,17 +54,17 @@ import Layout from '../components/layout/Layout.astro';
                 SELECT DIFFICULTY:
               </span>
               <div class="grid grid-cols-3 gap-2">
-                <button type="button" data-diff="novice" class="diff-btn py-1.5 px-2 border-2 border-black font-mono text-xs font-bold uppercase transition-all bg-white hover:bg-gray-100 group">
-                  Novice
-                  <span class="absolute -bottom-10 left-0 w-full text-center text-[9px] text-gray-500 opacity-0 group-hover:opacity-100 hidden sm:block">No hesitation</span>
+                <button type="button" data-diff="novice" class="diff-btn py-1.5 px-2 border-2 border-black font-mono text-xs font-bold uppercase transition-all bg-white hover:bg-gray-100 group flex flex-col items-center justify-center">
+                  <span>Novice</span>
+                  <span class="text-[9px] text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity mt-0.5">No hesitation</span>
                 </button>
-                <button type="button" data-diff="pro" class="diff-btn py-1.5 px-2 border-2 border-black font-mono text-xs font-bold uppercase transition-all bg-black text-white shadow-[2px_2px_0_#000] group relative">
-                  Pro ⚡
-                  <span class="absolute -bottom-10 left-0 w-full text-center text-[9px] text-gray-500 opacity-0 group-hover:opacity-100 hidden sm:block">0.8s pause</span>
+                <button type="button" data-diff="pro" class="diff-btn py-1.5 px-2 border-2 border-black font-mono text-xs font-bold uppercase transition-all bg-black text-white shadow-[2px_2px_0_#000] group flex flex-col items-center justify-center">
+                  <span>Pro ⚡</span>
+                  <span class="text-[9px] text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity mt-0.5">0.8s pause</span>
                 </button>
-                <button type="button" data-diff="master" class="diff-btn py-1.5 px-2 border-2 border-black font-mono text-xs font-bold uppercase transition-all bg-white hover:bg-gray-100 group relative">
-                  Master 🔮
-                  <span class="absolute -bottom-10 left-0 w-full text-center text-[9px] text-gray-500 opacity-0 group-hover:opacity-100 hidden sm:block">2s logic delay</span>
+                <button type="button" data-diff="master" class="diff-btn py-1.5 px-2 border-2 border-black font-mono text-xs font-bold uppercase transition-all bg-white hover:bg-gray-100 group flex flex-col items-center justify-center">
+                  <span>Master 🔮</span>
+                  <span class="text-[9px] text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity mt-0.5">2s delay</span>
                 </button>
               </div>
             </div>
@@ -114,7 +114,7 @@ import Layout from '../components/layout/Layout.astro';
             type="text" 
             maxlength="6" 
             placeholder="ABCDEF"
-            class="flex-1 bg-[#f4f4f0] border-4 border-black text-black font-mono font-black text-2xl tracking-widest text-center uppercase px-4 py-3 focus:outline-none focus:ring-4 focus:ring-[var(--color-brand-accent)] shadow-[3px_3px_0_#000]"
+            class="flex-1 bg-[#f4f4f0] border-4 border-black text-black font-mono font-black text-xl sm:text-2xl tracking-wider sm:tracking-widest text-center uppercase px-4 py-3 focus:outline-none focus:ring-4 focus:ring-[var(--color-brand-accent)] shadow-[3px_3px_0_#000]"
           />
           <button 
             id="join-btn"
@@ -209,9 +209,9 @@ import Layout from '../components/layout/Layout.astro';
           const target = e.currentTarget as HTMLButtonElement;
           selectedDifficulty = target.dataset.diff || 'pro';
           diffButtons.forEach(b => {
-            b.className = 'diff-btn py-1.5 px-2 border-2 border-black font-mono text-xs font-bold uppercase transition-all bg-white hover:bg-gray-100 group relative';
+            b.className = 'diff-btn py-1.5 px-2 border-2 border-black font-mono text-xs font-bold uppercase transition-all bg-white hover:bg-gray-100 group flex flex-col items-center justify-center';
           });
-          target.className = 'diff-btn py-1.5 px-2 border-2 border-black font-mono text-xs font-bold uppercase transition-all bg-black text-white shadow-[2px_2px_0_#000] group relative';
+          target.className = 'diff-btn py-1.5 px-2 border-2 border-black font-mono text-xs font-bold uppercase transition-all bg-black text-white shadow-[2px_2px_0_#000] group flex flex-col items-center justify-center';
         });
       });
 

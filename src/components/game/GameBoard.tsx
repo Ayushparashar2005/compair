@@ -256,15 +256,15 @@ export function GameBoard({ categoryId }: GameBoardProps) {
         <h2 className="text-3xl md:text-5xl font-display font-bold text-center mb-12 tracking-tight opacity-30 animate-pulse">
           WHICH IS HIGHER?
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full px-4 relative">
-          <div className="flex flex-col items-center justify-center p-8 md:p-12 min-h-[300px] neo-glass">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6 w-full px-4 relative">
+          <div className="flex flex-col items-center justify-center p-8 md:p-12 min-h-[240px] sm:min-h-[300px] neo-glass">
             <div className="w-32 h-32 md:w-40 md:h-40 bg-black/10 animate-pulse mb-6 mx-auto" />
             <div className="h-6 w-3/4 bg-black/10 animate-pulse mb-3 mx-auto" />
             <div className="h-4 w-1/2 bg-black/10 animate-pulse mx-auto" />
           </div>
           <div className="md:hidden flex items-center justify-center py-2 text-[var(--color-brand-text-secondary)] font-display font-bold opacity-50">VS</div>
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-[#f4f4f0] border-4 border-black items-center justify-center z-10 hidden md:flex animate-pulse" />
-          <div className="flex flex-col items-center justify-center p-8 md:p-12 min-h-[300px] neo-glass">
+          <div className="flex flex-col items-center justify-center p-8 md:p-12 min-h-[240px] sm:min-h-[300px] neo-glass">
             <div className="w-32 h-32 md:w-40 md:h-40 bg-black/10 animate-pulse mb-6 mx-auto" style={{ animationDelay: '150ms' }} />
             <div className="h-6 w-3/4 bg-black/10 animate-pulse mb-3 mx-auto" style={{ animationDelay: '150ms' }} />
             <div className="h-4 w-1/2 bg-black/10 animate-pulse mx-auto" style={{ animationDelay: '150ms' }} />
@@ -331,11 +331,11 @@ export function GameBoard({ categoryId }: GameBoardProps) {
           </div>
 
           {/* Question progress pips */}
-          <div className="flex items-center gap-1.5 md:gap-2 mx-4">
+          <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 mx-2 sm:mx-4 overflow-hidden max-w-[100px] sm:max-w-none justify-center">
             {Array.from({ length: 10 }).map((_, i) => (
               <div
                 key={i}
-                className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full border border-black transition-all duration-300 ${
+                className={`w-1 h-1 sm:w-1.5 sm:h-1.5 md:w-2 md:h-2 rounded-full border border-black transition-all duration-300 flex-shrink-0 ${
                   i < stats.questionsAnswered ? 'bg-black scale-100' : 'bg-black/10 scale-90'
                 }`}
               />
@@ -357,7 +357,7 @@ export function GameBoard({ categoryId }: GameBoardProps) {
         </div>
       </div>
 
-      <h2 key={question.questionId} ref={headlineRef} className="text-2xl md:text-4xl lg:text-5xl font-display font-black text-center mb-8 tracking-tighter uppercase [text-wrap:balance]">
+      <h2 key={question.questionId} ref={headlineRef} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-black text-center mb-8 tracking-tighter uppercase [text-wrap:balance]">
         {STAT_VERB_MAP[question.stat.id] || `WHICH HAS HIGHER `}
         {!STAT_VERB_MAP[question.stat.id] && <StatHighlight trigger={question.questionId}>{question.stat.name}?</StatHighlight>}
       </h2>
@@ -381,7 +381,7 @@ export function GameBoard({ categoryId }: GameBoardProps) {
         <AnswerBurst isCorrect={answerResult.isCorrect} />
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full px-4 relative">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6 w-full px-4 relative">
         <ComparisonCard 
           name={question.entityA.name}
           emoji={question.entityA.emoji}

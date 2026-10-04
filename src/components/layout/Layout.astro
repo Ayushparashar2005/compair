@@ -18,7 +18,7 @@ const pathname = Astro.url.pathname;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title} - ComPair</title>
@@ -46,11 +46,11 @@ const pathname = Astro.url.pathname;
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
         </button>
 
-        <nav id="main-nav" class="hidden md:flex absolute top-16 left-0 w-full bg-white border-b-4 border-black md:border-none md:static md:w-auto md:bg-transparent flex-col md:flex-row items-center gap-2 md:gap-4 font-mono text-sm font-bold uppercase tracking-wider p-4 md:p-0 z-40 shadow-[0_4px_0_#000] md:shadow-none">
-          <a href="/play" class={`px-4 py-2 transition-colors ${pathname.startsWith('/play') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Play</a>
-          <a href="/duel" class={`px-4 py-2 transition-colors ${pathname.startsWith('/duel') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Duel</a>
-          <a href="/leaderboard" class={`px-4 py-2 transition-colors ${pathname.startsWith('/leaderboard') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Ranks</a>
-          <a href="/explore" class={`px-4 py-2 transition-colors ${pathname.startsWith('/explore') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Explore</a>
+        <nav id="main-nav" class="hidden md:flex absolute top-16 left-0 w-full bg-white border-b-4 border-black md:border-none md:static md:w-auto md:bg-transparent flex-col md:flex-row items-stretch md:items-center gap-0 md:gap-4 font-mono text-base md:text-sm font-bold uppercase tracking-wider p-0 md:p-0 z-40 shadow-[0_4px_0_#000] md:shadow-none">
+          <a href="/play" class={`px-5 md:px-4 py-4 md:py-2 transition-colors border-b-2 border-black/10 md:border-none ${pathname.startsWith('/play') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Play</a>
+          <a href="/duel" class={`px-5 md:px-4 py-4 md:py-2 transition-colors border-b-2 border-black/10 md:border-none ${pathname.startsWith('/duel') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Duel</a>
+          <a href="/leaderboard" class={`px-5 md:px-4 py-4 md:py-2 transition-colors border-b-2 border-black/10 md:border-none ${pathname.startsWith('/leaderboard') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Ranks</a>
+          <a href="/explore" class={`px-5 md:px-4 py-4 md:py-2 transition-colors ${pathname.startsWith('/explore') ? 'bg-black text-white' : 'hover:bg-black/5 text-black'}`}>Explore</a>
         </nav>
       </div>
     </header>
@@ -63,6 +63,16 @@ const pathname = Astro.url.pathname;
           nav.classList.toggle('hidden');
           nav.classList.toggle('flex');
         });
+        
+        // Close menu on link click
+        nav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            if (window.innerWidth < 768) {
+              nav.classList.add('hidden');
+              nav.classList.remove('flex');
+            }
+          });
+        });
       }
     </script>
 
@@ -71,7 +81,7 @@ const pathname = Astro.url.pathname;
     </main>
 
     <footer class="w-full border-t-4 border-black bg-black text-white mt-auto py-12">
-      <div class="w-full px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="w-full px-6 flex flex-col md:flex-row justify-between items-center gap-8">
         <div class="text-2xl font-display font-black tracking-tighter uppercase">
           Com<span class="text-[var(--color-brand-accent)]">Pair</span>
         </div>
